@@ -3,6 +3,11 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\User\UserRepository;
+use App\Repositories\User\UserRepositoryImple;
+use App\Repositories\Article\ArticleRepositoryImple;
+use App\Repositories\Article\ArticleRepository;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +18,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $models = [
+            'User',
+            'Article'
+        ];
+        // foreach ($models as $model) {
+        //     $this->app->bind(
+        //         "App\Repositories\\{$model}\\{$model}Repository",
+        //         "App\Repositories\\{$model}\\{$model}RepositoryImple"
+        //     );
+        // }
     }
 
     /**
@@ -23,6 +37,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
     }
 }

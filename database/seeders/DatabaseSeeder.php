@@ -15,6 +15,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        // $this->call([
+        //     \App\Models\WebGis::class
+        // ]); // for seeder
+        \App\Models\WebGis::factory(20)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

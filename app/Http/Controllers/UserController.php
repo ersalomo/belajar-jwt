@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
+use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -14,8 +15,10 @@ class UserController extends Controller
      *
      * @return void
      */
+    private $userRepository;
     public function __construct()
     {
+        //     $this->userRepository = $userRepository;
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
     public function index(Request $req)
@@ -51,6 +54,15 @@ class UserController extends Controller
     public function me()
     {
         return response()->json(auth()->user());
+    }
+
+    public function showUser($id)
+    {
+        $user_detail = $this->userRepository->getUserById($id);
+        return response()->json([
+            'succees' => true,
+            'data' => $user_detail
+        ]);
     }
 
     /**

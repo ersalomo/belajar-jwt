@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use App\Http\Resources\ArticleShow;
 use Illuminate\Http\Request;
+use App\Http\Resources\ArticleShow;
 use Illuminate\Support\Facades\Validator;
+use App\Repositories\Article\ArticleRepository;
 
 
 class ArticleController extends Controller
@@ -15,6 +16,13 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $articleRepository;
+    public function __construct()
+    {
+        // $this->articleRepository = $articleRepository;
+        $this->middleware('auth:api');
+    }
+
     public function index(Request $req)
     {
         $articles  = Article::paginate($req->paginate || 10);
@@ -62,6 +70,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
+        // $this->articleRepository->detail($article);
         return response()->json([
             'success' => true,
             'data' => $article
