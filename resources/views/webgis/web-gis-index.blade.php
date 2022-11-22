@@ -18,9 +18,22 @@
 </head>
 
 <body>
+    <div>
+        <p>Cari Lokasi</p>
+        <select class="form-control" onchange="findLocation(this.value)">
+            @forelse ($locations as $location)
+                <option value="{{ $location->id }}" class="form-control">{{ $location->nama }}</option>
+            @empty
+                <option class="form-control">Empty data</option>
+            @endforelse
+        </select>
+    </div>
     <div id="map"></div>
 </body>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="{{ asset('map-leaflet.js') }}"></script>
+<script type="text/javascript" src="{{ asset('leaflet/leaflet.textpath.js') }}"></script>
+<script type="text/javascript" src="{{ asset('leaflet/sungai.lf.js') }}"></script>
 
 </html>
