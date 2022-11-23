@@ -4,8 +4,19 @@ const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-    const marker = L.marker([-6.233737, 106.324895]).addTo(map)
-        .bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
+const onSatelit = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains: ['mt0','mt1','mt2','mt3']
+}).addTo(map)
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',{
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://osm.org/copyright">Constributors</a>'
+}).addTo(map)
+
+const marker = L.marker([-6.233737, 106.324895])
+    .addTo(map)
+    .bindPopup('<b>Hello world!</b><br />I am a popup.')
+    .openPopup();
 
     const circle = L.circle([-6.233737, 106.324895], {
         color: 'red',
@@ -29,6 +40,28 @@ const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
              .setContent(`You clicked the map at ${e.latlng.toString()}`)
              .openOn(map);
     });
+
+const legend = L.control({position: 'topright'})
+legend.onAdd = (function(map){
+    const div = L.DomUtil.create('div','legend');
+    const labels = ['<strong>Keterangan :</strong>']
+    const categories = [
+        'Rumah Sakit',
+        'Sekolah',
+        'Gedung Pemerintah',
+        'DJ Discotic'
+    ]
+    categories.forEach((element,i) => {
+        if(i == 0) {
+            div.innerHTML += labels.push(
+                '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3HR8f2I9YFDbQbN6nhbK31YNT44_iuf73oQ&usqp=CAU" alt="">'
+            )
+        }
+    });
+    div.innerHTML = labels.join('<br>')
+    return div
+})
+legend.addTo(map)
 
 $(document).ready(function(){
     $.getJSON('gis/data',function(data) {
@@ -60,12 +93,10 @@ $(document).ready(function(){
                     color: 'blue',
                     dashArray : "30 10",
                     lineCap : 'square',
-                }
+                };
             },
             onEachFeature: (feature, layer) => {
-                layer.setText(feature.properties.nama,{ //option
-
-                })
+                layer.setText(feature.properties.nama,{ /*option**/})
                 layer.on('click',(e)=>{
                 })
                 layer.addTo(map)
@@ -92,8 +123,70 @@ $(document).ready(function(){
 //                             L.marker([parseFloat(value.latitude),parseFloat(value.longitude)],{icon:logoIcon}).addTo(map).bindPopup(templatePreview);// L.marker([parseFloat(data[i].latitude),parseFloat(data[i].longitude)],{icon:logoIcon}).addTo(map).bindPopup('oke');
 //         })
 // })
+// mini map
+// var osm2 = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 13, attribution: osmAttrib});
+var miniMap = new L.Control.MiniMap(onSatelit,{
+    toggleDisplay: true,
+    minimized: true,
+}).addTo(map);
+// const minimap = new L.control.MiniMap(,{
+//     minimized: true,
+//     toggleDisplay: true,
+// }).addTo(map)
+// L.Control.MiniMap(osm2).addTo(map);
 
-// plugins search and popups 
+// rules / distance
+var options = {
+          position: 'topleft',
+          lengthUnit: {
+            factor: 0.539956803,    //  from km to nm
+            display: 'Nautical Miles',
+            decimal: 2
+          }
+        };
+L.control.ruler(options).addTo(map);
+
+//hash / cursor
+const hash = new L.Hash(map)
+
+L.control.mousePosition().addTo(map);
+
+// routing machine
+const waypoints = [
+    L.latLng(-6.253136, 106.316543),
+    L.latLng(-6.254021, 106.316972),
+];
+
+const routeControler =  L.Routing.control({
+  waypoints: waypoints,
+  routeWhileDragging:true,
+  lineOptions: {
+    styles: [{
+        color:'green',
+        opacity: 1,
+        weight: 5
+    }]
+  }
+}).addTo(map);
+routeControler.on('routesfound',(e)=>{
+    console.info(e.routes[0])
+    const distance = e.routes[0].summary.totalDistance;
+    const time = e.routes[0].summary.totalTime;
+
+    const titikA = document.getElementById('titiA');
+    const titikB = document.getElementById('titiB');
+    const jalan = document.getElementById('jalan');
+
+    titikA.value = e.routes[0].waypoints[0].latLng.lat + ',' + e.routes[0].waypoints[0].latLng.lng
+    titikB.value = e.routes[0].waypoints[1].latLng.lat + ',' + e.routes[0].waypoints[1].latlng.lng
+    jalan.value = e.routes[0].name
+
+
+
+
+})
+
+// plugins search and popups
 function findLocation(id){
     geoLayer.eachLayer((layer)=>{
 
