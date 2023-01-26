@@ -7,6 +7,21 @@ use App\Http\Controllers\{
     ArticleCommentController,
 };
 
+use App\Http\Controllers\{
+    Api\UserController as UserApiController
+};
+
+Route::group(
+    [
+        'middleware' => ['auth:api'],
+        'except' => ['login', 'register']
+    ],
+    function ($router) {
+        Route::post('login', [UserApiController::class, 'login'])->name('api.login');
+        Route::post('register', [UserApiController::class, 'register'])->name('api.register');
+    }
+);
+
 Route::group([
     'middleware' => ['auth:api'],
     'prefix' => 'auth',
