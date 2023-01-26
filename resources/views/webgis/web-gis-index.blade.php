@@ -64,9 +64,7 @@
 <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>  --}}
 <link rel="stylesheet" href="{{ asset('leaflet/routing-machine/leaflet-routing-machine.css') }}">
 <script src="{{ asset('leaflet/routing-machine/leaflet-routing-machine.js') }}"></script>
-
 <script type="text/javascript" src="{{ asset('map-leaflet.js') }}"></script>
-<script type="text/javascript" src="{{ asset('leaflet/sungai.lf.js') }}"></script>
 
 
 </html>

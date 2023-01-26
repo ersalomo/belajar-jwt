@@ -1,14 +1,36 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build"
-    },
-    "devDependencies": {
-        "axios": "^1.1.2",
-        "laravel-vite-plugin": "^0.6.0",
-        "lodash": "^4.17.19",
-        "postcss": "^8.1.14",
-        "vite": "^3.0.0"
-    }
+  "name": "laravel",
+  "version": "1.0.0",
+  "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg\" width=\"400\" alt=\"Laravel Logo\"></a></p>",
+  "main": "vite.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "",
+    "dev": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ersalomo/belajar-jwt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ersalomo/belajar-jwt/issues"
+  },
+  "homepage": "https://github.com/ersalomo/belajar-jwt#readme",
+  "dependencies": {
+    "leaflet": "^1.9.3",
+    "leaflet-hash": "^0.2.1",
+    "leaflet-legend": "^1.0.2",
+    "leaflet-minimap": "^3.6.1",
+    "leaflet-mouse-position": "^1.2.0",
+    "leaflet-realtime": "^2.2.0",
+    "leaflet-routing-machine": "^3.2.12",
+    "leaflet-ruler": "^1.0.0",
+    "leaflet.markercluster": "^1.5.3"
+  }
 }

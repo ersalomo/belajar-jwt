@@ -180,11 +180,18 @@ routeControler.on('routesfound',(e)=>{
     titikA.value = e.routes[0].waypoints[0].latLng.lat + ',' + e.routes[0].waypoints[0].latLng.lng
     titikB.value = e.routes[0].waypoints[1].latLng.lat + ',' + e.routes[0].waypoints[1].latlng.lng
     jalan.value = e.routes[0].name
-
-
-
-
 })
+  L.realtime({
+        url: 'https://wanderdrone.appspot.com/',
+        crossOrigin: true,
+        type: 'json'
+    }, {
+        interval: 3 * 1000
+    }).addTo(map);
+
+realtime.on('update', function() {
+    map.fitBounds(realtime.getBounds(), {maxZoom: 3});
+});
 
 // plugins search and popups
 function findLocation(id){
