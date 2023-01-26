@@ -16,3 +16,9 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+.editorconfig
+.gitattributes
+.gitignore
+vite.config.json
+package-lock.json
+composer.lock
