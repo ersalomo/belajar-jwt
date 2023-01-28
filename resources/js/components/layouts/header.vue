@@ -1,3 +1,4 @@
+<template>
 <div class="header">
     <div class="header-left">
         <a href="index.html" class="logo">
@@ -29,15 +30,19 @@
                     <span class="status online"></span>
                 </span>
                 <div class="user-names">
-                    <h5>Soeng Souy</h5>
+                    <h5></h5>
                     <span>Administrator</span>
                 </div>
             </a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="profile.html">My Profile</a>
-                <a class="dropdown-item" href="edit-profile.html">Edit Profile</a>
+                 <router-link to="/profile" class="dropdown-item">Profile</router-link>
                 <a class="dropdown-item" href="settings.html">Settings</a>
-                <a class="dropdown-item" href="login.html">Logout</a>
+                <form action="{{ route('api.logout') }}" method="POST">
+                    <button type="submit" class="dropdown-item">
+                        <img src="assets/img/icon/lock-out.svg" class="me-2" alt=""> Logout
+                    </button>
+                </form>
             </div>
         </li>
     </ul>
@@ -48,7 +53,12 @@
             <a class="dropdown-item" href="profile.html">My Profile</a>
             <a class="dropdown-item" href="edit-profile.html">Edit Profile</a>
             <a class="dropdown-item" href="settings.html">Settings</a>
-            <a class="dropdown-item" href="login.html">Logout</a>
+            <form action="{{ route('api.logout') }}" method="POST">
+                <button type="submit" class="dropdown-item">
+                    <img src="assets/img/icon/lock-out.svg" class="me-2" alt=""> Logout
+                </button>
+            </form>
         </div>
     </div>
 </div>
+</template>

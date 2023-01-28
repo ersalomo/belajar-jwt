@@ -1,5 +1,5 @@
-<x-app-layout pageTitle="Login">
-    <div class="main-wrapper account-wrapper bg-wrapper">
+<template>
+     <div class="main-wrapper account-wrapper bg-wrapper">
         <div class="account-page">
             <div class="account-center">
                 <div class="account-logo">
@@ -10,18 +10,21 @@
                         <h3>Let's Get Started</h3>
                         <p>Sign in to continue to Crypto</p>
                     </div>
-                    <form action="{{ route('api.login') }}" method="post" class="form-signin">
+                    <form action="/api/login" method="post" class="form-signin" id="sing-in">
                         <div class="form-group">
-                            <input type="text" autofocus="" name="email" class="form-control"
+                            <input type="text" autofocus="true" name="email" class="form-control"
                                 placeholder="Username">
-                            <span class="profile-views"><img src="assets/img/icon/lock-icon-01.svg"
-                                    alt=""></span>
+                            <span class="profile-views">
+                                <img src="assets/img/icon/lock-icon-01.svg" alt="">
+                            </span>
+                            <span class="text-danger invalid-feedback email_error error-text"></span>
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" name="password" placeholder="Password">
-                            <span class="profile-views"><img src="assets/img/icon/lock-icon-02.svg"
-                                    alt=""></span>
+                            <span class="profile-views"><img src="assets/img/icon/lock-icon-02.svg" alt="">
+                            </span>
                         </div>
+                        <span class="text-danger password_error error-text "></span>
                         <div class="forgotpass">
                             <div class="remember-me">
                                 <label class="custom_check me-2 mb-0 d-inline-flex remember-me"> Remember me
@@ -37,14 +40,14 @@
                                     class="fas fa-arrow-right ms-1"></i></button>
                         </div>
                         <div class="text-center register-link">
-                            Don't have an account? <a href="{{ route('login.register') }}">Sign Up</a>
+                            Don't have an account?
+                            <router-link to="/register">Sign Up</router-link>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    @push('scripts')
-        <script></script>
-    @endpush
-</x-app-layout>
+</template>
+
+

@@ -1,4 +1,4 @@
-<x-home-layout title="Accounts">
+<template >
     <div class="content">
         <div class="buy-form">
             <div class="row">
@@ -223,4 +223,4 @@
             </div>
         </div>
     </div>
-</x-home-layout>
+</template>
