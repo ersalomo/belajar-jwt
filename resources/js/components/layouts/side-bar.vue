@@ -4,7 +4,7 @@
         <div id="sidebar-menu" class="sidebar-menu">
             <ul>
                 <li class="{{ request()->is('home') ? 'active' : '' }}">
-                    <router-link to="/home" class="active">
+                    <router-link to="/dashboard" class="active">
                          <img
                         src="assets/img/icon/menu-icon-01.svg" alt="img">
                         <span>Dashboard</span>

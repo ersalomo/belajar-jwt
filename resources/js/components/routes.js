@@ -3,17 +3,24 @@ import Acccount from "./home/accounts.vue";
 import Profile from "./home/profile.vue";
 import Login from "./auth/login.vue";
 import Register from "./auth/register.vue";
+import Home from "./home/home.vue";
+import { createRouter, createWebHistory } from "vue-router";
 
 export const routes = [
     {
         path: "/home",
         name: "",
-        component: Dashboard,
-    },
-    {
-        path: "/accounts",
-        name: "",
-        component: Acccount,
+        component: Home,
+        children: [
+            {
+                path: "/accounts",
+                component: async () => await Acccount,
+            },
+            {
+                path: "/dashboard",
+                component: async () => await Dashboard,
+            },
+        ],
     },
     {
         path: "/profile",
@@ -36,3 +43,10 @@ export const routes = [
         component: Register,
     },
 ];
+
+const route = createRouter({
+    routes,
+    history: createWebHistory(),
+});
+
+export default route;

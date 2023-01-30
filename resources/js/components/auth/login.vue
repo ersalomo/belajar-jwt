@@ -10,17 +10,17 @@
                         <h3>Let's Get Started</h3>
                         <p>Sign in to continue to Crypto</p>
                     </div>
-                    <form action="/api/login" method="post" class="form-signin" id="sing-in">
+                    <form @submit.prevent="loginHandler" method="post" class="form-signin" id="sing-in">
                         <div class="form-group">
-                            <input type="text" autofocus="true" name="email" class="form-control"
+                            <input type="text" v-model="email" autofocus="true" name="email" class="form-control"
                                 placeholder="Username">
                             <span class="profile-views">
                                 <img src="assets/img/icon/lock-icon-01.svg" alt="">
                             </span>
-                            <span class="text-danger invalid-feedback email_error error-text"></span>
+                            <span class="text-danger email_error error-text"></span>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="password" placeholder="Password">
+                            <input type="password" v-model="password" class="form-control" name="password" placeholder="Password">
                             <span class="profile-views"><img src="assets/img/icon/lock-icon-02.svg" alt="">
                             </span>
                         </div>
@@ -49,5 +49,53 @@
         </div>
     </div>
 </template>
-
+<script>
+import axios from "axios"
+    export default {
+        data: () => {
+            return {
+                email: '',
+                password: ''
+            }
+        },
+        methods: {
+            async loginHandler() {
+                await axios.post('/api/login', {
+                    email: this.email,
+                    password: this.password
+                }).then((response) =>{
+                    console.log(response)
+                    if(response.data.errors){
+                        console.log(response.data)
+                        Object.entries(response.data.errors).forEach((val, i)=>{
+                            this.$el.querySelector(`span.${val[0]}_error`).innerHTML = val[1][0]
+                            console.log(val,val[1])
+                        })
+                    }else{
+                    console.log(response)
+                        if(response.status === 200) {
+                            this.$router.push(
+                                {
+                                    path: '/home',
+                                    query: {
+                                        token: response.data.access_token
+                                    }
+                                }
+                                )
+                        }
+                    }
+                })
+                .catch(({response})=>{
+                       console.log(response)
+                    toastr.warning(response.data.error, {
+                    positionClass: "toast-top-center",
+                    closeButton: !0,
+                    tapToDismiss: !1,
+                    rtl: true,
+                });
+                })
+            }
+        }
+    }
+</script>
 
