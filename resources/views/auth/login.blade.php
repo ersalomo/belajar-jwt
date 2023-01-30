@@ -1,4 +1,4 @@
- <x.layouts.app-layout>
+ <x-app-layout pageTitle="Login">
      <div class="main-wrapper account-wrapper bg-wrapper">
          <div class="account-page">
              <div class="account-center">
@@ -10,8 +10,7 @@
                          <h3>Let's Get Started</h3>
                          <p>Sign in to continue to Crypto</p>
                      </div>
-                     <form action="/api/login" method="post" @submit.prevent="loginHandler()" class="form-signin"
-                         id="sing-in">
+                     <form action="/api/login" method="post" class="form-signin" id="sing-in">
                          <div class="form-group">
                              <input type="text" autofocus="true" v-model="email" name="email" class="form-control"
                                  placeholder="Username">
@@ -44,11 +43,67 @@
                          </div>
                          <div class="text-center register-link">
                              Don't have an account?
-                             <router-link to="/register">Sign Up</router-link>
+                             <a href="{{ route('login.register') }}">Sign Up</a>
                          </div>
                      </form>
                  </div>
              </div>
          </div>
      </div>
- </x.layouts.app-layout>
+ </x-app-layout>
+ @push('scripts')
+     <script>
+         $(document).ready(function() {
+             $("#sing-in").on("submit", function(e) {
+                 e.preventDefault();
+                 e.stopPropagation();
+                 const o = "rtl" === $("html").attr("data-textdirection");
+                 $.ajax({
+                     url: e.target["action"],
+                     method: e.target["method"],
+                     processData: false,
+                     contentType: false,
+                     dataType: "json",
+                     data: new FormData(e.target),
+                     beforeSend: function(res) {
+                         $(e.target).find("span.error-text").text("");
+                     },
+                     success: function(res) {
+                         if (!res.status) {
+                             $.each(res.errors, (prefix, val) => {
+                                 // $("span." + prefix + "_error").text(val[0]);
+                                 toastr.warning(prefix + ":" + val, {
+                                     positionClass: "toast-top-center",
+                                     closeButton: !0,
+                                     tapToDismiss: !1,
+                                     rtl: o,
+                                 });
+                             });
+                             return;
+                         }
+                         toastr.success("Berhasil Login", {
+                             positionClass: "toast-top-center",
+                             closeButton: !0,
+                             tapToDismiss: !1,
+                             rtl: o,
+                         });
+                         $(e.target)[0].reset();
+                         localStorage.setItem("acces_token", res.access_token);
+                         window.location.href = "/home?token=" + res.access_token;
+                     },
+                     error: function({
+                         responseJSON
+                     }) {
+                         toastr.warning(responseJSON.error, {
+                             positionClass: "toast-top-center",
+                             closeButton: !0,
+                             tapToDismiss: !1,
+                             rtl: o,
+                         });
+                         console.log(responseJSON, "eerpr");
+                     },
+                 });
+             });
+         });
+     </script>
+ @endpush

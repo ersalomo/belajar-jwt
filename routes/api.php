@@ -6,20 +6,35 @@ use App\Http\Controllers\{
     ArticleController,
     ArticleCommentController,
 };
+use App\Http\Controllers\{
+    Api\UserController as UserApiController
+};
 
-Route::group([
-    'middleware' => ['auth:api'],
-    'prefix' => 'auth',
-    'except' => ['login', 'register']
-], function ($router) {
+Route::group(
+    [
+        'as' => 'api.',
+    ],
+    function ($router) {
+        Route::post('login', [UserApiController::class, 'login'])->name('login');
+        Route::post('register', [UserApiController::class, 'register'])->name('register');
+        Route::post('logout', [UserApiController::class, 'logout'])->name('logout');
+        Route::get('profile/me', [UserApiController::class, 'me'])->name('profile');
+    }
+);
 
-    //     // Route::post('register', [UserController::class, 'register'])->name('register');
-    //     // Route::post('login', [UserController::class, 'login'])->name('login');
-    //     Route::post('me', [UserController::class, 'me'])->name('me');
-    //     Route::post('logout', [UserController::class, 'logout'])->name('logout');
-    //     Route::post('refresh', [UserController::class, 'refresh'])->name('refresh');
-    //     Route::get('index', [UserController::class, 'index'])->name('index');
-    //     Route::get('show-user/{id}', [UserController::class, 'showUser'])->name('show.user');
+// Route::group([
+//     'middleware' => ['auth:api'],
+//     'prefix' => 'auth',
+//     'except' => ['login', 'register']
+// ], function ($router) {
+
+//     Route::post('register', [UserController::class, 'register'])->name('register');
+//     Route::post('login', [UserController::class, 'login'])->name('login');
+//     Route::post('me', [UserController::class, 'me'])->name('me');
+//     Route::post('logout', [UserController::class, 'logout'])->name('logout');
+//     Route::post('refresh', [UserController::class, 'refresh'])->name('refresh');
+//     Route::get('index', [UserController::class, 'index'])->name('index');
+//     Route::get('show-user/{id}', [UserController::class, 'showUser'])->name('show.user');
 
     //     Route::controller(ArticleController::class)
     //         // ->prefix('articles')
@@ -39,4 +54,4 @@ Route::group([
     //             Route::put('update/{articleComment?}', 'update');
     //             Route::delete('delete/{articleComment?}', 'delete');
     //         });
-});
+// });

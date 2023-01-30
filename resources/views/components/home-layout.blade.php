@@ -22,7 +22,7 @@
     <div class="sidebar-overlay" data-reff=""></div>
 
     @include('layouts.styles.js-styles')
-    @vite(['resources/js/homeApp.js'])
+    {{-- @vite(['resources/js/homeApp.js']) --}}
     <script>
         if (!localStorage.getItem('acces_token')) {
             window.location.href = '/login'

@@ -14,7 +14,8 @@
                         <span class="menu-arrow"></span></a>
                     <ul style="display: none;" class="">
                         <li><a id="achorAccounts"
-                                href="{{ route('home.accounts', ['token' => request()->token]) }}">Employees List</a>
+                                href="{{ route('home.accounts', ['token' => request()->token]) }}">Employees
+                                List</a>
                         </li>
                         <li><a href="">Leaves</a></li>
                         <li><a href="">Holidays</a></li>
