@@ -10,17 +10,17 @@
                         <h3>Let's Get Started</h3>
                         <p>Sign in to continue to Crypto</p>
                     </div>
-                    <form action="/api/login" method="post" class="form-signin" id="sing-in">
+                    <form action="/api/login" method="post" @submit.prevent="loginHandler()" class="form-signin" id="sing-in">
                         <div class="form-group">
-                            <input type="text" autofocus="true" name="email" class="form-control"
+                            <input type="text" autofocus="true" v-model="email" name="email" class="form-control"
                                 placeholder="Username">
                             <span class="profile-views">
                                 <img src="assets/img/icon/lock-icon-01.svg" alt="">
                             </span>
-                            <span class="text-danger invalid-feedback email_error error-text"></span>
                         </div>
+                        <span class="text-danger email_error error-text"></span>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="password" placeholder="Password">
+                            <input type="password" v-model="password" class="form-control" name="password" placeholder="Password">
                             <span class="profile-views"><img src="assets/img/icon/lock-icon-02.svg" alt="">
                             </span>
                         </div>
@@ -32,11 +32,11 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <a href="forgot-password.html"><img src="assets/img/icon/lock-icon.svg" class="me-1"
+                            <a href=""><img src="assets/img/icon/lock-icon.svg" class="me-1"
                                     alt="">Forgot your password?</a>
                         </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary account-btn">Sign In <i
+                            <button type="submit"  class="btn btn-primary account-btn">Sign In <i
                                     class="fas fa-arrow-right ms-1"></i></button>
                         </div>
                         <div class="text-center register-link">
@@ -49,5 +49,45 @@
         </div>
     </div>
 </template>
-
+<script>
+import axios from "axios"
+    export default {
+        data: () => {
+            return {
+                email: '',
+                password: ''
+            }
+        },
+        methods: {
+            async loginHandler(e) {
+                await axios.post('/api/login', {
+                    email: this.email,
+                    password: this.password
+                }).then((response) =>{
+                    console.log(response)
+                    if(response.data.errors){
+                        console.log(response.data)
+                        Object.entries(response.data.errors).forEach((val, i)=>{
+                            this.$el.querySelector(`span.${val[0]}_error`).innerHTML = val[1][0]
+                            console.log(val,val[1])
+                        })
+                    }else{
+                    console.log(response)
+                        if(response.status === 200) {
+                            window.location.href  = 'o/home?token='+response.data.access_token
+                        }
+                    }
+                })
+                .catch(({response})=>{
+                    toastr.warning(response.data.error, {
+                    positionClass: "toast-top-center",
+                    closeButton: !0,
+                    tapToDismiss: !1,
+                    rtl: true,
+                });
+                })
+            }
+        }
+    }
+</script>
 
