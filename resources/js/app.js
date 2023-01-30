@@ -1,27 +1,10 @@
 import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
+import Header from "./components/layouts/header.vue";
+import SideBar from "./components/layouts/side-bar.vue";
+import { routes } from "./components/routes";
+// import "./Auth";
 
-import Login from "./components/auth/login.vue";
-import Register from "./components/auth/register.vue";
-import "./Auth";
-
-const routes = [
-    {
-        path: "/",
-        name: "",
-        component: Login,
-    },
-    {
-        path: "/login",
-        name: "",
-        component: Login,
-    },
-    {
-        path: "/register",
-        name: "",
-        component: Register,
-    },
-];
 const route = createRouter({
     routes,
     history: createWebHistory(),
@@ -34,4 +17,6 @@ const app = createApp({
         };
     },
 }).use(route);
+app.component("header-bar", Header);
+app.component("side-bar", SideBar);
 app.mount("#authApp");

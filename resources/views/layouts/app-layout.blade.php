@@ -7,7 +7,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include('layouts.styles.css-styles')
-    <title>Visitor Management | {{ $pageTitle }}</title>
+    <title>Visitor Management | {{ 'Lofin' }}</title>
     <meta charset="utf-8">
 </head>
 
