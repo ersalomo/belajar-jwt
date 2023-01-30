@@ -14,6 +14,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+<<<<<<< HEAD
         if (!$request->expectsJson()) {
             if ($request->routeIs('home.*')) {
                 session()->flash('fail', 'you must login first');
@@ -22,6 +23,10 @@ class Authenticate extends Middleware
                     'returnUrl' => \URL::full(),
                 ]);
             }
+=======
+        if (! $request->expectsJson()) {
+            return route('login');
+>>>>>>> parent of e1233d0 (layouting app)
         }
     }
 }

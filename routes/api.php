@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     ArticleCommentController,
 };
 
+<<<<<<< HEAD
 use App\Http\Controllers\{
     Api\UserController as UserApiController
 };
@@ -28,6 +29,13 @@ Route::group(
 //     'prefix' => 'auth',
 //     'except' => ['login', 'register']
 // ], function ($router) {
+=======
+Route::group([
+    'middleware' => ['auth:api'],
+    'prefix' => 'auth',
+    'except' => ['login', 'register']
+], function ($router) {
+>>>>>>> parent of e1233d0 (layouting app)
 
 //     // Route::post('register', [UserController::class, 'register'])->name('register');
 //     // Route::post('login', [UserController::class, 'login'])->name('login');
