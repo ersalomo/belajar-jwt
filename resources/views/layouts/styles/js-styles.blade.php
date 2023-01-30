@@ -14,7 +14,6 @@
 <script src="assets/plugins/moment/moment.min.js" defer></script>
 <script src="assets/plugins/daterangepicker/daterangepicker.js" defer></script>
 <script src="assets/js/jquery.slimscroll.js" defer></script>
-
 <script src="assets/plugins/toastr/toastr.min.js" defer></script>
 <script src="assets/plugins/toastr/toastr.js" defer></script>
 <script src="assets/js/form-validation.js" defer></script>
