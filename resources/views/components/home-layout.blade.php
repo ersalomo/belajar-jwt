@@ -12,11 +12,10 @@
 
 <body>
     <div class="main-wrapper" id="homeApp">
-        <header-bar></header-bar>
-        <side-bar></side-bar>
+        <x-header></x-header>
+        <x-side-bar></x-side-bar>
         <div class="page-wrapper bg-wrapper" id="">
-            {{-- {{ $slot }} --}}
-            <router-view></router-view>
+            {{ $slot }}
         </div>
     </div>
 
