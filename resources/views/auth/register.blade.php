@@ -99,7 +99,7 @@
                             rtl: o,
                         });
                         $(e.target)[0].reset();
-                        localStorage.setItem("acces_token", res.access_token);
+                        localStorage.setItem("access_token", res.access_token);
                         window.location.href = "/home?token=" + res.access_token;
                     },
                     error: function(res) {
