@@ -15,7 +15,7 @@
         <header-bar></header-bar>
         <side-bar></side-bar>
         <div class="page-wrapper bg-wrapper" id="">
-            {{-- {{ $slot }} --}}
+            {{ $slot }}
             <router-view></router-view>
         </div>
     </div>
