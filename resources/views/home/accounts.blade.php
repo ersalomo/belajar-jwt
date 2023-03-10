@@ -69,7 +69,7 @@
                              <tbody>
                                  <tr>
                                      <td>
-                                         <img width="28" height="28" src="assets/img/user.jpg"
+                                         <img width="28" height="28" src="/assets/img/user.jpg"
                                              class="rounded-circle" alt="">
                                          <h2>Albina Simonis</h2>
                                      </td>
@@ -129,7 +129,7 @@
                                  </tr>
                                  <tr>
                                      <td>
-                                         <img width="28" height="28" src="assets/img/user.jpg"
+                                         <img width="28" height="28" src="/assets/img/user.jpg"
                                              class="rounded-circle" alt="">
                                          <h2>Mary Mericle</h2>
                                      </td>
@@ -159,7 +159,7 @@
                                  </tr>
                                  <tr>
                                      <td>
-                                         <img width="28" height="28" src="assets/img/user.jpg"
+                                         <img width="28" height="28" src="/assets/img/user.jpg"
                                              class="rounded-circle" alt="">
                                          <h2>Haylie Feeney</h2>
                                      </td>
@@ -189,7 +189,7 @@
                                  </tr>
                                  <tr>
                                      <td>
-                                         <img width="28" height="28" src="assets/img/user.jpg"
+                                         <img width="28" height="28" src="/assets/img/user.jpg"
                                              class="rounded-circle" alt="">
                                          <h2>Zoe Butler</h2>
                                      </td>
