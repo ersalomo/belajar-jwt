@@ -25,4 +25,5 @@ Route::group([
     Route::get('appointment', [AppointmentController::class, 'create'])->name('appointment.create');
     Route::view('me/profile', 'front.home.profile')->name('me.profile');
     Route::put('me/change-password', [UserController::class, 'changePassword'])->name('me.change-password');
+
 });
