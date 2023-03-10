@@ -4,12 +4,12 @@
             <ul>
                 <li class="{{ request()->is('home') ? 'active' : '' }}">
                     <a class="active" href="{{ route('home.home', ['token' => request()->token]) }}"><img
-                            src="assets/img/icon/menu-icon-01.svg" alt="img">
+                            src="/assets/img/icon/menu-icon-01.svg" alt="img">
                         <span>Dashboard</span></a>
                 </li>
                 <li class="submenu">
                     <a href="#" class="">
-                        <img src="assets/img/icon/menu-icon-07.svg" alt="img"> <span>
+                        <img src="/assets/img/icon/menu-icon-07.svg" alt="img"> <span>
                             Employees </span>
                         <span class="menu-arrow"></span></a>
                     <ul style="display: none;" class="">
@@ -24,11 +24,11 @@
                 </li>
 
                 <li>
-                    <a href=""><img src="assets/img/icon/menu-icon-10.svg" alt="img">
+                    <a href=""><img src="/assets/img/icon/menu-icon-10.svg" alt="img">
                         <span>Activities</span></a>
                 </li>
                 <li class="submenu">
-                    <a href="#"><img src="assets/img/icon/menu-icon-11.svg" alt="img"> <span>
+                    <a href="#"><img src="/assets/img/icon/menu-icon-11.svg" alt="img"> <span>
                             Reports </span>
                         <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
@@ -37,7 +37,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href=""><img src="assets/img/icon/menu-icon-12.svg" alt="img">
+                    <a href=""><img src="/assets/img/icon/menu-icon-12.svg" alt="img">
                         <span>Settings</span></a>
                 </li>
                 <li class="submenu">
@@ -68,7 +68,7 @@
             <div class="logout-btn">
                 <form action="{{ route('api.logout') }}" method="POST">
                     <button type="submit" class="btn btn-primary">
-                        <img src="assets/img/icon/lock-out.svg" class="me-2" alt=""> Logout
+                        <img src="/assets/img/icon/lock-out.svg" class="me-2" alt=""> Logout
                     </button>
                 </form>
             </div>

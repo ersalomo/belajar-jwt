@@ -11,7 +11,7 @@ Route::get('test', function () {
 Route::view('login', 'auth.login')->name('login.index');
 Route::view('register', 'auth.register')->name('login.register');
 Route::group([
-    'middleware' => ['jwt.verify']
+//    'middleware' => ['jwt.verify']
 ], function ($header) {
     Route::view('home', 'home.dashboard')->name('home.home');
     Route::view('accounts', 'home/accounts')->name('home.accounts');
