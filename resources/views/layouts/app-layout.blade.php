@@ -7,14 +7,13 @@
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include('layouts.styles.css-styles')
-    <title>Visitor Management | {{ 'Login' }}</title>
+    <title>Visitor Management | {{ $pageTitle }}</title>
     <meta charset="utf-8">
 </head>
 
 <body>
     <div class="main-wrapper" id="authApp">
-
-        <router-view></router-view>
+        {{ $slot }}
     </div>
 </body>
 <div class="sidebar-overlay" data-reff=""></div>

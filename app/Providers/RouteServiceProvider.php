@@ -40,7 +40,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('author')
                 ->group(base_path('routes/author.php'));
 
-            Route::middleware('api')
+            // Route::middleware('api')
+            Route::middleware('web')
                 ->group(base_path('routes/user.php'));
         });
     }

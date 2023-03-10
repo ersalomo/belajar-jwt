@@ -12,18 +12,17 @@
 
 <body>
     <div class="main-wrapper" id="homeApp">
-        <header-bar></header-bar>
-        <side-bar></side-bar>
+        <x-header></x-header>
+        <x-side-bar></x-side-bar>
         <div class="page-wrapper bg-wrapper" id="">
             {{ $slot }}
-            <router-view></router-view>
         </div>
     </div>
 
     <div class="sidebar-overlay" data-reff=""></div>
 
     @include('layouts.styles.js-styles')
-    @vite(['resources/js/homeApp.js'])
+    {{-- @vite(['resources/js/homeApp.js']) --}}
     <script>
         if (!localStorage.getItem('acces_token')) {
             window.location.href = '/login'

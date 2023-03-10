@@ -56,9 +56,10 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
         $guard = Arr::get($exception->guards(), 0);
-        $route = 'login.index';
+        // dd('Handler', $exception);
+        $route = 'auth'; // $user
         if ($guard == 'author') {
-            // dd('Handler');
+            dd('Handler');
             \Auth::logout();
             $route = 'login.index';
         }
