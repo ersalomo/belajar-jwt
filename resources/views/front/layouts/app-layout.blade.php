@@ -262,7 +262,4 @@
     @include('front.layouts.styles.js')
 </body>
 
-
-<!-- Mirrored from mobilekit.bragherstudio.com/view29/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Feb 2023 05:17:01 GMT -->
-
 </html>
