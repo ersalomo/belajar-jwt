@@ -7,7 +7,6 @@ use App\Http\Controllers\{
     User\UserController
 };
 
-
 Route::get('/', fn () => to_route('auth'));
 Route::group([
     'prefix' => 'auth',
