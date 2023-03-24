@@ -13,6 +13,7 @@
     <meta name="description" content="Mobilekit HTML Mobile UI Kit">
     <meta name="keywords" content="bootstrap 5, mobile template, cordova, phonegap, mobile, html" />
     @include('front.layouts.styles.css')
+    @vite([])
 </head>
 
 <body>

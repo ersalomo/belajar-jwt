@@ -13,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('employee_kodes', function (Blueprint $table) {
-            $table->foreignId(('user_id'))
+        Schema::create('detail_users', function (Blueprint $table) {
+            $table->foreignId('id_user')
+                ->nullable()
                 ->constrained('users')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->string('kode_emp', 12)->unique()->primary();
+            $table->string('picture');
+            $table->string('phone',13);
+            $table->string('address');
             $table->timestamps();
         });
     }
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_kodes');
+        Schema::dropIfExists('detail_users');
     }
 };

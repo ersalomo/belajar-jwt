@@ -6,26 +6,27 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                "resources/js/homeApp.js",
+                // "resource/"
+                // "resources/js/homeApp.js",
                 // "resources/css/app.css",
                 // "resources/js/app.js",
                 // "resources/js/bootstrap.js",
                 // "public/map-leaflet.js",
             ],
-            // refresh: true,
+            refresh: true,
         }),
-        vue({
-            template: {
-                transformAssetUrls: {
-                    base: null,
-                    includeAbsolute: false,
-                },
-            },
-        }),
+        // vue({
+        //     template: {
+        //         transformAssetUrls: {
+        //             base: null,
+        //             includeAbsolute: false,
+        //         },
+        //     },
+        // }),
     ],
-    resolve: {
-        alias: {
-            vue: "vue/dist/vue.esm-bundler.js",
-        },
-    },
+    // resolve: {
+    //     alias: {
+    //         vue: "vue/dist/vue.esm-bundler.js",
+    //     },
+    // },
 });

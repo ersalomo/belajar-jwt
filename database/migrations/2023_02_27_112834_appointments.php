@@ -15,14 +15,18 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')
+            $table->foreignId('user_id')
+                ->constrained('users')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->string('kode_emp', 12);
+            $table->foreignId('kode_emp')
+                ->constrained('users')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            $table->string('type')->default('personil');
+            $table->text('purpose');
+            $table->string('names_of')->nullable();
             $table->string('status')->default('pending');
-            $table->foreign('kode_emp')
-                ->references('kode_emp')
-                ->on('employee_kodes');
             $table->timestamps();
         });
     }
