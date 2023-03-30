@@ -7,6 +7,11 @@
             <h1>Get started</h1>
             <h4>Fill the form to log in</h4>
         </div>
+        @if(session()->has('fail'))
+            <div class="alert alert-danger">
+                {{session()->get('fail')}}
+            </div>
+        @endif
         <div class="section mt-1 mb-5">
             <form wire:submit.prevent="loginHandler()">
                 {{-- @csrf no wok --}}

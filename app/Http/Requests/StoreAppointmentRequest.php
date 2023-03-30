@@ -24,13 +24,15 @@ class StoreAppointmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'purpose' => ['required']
+            'kode_emp' => ['required', 'integer'],
+            'purpose' => ['required'],
         ];
     }
 
     public function messages()
     {
         return [
+            'kode_emp.required' => 'kolom ini harus diisi',
             'purpose.required' => 'Kolom ini tidak boleh kosong'
         ];
     }

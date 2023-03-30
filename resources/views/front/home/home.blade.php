@@ -6,7 +6,11 @@
                 <div>
                     <h6 class="card-subtitle">Welcome</h6>
                     <h5 class="card-title mb-0 d-flex align-items-center justify-content-between">
-                        {{ __(auth()->user()->name) }}
+                        @if(auth('visitor')->check())
+                        {{ __('User '.auth('visitor')->user()->firstname) }}
+                        @elseif(auth('employee')->check())
+                        {{ __('Karyawan '.auth('employee')->user()->firstname) }}
+                        @endif
                     </h5>
                 </div>
                 <div class="form-check form-switch">

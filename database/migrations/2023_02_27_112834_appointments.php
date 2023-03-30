@@ -13,18 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
+        // online
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                ->constrained('users')
+                ->constrained('visitors')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->foreignId('kode_emp')
-                ->constrained('users')
+                ->constrained('employees')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->string('type')->default('personil');
-            $table->text('purpose');
+            $table->text('purpose')->nullable();
             $table->string('names_of')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Facades\URL;
 
 class Authenticate extends Middleware
 {
@@ -14,20 +15,14 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-
         if (!$request->expectsJson()) {
             if ($request->routeIs('home.*')) {
                 session()->flash('fail', 'you must login first');
-                if ($request->url('auth')) {
-                    return redirect()->route('auth', [
-                        'fail' => true,
-                        'returnUrl' => \URL::full(),
-                    ]);
-                }
-                return route('login.index', [
+                 $returnUrl = URL::full();
+                return route('auth', [
                     'fail' => true,
-                    'returnUrl' => \URL::full(),
-                ]);
+                    'returnUrl' => $returnUrl,
+                ],);
             }
         }
     }

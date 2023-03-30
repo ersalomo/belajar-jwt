@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Appointment;
+use App\Models\{Appointment};
 use App\Http\Requests\{
     StoreAppointmentRequest,
     UpdateAppointmentRequest
 };
-
+use App\Events\ServerCreated;
 class AppointmentController extends Controller
 {
     /**
@@ -17,8 +17,8 @@ class AppointmentController extends Controller
      */
     public function index()
     {
+        event(new ServerCreated("ersalomo " . auth()->user()->lastname));
         return view('front.home.list-appointment', [
-            // 'appointments' => Appointment::where('user_id', auth()->user()->id)->get(),
             'appointments' => auth()->user()->appointment()->get(),
         ]);
     }
@@ -48,7 +48,10 @@ class AppointmentController extends Controller
 
         if ($count_appointments) {
             $appointment = $user->appointment()->create([
-                'purpose' => $request->purpose
+                'kode_emp'=> $request->kode_emp,
+                'purpose' => $request->purpose,
+                'type'    => $request->type,
+                'names_of'=> $request->names_of
             ]);
             if ($appointment) {
                 return back()->with('success', 'berhasil');
@@ -56,6 +59,14 @@ class AppointmentController extends Controller
             return back()->with('error', 'kesalahan server');
         }
         return back()->with('error', 'tidak boleh membuat appointment lebih dari 5');
+    }
+
+    public function approveAppointment(Appointment $appoinment){
+        $isAppproved = $appoinment["status"] != "pending";
+        if ($isAppproved){ return back(); }
+
+        $appoinment->update(['status' => 'approved']);
+        return back();
     }
 
     /**

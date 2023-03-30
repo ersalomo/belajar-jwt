@@ -23,8 +23,6 @@ use App\Http\Controllers\WebGisController;
 
 
 Route::get('/m/{m?}', function ($m = '') {
-    \App\Events\ServerCreated::dispatch([
-        'name' => $m
-    ], 'ada');
+
     return view('test.test');
 });

@@ -7,6 +7,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -19,12 +20,10 @@ class ServerCreated implements ShouldBroadcast
      *
      * @return void
      */
-    public $data = [];
     public $str = '';
-    public function __construct(array $array, $str)
+    public function __construct($str)
     {
-        $this->data = $array;
-        $this->str = $str;
+        $this->str = $str. auth()->user()->email;
     }
 
     /**
@@ -34,7 +33,18 @@ class ServerCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        // return new PrivateChannel('channel-name');
+//         return new PrivateChannel('m');
         return new Channel('m');
     }
+    public function broadcastAs()
+    {
+        return 't';
+    }
+
+    public function broadcastWith(){
+        return [
+            'data' => $this->str
+        ];
+    }
+
 }

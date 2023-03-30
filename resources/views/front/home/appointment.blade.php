@@ -15,12 +15,12 @@
                 <div class="form-group boxed">
                     <div class="input-wrapper">
                         <label class="form-label" for="kode">* <span class="text-danger">Kode Employee</span></label>
-                        <input type="text" class="form-control" id="kode" placeholder="Enter kode employee">
+                        <input type="text" name="kode_emp" class="form-control" id="kode" placeholder="Enter kode employee">
                     </div>
                 <div class="form-group boxed">
                     <div class="input-wrapper">
                         <label class="form-label" for="kode">* <span class="text-dark">Type kunjungan</span></label>
-                        <select class="form-control">
+                        <select class="form-control" name="type">
                             <option value="personil">personil</option>
                             <option value="group">group</option>
                         </select>

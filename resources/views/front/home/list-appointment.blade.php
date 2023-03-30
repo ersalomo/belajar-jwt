@@ -13,6 +13,13 @@
                     {{ __('#APPOINTMENT' . $loop->iteration . ' ' . "($appointment->status)") }}
                 </h6>
                 <p class="card-text">{{ __($appointment->purpose) }}</p>
+                @auth('employee')
+                    <form action="{{route("home.update-approve", $appointment->id)}}" method="post">
+                        @csrf
+                        @method('PUT')
+                <button type="submit" class="btn btn-android">approve</button>
+                    </form>
+                @endauth
             </div>
         </div>
         </div>
