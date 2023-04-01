@@ -1,4 +1,4 @@
-<x-back.app-layout>
+<x-back.app-layout page-title="Table Roles">
     <div class="row">
         <div class="col">
             <div class="card mb-4">

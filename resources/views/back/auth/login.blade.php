@@ -19,30 +19,35 @@
                     <div class="card border-0 mb-0">
                         <div class="card-header bg-transparent">
                             <h5 class="text-dark text-center mt-2 mb-3">Sign in</h5>
-{{--                            <div class="btn-wrapper text-center">--}}
-{{--                                <a href="javascript:;" class="btn btn-neutral btn-icon btn-sm mb-0">--}}
-{{--                                    <img class="w-30" src="../../../assets/img/logos/github.svg">--}}
-{{--                                    Github--}}
-{{--                                </a>--}}
-{{--                                <a href="javascript:;" class="btn btn-neutral btn-icon btn-sm mb-0">--}}
-{{--                                    <img class="w-30" src="../../../assets/img/logos/google.svg">--}}
-{{--                                    Google--}}
-{{--                                </a>--}}
-{{--                            </div>--}}
+                            <div class=" text-center">
+                                @if(session()->has('error'))
+                                    <div class="alert alert-danger">
+                                        {{session()->get('error')}}
+
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                         <div class="card-body px-lg-5 pt-0">
                             <div class="text-center text-muted mb-4">
                                 <small>Sign in with credentials</small>
                             </div>
-                            <form role="form" class="text-start" action="/admin/dashboard/" method="get">
+                            <form role="form" class="text-start" action="{{route('admin-auth.login')}}" method="post">
+                                @csrf
                                 <div class="mb-3">
-                                    <input type="email" class="form-control" placeholder="Email" aria-label="Email">
+                                    <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email">
+                                    @error('email')
+                                    <span class="text-danger fa-sm">{{$message}}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control" placeholder="Password" aria-label="Password">
+                                    <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password">
+                                    @error('password')
+                                    <span class="text-danger fa-sm">{{$message}}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                                    <input class="form-check-input" name="rememberMe" type="checkbox" id="rememberMe">
                                     <label class="form-check-label" for="rememberMe">Remember me</label>
                                 </div>
                                 <div class="text-center">

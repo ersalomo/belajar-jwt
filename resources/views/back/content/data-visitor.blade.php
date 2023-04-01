@@ -1,4 +1,4 @@
-<x-back.app-layout>
+<x-back.app-layout page-title="Data Visitors">
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">

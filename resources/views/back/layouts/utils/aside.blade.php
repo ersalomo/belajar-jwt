@@ -84,7 +84,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <form action="/admin/auth/login" class="nav-link" method="">
+                <form action="{{route('admin.logout')}}" class="nav-link" method="post">
+                    @csrf
+                    @method('DELETE')
                     <button class="ms-4 justify-content-center btn btn-github btn-block">Sign out</button>
                 </form>
 

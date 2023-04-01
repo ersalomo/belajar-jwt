@@ -10,9 +10,11 @@ use App\Http\Controllers\Back\{
 };
 
 Route::group([
-    'prefix' => 'auth'
+    'prefix' => 'auth',
+    'as' => 'admin-auth.'
 ], function () {
-    Route::get('login', [AuthAdminController::class, 'index'])->name('admin-auth.index');
+    Route::get('login', [AuthAdminController::class, 'index'])->name('index');
+    Route::post('login', [AuthAdminController::class ,'login'])->name('login');
 });
 
 
@@ -21,7 +23,9 @@ Route::group([
     'as' => 'admin.'
 ],
     function () {
+        Route::delete('logout', [AuthAdminController::class, 'logout'])->name('logout');
 
+        // Authenticated
         Route::view('dashboard', 'back.content.dashboard')->name('dashboard');
         Route::get('employee-table', [DataEmployeeController::class, 'index'])->name('employee-table');
         Route::get('visitor-table', [DataVisitorController::class, 'index'])->name('visitor-table');

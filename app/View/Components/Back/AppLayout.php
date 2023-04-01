@@ -11,9 +11,10 @@ class AppLayout extends Component
      *
      * @return void
      */
-    public function __construct()
+    public string $pageTitle;
+    public function __construct(string $pageTitle = 'Management Visitor')
     {
-        //
+        $this->pageTitle = $pageTitle;
     }
 
     /**
