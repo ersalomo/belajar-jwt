@@ -9,6 +9,9 @@ use App\Http\Controllers\{
 };
 
 use Illuminate\Http\Request;
+Route::get('face-detection', [FaceDetection::class, 'index'])->name('face-detection');
+Route::post('face-detection', [FaceDetection::class, 'store'])->name('store.face-detection');
+Route::get('labeled-faces', [FaceDetection::class, 'labeledFaces'])->name('labeled-faces');
 Route::get('/', fn () => to_route('auth'));
 Route::group([
     'as' => 'auth'
@@ -38,7 +41,5 @@ Route::group([
     Route::put('appointment/update-approve/{appoinment}',[AppointmentController::class,'approveAppointment'])->name('update-approve');
 
     // FC
-    Route::get('face-detection', [FaceDetection::class, 'index'])->name('face-detection');
-    Route::post('face-detection', [FaceDetection::class, 'store'])->name('store.face-detection');
-    Route::get('labeled-faces', [FaceDetection::class, 'labeledFaces'])->name('labeled-faces');
+
 });
