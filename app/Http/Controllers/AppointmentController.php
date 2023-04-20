@@ -3,17 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\{Appointment};
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use App\Http\Requests\{
     StoreAppointmentRequest,
     UpdateAppointmentRequest
 };
 use App\Events\ServerCreated;
+use App\Traits\Helper;
+
 class AppointmentController extends Controller
 {
+    use Helper;
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -26,18 +33,21 @@ class AppointmentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
+        if($this->check_image()){
+            return to_route('home.home-user');
+        }
         return view('front.home.appointment');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreAppointmentRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreAppointmentRequest $request
+     * @return Response
      */
     public function store(StoreAppointmentRequest $request)
     {
@@ -72,8 +82,8 @@ class AppointmentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Appointment  $appointment
-     * @return \Illuminate\Http\Response
+     * @param Appointment $appointment
+     * @return Response
      */
     public function show(Appointment $appointment)
     {
@@ -83,8 +93,8 @@ class AppointmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Appointment  $appointment
-     * @return \Illuminate\Http\Response
+     * @param Appointment $appointment
+     * @return Response
      */
     public function edit(Appointment $appointment)
     {
@@ -94,9 +104,9 @@ class AppointmentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateAppointmentRequest  $request
-     * @param  \App\Models\Appointment  $appointment
-     * @return \Illuminate\Http\Response
+     * @param UpdateAppointmentRequest $request
+     * @param Appointment $appointment
+     * @return Response
      */
     public function update(UpdateAppointmentRequest $request, Appointment $appointment)
     {
@@ -106,8 +116,8 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Appointment  $appointment
-     * @return \Illuminate\Http\Response
+     * @param Appointment $appointment
+     * @return Response
      */
     public function destroy(Appointment $appointment)
     {

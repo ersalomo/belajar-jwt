@@ -6,11 +6,9 @@ export default defineConfig({
         laravel({
             input: [
                 // "resource/**"
-                // "resources/js/homeApp.js",
-                // "resources/css/app.css",
-                "resources/js/app.js",
-                // "resources/js/bootstrap.js",
-                // "public/map-leaflet.js",
+                // "resources/js/app.js",
+                // "resources/sass/app.scss",
+                "resources/js/face-recognition.js",
             ],
             refresh: true,
         }),

@@ -16,6 +16,9 @@
                     <div class="input-wrapper">
                         <label class="form-label" for="kode">* <span class="text-danger">Kode Employee</span></label>
                         <input type="text" name="kode_emp" class="form-control" id="kode" placeholder="Enter kode employee">
+                        @error('purpose')
+                        <em class="text-danger">{{ $message }}</em>
+                        @enderror
                     </div>
                 <div class="form-group boxed">
                     <div class="input-wrapper">

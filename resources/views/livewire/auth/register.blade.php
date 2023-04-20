@@ -10,20 +10,14 @@
                 <div class="form-group boxed">
                     <div class="input-wrapper">
                         <input type="email" class="form-control" id="name1" placeholder="Full name">
-                        <i class="clear-input">
-                            <ion-icon name="close-circle" role="img" class="md hydrated" aria-label="close circle">
-                            </ion-icon>
-                        </i>
+
                     </div>
                 </div>
 
                 <div class="form-group boxed">
                     <div class="input-wrapper">
                         <input type="email" class="form-control" id="email1" placeholder="Email address">
-                        <i class="clear-input">
-                            <ion-icon name="close-circle" role="img" class="md hydrated" aria-label="close circle">
-                            </ion-icon>
-                        </i>
+
                     </div>
                 </div>
 
@@ -31,10 +25,7 @@
                     <div class="input-wrapper">
                         <input type="password" class="form-control" id="password1" autocomplete="off"
                             placeholder="Password">
-                        <i class="clear-input">
-                            <ion-icon name="close-circle" role="img" class="md hydrated" aria-label="close circle">
-                            </ion-icon>
-                        </i>
+
                     </div>
                 </div>
 
@@ -42,10 +33,6 @@
                     <div class="input-wrapper">
                         <input type="password" class="form-control" id="password2" autocomplete="off"
                             placeholder="Password (again)">
-                        <i class="clear-input">
-                            <ion-icon name="close-circle" role="img" class="md hydrated" aria-label="close circle">
-                            </ion-icon>
-                        </i>
                     </div>
                 </div>
 
@@ -55,17 +42,20 @@
                         <label class="form-check-label" for="customCheckb1">I Agree <a href="#">Terms &amp;
                                 Conditions</a></label>
                     </div>
-                    <a href="{{ route('auth', [
-                        'mode' => 'login',
-                    ]) }}">back
-                        to login</a>
 
                 </div>
 
                 <div class="form-button-group">
+                    <a href="{{ route('auth', ['mode' => 'login']) }}" class="btn btn-primary btn-lg w-0 me-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M5 12l14 0"></path>
+                            <path d="M5 12l6 6"></path>
+                            <path d="M5 12l6 -6"></path>
+                        </svg>
+                    </a>
                     <button type="submit" class="btn btn-primary btn-block btn-lg">Register</button>
                 </div>
-
             </form>
         </div>
     </div>

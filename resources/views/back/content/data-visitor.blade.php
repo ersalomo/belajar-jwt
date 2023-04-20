@@ -5,6 +5,7 @@
                 <div class="card-header pb-0">
                     <h6>Employee table</h6>
                 </div>
+                <x-input.header-table href="{{route('admin.create-visitor')}}"/>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
@@ -23,7 +24,7 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div>
-{{--                                                <img src="{{$visitor->picture}}" class="avatar avatar-sm me-3" alt="user1">--}}
+                                                <img src="{{$visitor->picture}}" class="avatar avatar-sm me-3" alt="user1">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="mb-0 text-sm">{{__($visitor->firstname)}}</h6>

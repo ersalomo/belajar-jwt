@@ -24,7 +24,7 @@ class StoreAppointmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'kode_emp' => ['required', 'integer'],
+            'kode_emp' => ['required', 'integer', 'exists:employees,id'],
             'purpose' => ['required'],
         ];
     }
@@ -32,6 +32,7 @@ class StoreAppointmentRequest extends FormRequest
     public function messages()
     {
         return [
+            'kode_emp.exists' => 'Kode karyawan tidak ditemukan',
             'kode_emp.required' => 'kolom ini harus diisi',
             'purpose.required' => 'Kolom ini tidak boleh kosong'
         ];

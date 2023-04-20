@@ -41,7 +41,7 @@
                         <div class="forgotpass term-register">
                             <div class="remember-me">
                                 <label class="custom_check me-2 mb-0 d-inline-flex remember-me"> I have read and agree
-                                    the <a href="javascript:;">Terms &amp; Conditions</a>
+                                    the <a href="javascript:">Terms &amp; Conditions</a>
                                     <input type="checkbox" name="radio">
                                     <span class="checkmark"></span>
                                 </label>

@@ -1,5 +1,6 @@
     <!-- * welcome notification -->
     <!-- ============== Js Files ==============  -->
+    <script src="/jQuery/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap -->
     <script src="/front/view29/assets/js/lib/bootstrap.min.js"></script>
     <!-- Ionicons -->
@@ -18,3 +19,5 @@
         //     notification('notification-welcome', 5000);
         // }, 2000);
     </script>
+    <script src="/ijabo-croptool/ijaboCropTool.min.js"></script>
+    @stack('scripts')

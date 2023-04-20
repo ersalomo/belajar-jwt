@@ -1,3 +1,4 @@
+@php use App\Models\Role; @endphp
 <x-back.app-layout page-title="Table Roles">
     <div class="row">
         <div class="col">
@@ -11,18 +12,24 @@
                             <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NO</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role ID</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role name</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Role ID
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Role name
+                                </th>
                                 <th class="text-secondary opacity-7"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach(\App\Models\Role::all() as $role)
+                            @foreach(Role::all() as $role)
                                 <tr>
+                                    <td class="text-bold text-center w-5">#</td>
                                     <td class="text-bold text-center w-5">{{$role->id}}</td>
                                     <td class="text-bold text-start">{{$role->role_name}}</td>
                                     <td class="text-bold text-start ">
-                                        <a href="javascript:void();" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                        <a href="javascript:void();" class="text-secondary font-weight-bold text-xs"
+                                           data-toggle="tooltip" data-original-title="Edit user">
                                             Edit
                                         </a>
                                     </td>

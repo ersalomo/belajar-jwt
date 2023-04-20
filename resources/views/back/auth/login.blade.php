@@ -18,7 +18,7 @@
                 <div class="col-lg-4 col-md-7">
                     <div class="card border-0 mb-0">
                         <div class="card-header bg-transparent">
-                            <h5 class="text-dark text-center mt-2 mb-3">Sign in</h5>
+                            <h5 class="text-dark text-center mt-2 mb-3">Login Admin Bintang B7</h5>
                             <div class=" text-center">
                                 @if(session()->has('error'))
                                     <div class="alert alert-danger">

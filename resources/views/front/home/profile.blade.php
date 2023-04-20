@@ -1,8 +1,11 @@
 <x-app-layout pageTitle="Make Appointment">
     <div class="section mt-2 mb-2">
         <div class="card bg-primary comment-box">
-            <img src="/front/view29/assets/img/sample/avatar/avatar8.jpg" alt="avatar" class="imaged w140 rounded">
-            <button class="btn-sm mx-auto btn-primary rounded shadowed w16">
+            <img src="{{auth()->user()->picture}}" alt="avatar" class="imaged w140 rounded">
+            <input type="file" name="file" id="changeAuthorPictureFile" class="d-none" onchange="this.dispatchEvent(new InputEvent
+('input'))">
+            <button class="btn-sm mx-auto btn-primary rounded shadowed w16"
+                    onclick="event.preventDefault();document.getElementById('changeAuthorPictureFile'). click();">
                 <span class="justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit-circle" width="24"
                         height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -122,6 +125,40 @@
         <!-- * pilled tab -->
     </div>
     @push('scripts')
-        <script></script>
+
+        <script>
+            function toastbox(target, time) {
+                var a = document.getElementById(target);
+                closeToastBox()
+                setTimeout(() => {
+                    a.classList.add("show")
+                }, 100);
+                if (time) {
+                    time = time + 100;
+                    setTimeout(() => {
+                        closeToastBox()
+                    }, time);
+                }
+            }
+            $("#changeAuthorPictureFile").ijaboCropTool({
+                preview: '',
+                setRatio: 1,
+                allowedExtensions: ['jpg', 'jpeg', 'png'],
+                buttonsText: ['CROP', 'QUIT'],
+                buttonsColor: ['#30bf7d', '#ee5155', -15],
+                processUrl: "{{ route('home.change-profile-picture') }}",
+                withCSRF: ['_token', '{{ csrf_token() }}'],
+                onSuccess: function(message, element, status) {
+                    // Livewire.emit('UpdateAuthorProfileHeader');
+                    // Livewire.emit('UpdateTopHeader');
+                    toastbox('toast-3', 5000)
+                },
+                onError: function(message, element, status) {
+                    // toastr.error(message)
+                    toastbox('toast-3', 5000)
+                    console.log(message)
+                }
+            });
+        </script>
     @endpush
 </x-app-layout>

@@ -4,9 +4,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Back\{
     AuthAdminController,
-    DataEmployeeController,
     DataVisitorController,
-    DataAppointmentController
+    DataAppointmentController,
+    DataEmployeeController,
 };
 
 Route::group([
@@ -28,7 +28,14 @@ Route::group([
         // Authenticated
         Route::view('dashboard', 'back.content.dashboard')->name('dashboard');
         Route::get('employee-table', [DataEmployeeController::class, 'index'])->name('employee-table');
+        Route::get('add-employee', [DataEmployeeController::class, 'create'])->name('add-employee');
+        Route::post('add-employee', [DataEmployeeController::class, 'post'])->name('post-employee');
+
         Route::get('visitor-table', [DataVisitorController::class, 'index'])->name('visitor-table');
+        Route::get('create-visitor', [DataVisitorController::class, 'create'])->name('create-visitor');
+        Route::post('add-visitor', [DataVisitorController::class, 'post'])->name('post-visitor');
+
+
 
         // data appointment
         Route::get('list-appointments', [DataAppointmentController::class, 'index'])->name('list-appointments');

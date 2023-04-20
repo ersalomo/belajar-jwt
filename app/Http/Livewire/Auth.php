@@ -32,10 +32,9 @@ class Auth extends Component
     }
     public function render()
     {
-        if ($this->mode == 'login') {
-            return view('livewire.auth.login');
-        }
-        return view('livewire.auth.register');
+        if ($this->mode == 'register') return view('livewire.auth.register');
+        elseif ($this->mode == 'forget-password') return view('livewire.auth.forget-password');
+        else return view('livewire.auth.login');
         // return view('livewire.auth');
     }
     public function loginHandler()
