@@ -10,8 +10,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#000000">
     <title>Welcome | {{ isset($pageTitle) ? $pageTitle : 'Laravel' }}</title>
-    <meta name="description" content="Mobilekit HTML Mobile UI Kit">
-    <meta name="keywords" content="bootstrap 5, mobile template, cordova, phonegap, mobile, html"/>
+    <meta name="description" content="Management Visitor">
+    <meta name="keywords" content="bootstrap 5, cordova, phonegap, html"/>
     @include('front.layouts.styles.css')
 
 </head>

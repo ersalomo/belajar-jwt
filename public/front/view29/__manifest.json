@@ -1,9 +1,9 @@
 {
-    "name": "Mobilekit",
-    "short_name": "Mobilekit",
-    "start_url": "https://mobilekit.bragherstudio.com/view29/index.html",
+    "name": "Visitor Management",
+    "short_name": "VSM",
+    "start_url": "http://127.0.0.1:8000/auth",
     "display": "standalone",
-    "scope" : "https://mobilekit.bragherstudio.com/view29/",
+    "scope" : "http://127.0.0.1:8000",
     "background_color": "#000000",
     "theme_color": "#000000",
     "orientation": "portrait",
