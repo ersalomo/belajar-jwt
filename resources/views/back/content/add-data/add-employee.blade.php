@@ -45,7 +45,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="email" class="form-control-label">Email</label>
-                        <input class="form-control" name="email" type="email" value="" id="email">
+                        <input class="form-control" name="email" type="email" placeholder="email..." value="" id="email">
                         @error('email')
                         <span class="text-danger fa-sm">
                                {{$message}}
@@ -58,7 +58,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="phone" class="form-control-label">Phone</label>
-                        <input class="form-control" type="tel" name="phone" value="40-(770)-888-444" id="phone">
+                        <input class="form-control" type="tel" placeholder="phone..." name="phone" value="" id="phone">
                         @error('phone')
                         <span class="text-danger fa-sm">
                                {{$message}}
@@ -69,7 +69,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="add" class="form-control-label">Address</label>
-                        <input class="form-control" name="address" type="tel" value="" id="add">
+                        <input class="form-control" name="address" type="text" placeholder="address.." value="" id="add">
                         @error('address')
                         <span class="text-danger fa-sm">
                                {{$message}}
@@ -90,7 +90,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="department" class="form-control-label">Department</label>
-                        <input class="form-control" type="tel" name="department" value="" id="department">
+                        <input class="form-control" type="tel" name="department" value="" placeholder="department..." id="department">
                         @error('department')
                         <span class="text-danger fa-sm">
                                {{$message}}
@@ -101,7 +101,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="title" class="form-control-label">Title</label>
-                        <input class="form-control" type="tel" value="" name="title" id="title">
+                        <input class="form-control" type="tel" value="" placeholder="title..." name="title" id="title">
                         @error('title')
                         <span class="text-danger fa-sm">
                                {{$message}}
@@ -112,7 +112,7 @@
             </div>
             <div class="form-group">
                 <label for="password" class="form-control-label">Password</label>
-                <input class="form-control" type="password" name="password" value="" id="password">
+                <input class="form-control" placeholder="password..." type="password" name="password" value="" id="password">
                 @error('password')
                 <span class="text-danger fa-sm">
                                {{$message}}

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -61,7 +62,7 @@ class Visitor extends Authenticatable
 
     protected function firstname() : Attribute {
         return new Attribute(
-            get : fn($firstname) => $firstname. " ". $this->attributes['lastname'],
+            get : fn ($firstname, $e) => $firstname. " ". $this->lastname
         );
     }
 
@@ -72,7 +73,7 @@ class Visitor extends Authenticatable
         );
     }
 
-    public function appointment()
+    public function appointment() : HasMany
     {
         return $this->hasMany(Appointment::class, 'user_id');
     }

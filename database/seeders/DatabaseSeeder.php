@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\{User, Visitor, Employee};
+use App\Models\{User, Visit, Visitor, Employee};
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
@@ -28,20 +28,21 @@ class DatabaseSeeder extends Seeder
 //             ]);
 //         Visitor::factory(100)->create();
 //         Employee::factory(100)->create();
-         Employee::create([
-             'firstname' => "Ersalomo",
-             'lastname' => "Sitors",
-             'username' => fake()->userName(),
-             'email' => 'admin@gmail.com',
-             'phone' => fake('id_ID')->phoneNumber(),
-             'address' => fake()->address(),
-             'email_verified_at' => now(),
-             'password' => '$2y$10$v8Fg/gQrudWlEeYBaZvW2uG9Azp2AxD3YkH8niDztI6k9Mquw57Q2', //12345678
-             'role_id' => 1,
-             'department' => fake()->jobTitle(),
-             'title' => fake()->jobTitle(),
-             'remember_token' => Str::random(10),
-             ]);
+        Visit::factory(30)->create();
+//         Employee::create([
+//             'firstname' => "Ersalomo",
+//             'lastname' => "Sitors",
+//             'username' => fake()->userName(),
+//             'email' => 'admin@gmail.com',
+//             'phone' => fake('id_ID')->phoneNumber(),
+//             'address' => fake()->address(),
+//             'email_verified_at' => now(),
+//             'password' => '$2y$10$v8Fg/gQrudWlEeYBaZvW2uG9Azp2AxD3YkH8niDztI6k9Mquw57Q2', //12345678
+//             'role_id' => 1,
+//             'department' => fake()->jobTitle(),
+//             'title' => fake()->jobTitle(),
+//             'remember_token' => Str::random(10),
+//             ]);
 //         Visitor::create([
 //             'firstname' => "Ersalomo",
 //             'lastname' => "Sitors",

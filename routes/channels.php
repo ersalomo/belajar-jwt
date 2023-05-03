@@ -17,6 +17,9 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('m', function ($user){
-    return true;
-});
+//Broadcast::channel('m', function ($user){
+//    return false;
+//});
+//Broadcast::channel('Appointment', function ($user){
+//    return true;
+//});

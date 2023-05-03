@@ -2,31 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Appointment};
-use Illuminate\Http\Response;
+use App\Models\{
+    Appointment,
+    Visit
+};
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\{
     StoreAppointmentRequest,
     UpdateAppointmentRequest
 };
-use App\Events\ServerCreated;
+use App\Events\{
+    ServerCreated,
+    AppointmentCreated,
+};
 use App\Traits\Helper;
 
 class AppointmentController extends Controller
 {
     use Helper;
+
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
     public function index()
     {
-        event(new ServerCreated("ersalomo " . auth()->user()->lastname));
-        return view('front.home.list-appointment', [
-            'appointments' => auth()->user()->appointment()->get(),
+        $user = auth()->user();
+        ServerCreated::dispatch($user->lastname);
+        AppointmentCreated::dispatch($user->email);
+
+        return view('front.home.list-appointment');
+    }
+
+    public function getAppointmentsCurrentUser(Request $request): JsonResponse
+    {
+        return response()->json([
+            'status' => 'success',
+            'data' => auth()->user()->appointment()->latest()->get()
         ]);
     }
 
@@ -37,7 +55,7 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        if($this->check_image()){
+        if ($this->check_image()) {
             return to_route('home.home-user');
         }
         return view('front.home.appointment');
@@ -49,34 +67,79 @@ class AppointmentController extends Controller
      * @param StoreAppointmentRequest $request
      * @return Response
      */
-    public function store(StoreAppointmentRequest $request)
+    public function store(StoreAppointmentRequest $request): JsonResponse
     {
-        $user =  auth()->user();
+        $validator = Validator::make(
+            $request->all(),
+            $request->rules(),
+            $request->messages()
+        );
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fail',
+                'errros' => $validator->errors()->toArray()
+            ]);
+        }
+        $res = [];
+        $user = auth()->user();
         $count_appointments = $user->appointment()
-            ?->whereDate('created_at', now()->today())
-            ->get(['id']) || false;
+                ?->whereDate('created_at', now()->today())
+                ->get(['id']) || false;
 
         if ($count_appointments) {
             $appointment = $user->appointment()->create([
-                'kode_emp'=> $request->kode_emp,
+                'kode_emp' => $request->kode_emp,
                 'purpose' => $request->purpose,
-                'type'    => $request->type,
-                'names_of'=> $request->names_of
+                'type' => $request->type,
+                'names_of' => $request->names_of
             ]);
             if ($appointment) {
-                return back()->with('success', 'berhasil');
+                AppointmentCreated::dispatch($user);
+                $res = [
+                    'success' => 'berhasil',
+                    'msg' => 'Appointment berhasil dibuat'
+                ];
+            } else {
+                $res = [
+                    'success' => 'fail',
+                    'msg' => 'Fail'
+                ];
             }
-            return back()->with('error', 'kesalahan server');
         }
-        return back()->with('error', 'tidak boleh membuat appointment lebih dari 5');
+        return response()->json($res);
     }
 
-    public function approveAppointment(Appointment $appoinment){
+    /**
+     * this function for employee who has an appointment from visitors
+     * the purpose is to approve the appointment and
+     * insert data to visits table
+     */
+    public function approveAppointment(Appointment $appoinment)
+    {
         $isAppproved = $appoinment["status"] != "pending";
-        if ($isAppproved){ return back(); }
-
+        if ($isAppproved) {
+            $appoinment->update(['status' => 'pending']);
+        }else{
         $appoinment->update(['status' => 'approved']);
-        return back();
+        }
+        AppointmentCreated::dispatch(auth()->user());
+        // insert into table visits
+//        $visit = Visit::create([
+//            'id_appmt' => $appoinment->id,
+//            'checkin' => false,
+//            'checkout' => false,
+//            'notes' => '',
+//            'visit_date' => now()
+//        ]);
+//        if ($visit)
+//            return response()->json([
+//                'status' => 'success',
+//                'msg' => 'Successfully approved'
+//            ]);
+        return response()->json([
+            'status' => 'success',
+            'msg' => 'there something went wrong!'
+        ]);
     }
 
     /**
@@ -122,5 +185,13 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment)
     {
         //
+    }
+
+    public function getVisitorHasAppointment(Request $request)
+    {
+        $visitors = Appointment::get();
+        return response()->json([
+            'data' => $visitors
+        ]);
     }
 }

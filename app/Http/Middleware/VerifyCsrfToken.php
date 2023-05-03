@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'broadcastingp/auth',
-        'xx'
+        'xx',
+        'post-visit',
     ];
 }

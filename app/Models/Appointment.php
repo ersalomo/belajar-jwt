@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class   Appointment extends Model
 {
@@ -21,5 +22,9 @@ class   Appointment extends Model
 
     public function visitor() {
         return $this->belongsTo(Visitor::class, 'user_id');
+    }
+    public function visit(): HasMany
+    {
+        return $this->hasMany(Visit::class);
     }
 }

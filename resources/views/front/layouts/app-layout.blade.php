@@ -7,6 +7,7 @@
           content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#000000">
     <title>Welcome | {{ isset($pageTitle) ? $pageTitle : 'Laravel' }}</title>
     <meta name="description" content="Mobilekit HTML Mobile UI Kit">
@@ -105,6 +106,7 @@
             </svg>
         </div>
     </a>
+    @if(auth()->user()->role_id == 4)
     <a href="{{ route('home.appointment.create') }}" class="item">
         <div class="col">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ballpen" width="24"
@@ -119,6 +121,19 @@
             </svg>
         </div>
     </a>
+    @endif
+    @if(auth()->user()->role_id !== 4)
+    <a href="" class="item">
+        <div class="col">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                <path d="M6 21v-2a4 4 0 0 1 4 -4h4"></path>
+                <path d="M15 19l2 2l4 -4"></path>
+            </svg>
+        </div>
+    </a>
+    @endif
     <a href="{{ route('home.list-appointment') }}" class="item">
         <div class="col">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layers-intersect"
@@ -155,11 +170,7 @@
                      class="imaged rounded">
             </div>
             <div class="in">
-                @auth('visitor')
-                    <strong>{{ __('Visitor '.auth('visitor')->user()->firstname) }}</strong>
-                @else
-                    <strong>{{ __('Employee '.auth('employee')->user()->firstname) }}</strong>
-                @endauth
+                    <strong>{{ __('Visitor '.auth()->user()->firstname." ".auth()->user()->id) }}</strong>
                 <div class="text-muted">
                     <ion-icon name="location"></ion-icon>
                     Indonesia, DKI Ja
@@ -266,7 +277,7 @@
     </div>
 </div>
 @include('front.layouts.styles.js')
-@vite(['resources/js/app.js'])
+@vite(['resources/js/bootstrap.js'])
 </body>
 
 </html>

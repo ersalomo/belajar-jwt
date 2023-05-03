@@ -10,15 +10,13 @@
                     {{ Session::get('error') }}
                 </div>
             @endif
-            <form method="post" action="{{ route('home.appointment.store') }}">
+            <form method="post" action="{{ route('home.appointment.store') }}" id="appoinment-form">
                 @csrf
                 <div class="form-group boxed">
                     <div class="input-wrapper">
                         <label class="form-label" for="kode">* <span class="text-danger">Kode Employee</span></label>
                         <input type="text" name="kode_emp" class="form-control" id="kode" placeholder="Enter kode employee">
-                        @error('purpose')
-                        <em class="text-danger">{{ $message }}</em>
-                        @enderror
+                        <span class="text-danger error-text kode_emp_error"></span>
                     </div>
                 <div class="form-group boxed">
                     <div class="input-wrapper">
@@ -42,9 +40,7 @@
                         <label class="form-label" for="Purpose">* Purpose</label>
                         <textarea id="Purpose" name="purpose" rows="5" class="form-control"></textarea>
                     </div>
-                    @error('purpose')
-                        <em class="text-danger">{{ $message }}</em>
-                    @enderror
+                    <span class="text-danger error-text purpose_error"></span>
                 </div>
                 <div class="form-group boxed">
                     <button class="btn btn-primary btn-block">Submit</button>
@@ -54,4 +50,47 @@
 
         </div>
     </div>
+    <div id="success-created" class="toast-box toast-top">
+        <div class="in">
+            <ion-icon name="checkmark-circle" class="text-success md hydrated" role="img" aria-label="checkmark circle"></ion-icon>
+            <div class="text">
+                Successfully created
+            </div>
+        </div>
+        <button type="button" class="btn btn-sm btn-text-success close-button">CLOSE</button>
+    </div>
+    @push('scripts')
+        <script>
+            $(document).ready(function () {
+                $('#appoinment-form').on('submit', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation()
+                    const form = e.target
+                    $.ajax({
+                        url: form.action,
+                        method: form.method,
+                        data: new FormData(form),
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function() {
+                            $(form).find("span.error-text").text("");
+                        },
+                        success: function (res) {
+                            $(form)[0].reset();
+                            const el = 'success-created'
+                            $(`#${el} div.test`).text(res.msg)
+                            toastbox(el, 2500)
+                        },
+                        error: function (res) {
+                            $.each(res.responseJSON.errors, (prefix, val) => {
+                                $("span." + prefix + "_error").text(val[0]);
+                            });
+                        }
+
+                    })
+                })
+            })
+        </script>
+    @endpush
 </x-app-layout>

@@ -48,13 +48,11 @@ window.Echo = new Echo({
     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER, //added this line
 });
 
-
-window.addEventListener("DOMContentLoaded", (e)=>{
+window.addEventListener("DOMContentLoaded", (e) => {
         window.Echo
             .channel("m")
             .listen(".t", (e) => {
                 console.log(e.data);
-                alert(e.data);
-})
+            });
 });
 // Echo.channel('m').listen('.t', ({data})=>alert(data))

@@ -1,12 +1,11 @@
-<x-back.app-layout page-title="Data Employee">
+<x-back.app-layout page-title="Data visitation">
 
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Employee table</h6>
+                    <h6>Visitation table</h6>
                 </div>
-                <x-input.header-table href="{{route('admin.create-visitor')}}"/>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
@@ -15,22 +14,28 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Action
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Appointment
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name Visitor
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    phone
+                                    Visit Date
                                 </th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Status
+                                    Checkin
                                 </th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Address
+                                    Checkout
+                                </th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Notes
                                 </th>
                                 <th class="text-secondary opacity-7"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($employees as $employee)
+                            @foreach($visitations as $visitation)
                                 <tr>
                                     <td class="align-middle">
                                         <a href="javascript:void();" class="btn btn-bitcoin btn-xs btn-warning" data-toggle="tooltip"
@@ -47,7 +52,7 @@
                                             </svg>
                                         </a>
                                         <a href="javascript:void();" class="btn btn-bitcoin btn-xs btn-danger" data-toggle="tooltip"
-                                               data-original-title="Edit user">
+                                           data-original-title="Edit user">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                 <path d="M4 7l16 0"></path>
@@ -58,7 +63,7 @@
                                             </svg>
                                         </a>
                                         <a href="javascript:void();" class="btn btn-bitcoin btn-xs btn-info" data-toggle="tooltip"
-                                               data-original-title="Edit user">
+                                           data-original-title="Edit user">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                 <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
@@ -68,31 +73,42 @@
                                     </td>
                                     <td>
                                         <div class="d-flex px-2 py-1">
-                                            <div>
-                                                <img src="{{$employee->picture}}" class="avatar avatar-sm me-3"
-                                                     alt="user1">
-                                            </div>
+
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{__($employee->firstname)}}</h6>
-                                                <p class="text-xs text-secondary mb-0">{{__($employee->email)}}</p>
+                                                <h6 class="mb-0 text-sm">{{mt_rand(0, 0xFFFFFF)}}{{__($visitation->id_appmt)}}</h6>
+                                                <p class="text-xs text-secondary mb-0">{{__($visitation->email)}}</p>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{__($employee->phone)}}</p>
-                                        {{--                                    <p class="text-xs text-secondary mb-0">Organization</p>--}}
+                                        <div class="d-flex px-2 py-0">
+                                            <img src="{{__($visitation->appointment->visitor->picture)}}" class="avatar avatar-sm me-3"
+                                                 alt="user1">
+                                        <p class="text-xs font-weight-bold mb-0 mt-2">
+                                            {{__($visitation->appointment->visitor->firstname)}}
+                                        </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{$visitation->visit_date}}
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        @if(!$employee->is_blocked)
-                                            <span class="badge badge-sm bg-gradient-success">aktif</span>
+                                        @if(!$visitation->checkin)
+                                            <span class="badge badge-sm bg-gradient-success">Checkin</span>
                                         @else
-                                            <span class="badge badge-sm bg-gradient-danger">blocked</span>
+                                            <span class="badge badge-sm bg-gradient-danger">Not Checkin</span>
                                         @endif
                                     </td>
-                                    <td class="align-middle text-center">
-                                        <span
-                                            class="text-end text-secondary text-xs font-weight-bold">{{__($employee->department)}}</span>
-                                        <p class="text-xs text-secondary mb-0">{{__($employee->title)}}</p>
+                                    <td class="align-middle text-center text-sm">
+                                        @if(!$visitation->checkout)
+                                            <span class="badge badge-sm bg-gradient-success">Checkout</span>
+                                        @else
+                                            <span class="badge badge-sm bg-gradient-danger">Not Checkout</span>
+                                        @endif
+                                    </td>
+
+                                    <td class="text-start p-0 text-xs">
+                                     {{__(mb_strimwidth($visitation->notes,0,20, '...'))}}
                                     </td>
 
                                 </tr>

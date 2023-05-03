@@ -7,15 +7,13 @@ use App\Http\Requests\EmployeeRequest;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Storage;
-use App\DataTables\EmployeesDataTable;
 
 class DataEmployeeController extends Controller
 {
-    public function index(EmployeesDataTable $dataTable) {
-//        return view('back.content.data-employee', [
-//            'employees' => Employee::paginate(20),
-//        ]);
-        return $dataTable->render('back.content.data-employee');
+    public function index(Request $request) {
+        return view('back.content.data-employee', [
+            'employees' => Employee::orderBy('created_at', 'desc')->paginate(20),
+        ]);
     }
 
     public function create(Request $request) {
@@ -28,7 +26,9 @@ class DataEmployeeController extends Controller
             $path = Storage::putFile('public/images/employee', $request->file('picture'));
             $data['picture'] = $path;
         }
+
         Employee::create($data);
         return to_route('admin.employee-table');
     }
+
 }

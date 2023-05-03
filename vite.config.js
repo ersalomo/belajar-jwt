@@ -5,10 +5,10 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                // "resource/**"
+                "resource/**"
                 // "resources/js/app.js",
                 // "resources/sass/app.scss",
-                "resources/js/face-recognition.js",
+                // "resources/js/face-recognition.js",
             ],
             refresh: true,
         }),

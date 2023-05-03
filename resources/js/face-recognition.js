@@ -1,6 +1,11 @@
 import * as faceapi from 'face-api.js'
-const video = document.getElementById('video');
+import {
+    getVisitors,
+    getVisitorsHavaAppointment,
+    postVisitToCheckin
+} from "./fect-data";
 
+const video = document.getElementById('video');
 
 const startWebCam = () =>  {
     navigator.mediaDevices.getUserMedia({
@@ -12,66 +17,115 @@ const startWebCam = () =>  {
         console.log(error);
     });
 }
-const getLabeledFaceDescriptions = () => {
-    const labels = ['ersalomo','ersalomo-1'];
 
+
+const getLabeledFaceDescriptions = async () => {
+    // const labels = await getVisitors()
+    const labels = await getVisitorsHavaAppointment()
     return Promise.all(
         labels.map(async (label) => {
+            const {id, firstname, email, picture } = label.visitor
+            const idAppointment = label.id
+            const visitor = JSON.stringify(
+                Object.assign(label.visitor, {idAppointment})
+            )
             const descriptions = [];
-            // for(let i = 0 ; i<=2; i++){
-                const img = await faceapi.fetchImage('./storage/users/VISITOR10216814715879156.jpg')
-                console.log(img)
-                const detections = await faceapi
-                    .detectSingleFace(img)
-                    .withFaceLandmarks()
-                    .withFaceDescriptor()
-                descriptions.push(detections.descriptor);
-            // }
-            return new faceapi.LabeledFaceDescriptors(label, descriptions);
+            const img = await faceapi.fetchImage(`.${picture}`)
+            const detections = await faceapi
+                .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
+                // .detectAllFaces(img)
+                .withFaceLandmarks()
+                .withFaceDescriptor()
+
+            if (detections !== undefined) {
+                const { descriptor } = detections
+                descriptions.push(descriptor);
+            }
+            if(descriptions.length){
+                return new faceapi.LabeledFaceDescriptors(visitor, descriptions);
+            }
         })
     );
 }
 
-const faceRecognition = async () => {
-    const labeledFaceDescriptions = await getLabeledFaceDescriptions();
-    const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptions);
+const faceRecognition = () => {
+    video.addEventListener('playing', async () => {
+        console.log('playing')
+        const labeledFaceDescriptions = (await getLabeledFaceDescriptions()).filter((d) => d !== undefined);
+        const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptions, 0.6);
+        const canvas = faceapi.createCanvasFromMedia(video)
+        document.body.append(canvas)
 
-    video.addEventListener('playing', () => {
-        location.reload();
-    })
-
-    const canvas = faceapi.createCanvasFromMedia(video)
-    document.body.append(canvas)
-
-    faceapi.matchDimensions(canvas, {
-        width: video.width,
-        height: video.height
-    })
-
-    setInterval(async () => {
-        const detections = await faceapi
-            .detectAllFaces(video)
-            .withFaceLandmarks()
-            .withFaceDescriptors()
-        const resizedDetections = faceapi.resizeResults(detections, {
+        const displaySize = {
             width: video.width,
             height: video.height
-        })
+        }
 
-        canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height)
+        faceapi.matchDimensions(canvas, displaySize)
+        const runFaceDetection = async () => {
+            const detections = await faceapi
+                .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+                .withFaceLandmarks()
+                .withFaceDescriptors()
+            // jika tidak sesuai dengan gambar pada webcame maka akan menampilkan array [] sehingga mmebuat descriptor menjadi null
+            const resizedDetections = faceapi.resizeResults(detections, displaySize)
 
-        const results = resizedDetections.map((d) => {
-            return faceMatcher.findBestMatch(d.descriptor)
-        })
+            canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+            faceapi.draw.drawDetections(canvas, resizedDetections)
 
-        results.forEach((result,i ) => {
-            const box = resizedDetections[i].detection.box;
-            const drawBox = new faceapi.draw.DrawBox(box, {
-                label: result,
+            // get users picture for comparing
+            const {labeledDescriptors} = faceMatcher
+
+            labeledDescriptors.forEach((label) => {
+
+                const faceDescriptor = label.descriptors[0]
+                const appointment = JSON.parse(label.label)
+                const {id, firstname, email, idAppointment} = appointment
+                const resizedFloat32Array = resizedDetections[0]
+                if (resizedFloat32Array) {
+                    const bestMatch = faceapi.euclideanDistance(
+                        faceDescriptor,
+                        resizedFloat32Array.descriptor
+                    )
+                    if (bestMatch < 0.6) {
+                        const box = resizedFloat32Array.detection.box;
+                        const drawBox = new faceapi.draw.DrawBox(box, {label: firstname})
+                        drawBox.draw(canvas)
+                        stop()
+                        const answer = confirm(`This is you ${firstname}`)
+                        console.log('exucuting running', answer)
+                        if (answer) {
+                             postVisitToCheckin({
+                                "id_appmt"      : idAppointment,
+                                 "visit_date"   : "2023-04-26",
+                                 "checkin"      : 1,
+                                 "checkout"     : 0,
+                                 "notes"        : "",
+                            })
+                                 .then((res) => {
+                                     const {id: idVisit} = res.data.visit
+                                     window.location.href = 'face-verified?id_visit=' + idVisit
+                                 })
+                                 .catch(e => console.log(e))
+                        }else{
+                            start()
+                        }
+                    }
+                }
             })
-            drawBox.draw(canvas)
-        })
-    }, 100)
+        }
+
+        let intervalId
+        function start() {
+          intervalId = setInterval(runFaceDetection, 1000)
+            console.log(intervalId)
+        }
+        // start()
+        function stop() {
+            clearInterval(intervalId)
+        }
+
+    })
 }
 
 Promise.all([
@@ -79,7 +133,8 @@ Promise.all([
     faceapi.nets.ssdMobilenetv1.loadFromUri('/weights'),
     faceapi.nets.faceRecognitionNet.loadFromUri('/weights'),
     faceapi.nets.faceLandmark68Net.loadFromUri('/weights'),
-]).then(startWebCam)
+])
+    .then(startWebCam)
     .then(faceRecognition);
 
 

@@ -39,7 +39,7 @@ class Employee extends Authenticatable
     }
     protected function picture() : Attribute {
         return new Attribute(
-            get: fn ($val) => $val ? asset('storage/users/'. $val) : asset('storage/users/img.png'),
+            get: fn ($val) => $val ? '/storage/users/'. $val         : '/storage/users/img.png',
 
         );
     }

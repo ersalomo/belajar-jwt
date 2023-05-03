@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Visitor;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -19,9 +20,14 @@ class AppointmentCreated
      *
      * @return void
      */
-    public function __construct()
+    public $user = '';
+    public $status = [
+        'created',
+        'approved'
+    ];
+    public function __construct($user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -31,6 +37,16 @@ class AppointmentCreated
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel('Appointment');
+    }
+
+    public function broadcastAs() {
+        return 'appointment';
+    }
+
+    public function broadcastWith() {
+        return [
+            'data' => $this->user
+        ];
     }
 }

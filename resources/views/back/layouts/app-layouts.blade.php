@@ -8,7 +8,6 @@
     <link rel="icon" type="image/png" href="/argon/assets/img/favicon.png">
     <title>Admin B7 | {{ isset($pageTitle) ? $pageTitle : '' }}</title>
     @include('back.layouts.inc.css')
-    @vite(['resources/sass/app.scss','resources/js/app.js'])
 
 </head>
 

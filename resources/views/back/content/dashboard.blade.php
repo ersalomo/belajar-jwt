@@ -12,7 +12,7 @@
                                     </h5>
                                     <p class="mb-0">
                                         <span class="text-success text-sm font-weight-bolder">+55%</span>
-                                        Toal yesterday
+                                        Total yesterday
                                     </p>
                                 </div>
                             </div>
@@ -118,49 +118,79 @@
                 </div>
             </div>
             <div class="col-lg-5">
-                <div class="card card-carousel overflow-hidden h-100 p-0">
-                    <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
-                        <div class="carousel-inner border-radius-lg h-100">
-                            <div class="carousel-item h-100 active" style="background-image: url('/argon/assets/img/carousel-1.jpg');
-      background-size: cover;">
-                                <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                                    <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                                        <i class="ni ni-camera-compact text-dark opacity-10"></i>
-                                    </div>
-                                    <h5 class="text-white mb-1">Get started with Argon</h5>
-                                    <p>There’s nothing I really wanted to do in life that I wasn’t able to get good at.</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item h-100" style="background-image: url('/argon/assets/img/carousel-2.jpg');
-      background-size: cover;">
-                                <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                                    <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                                        <i class="ni ni-bulb-61 text-dark opacity-10"></i>
-                                    </div>
-                                    <h5 class="text-white mb-1">Faster way to create web pages</h5>
-                                    <p>That’s my skill. I’m not really specifically talented at anything except for the ability to learn.</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item h-100" style="background-image: url('/argon/assets/img/carousel-3.jpg');
-      background-size: cover;">
-                                <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                                    <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                                        <i class="ni ni-trophy text-dark opacity-10"></i>
-                                    </div>
-                                    <h5 class="text-white mb-1">Share with us your design tips!</h5>
-                                    <p>Don’t be afraid to be wrong because you can’t learn anything from a compliment.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                <div class="card">
+                    <div class="card-header pb-0 p-3">
+                        <h6 class="mb-0">List Visitors Checkin</h6>
                     </div>
+                    <div class="card-body p-3">
+                        <ul class="list-group">
+                            @foreach($visitors_checkin as $visitor)
+                            <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                                <div class="d-flex align-items-center">
+                                    <img src="{{__($visitor->appointment->visitor->picture)}}" class="img rounded-1 w-15 me-3"/>
+                                    <div class="d-flex flex-column">
+                                        <h6 class="mb-1 text-dark text-sm">{{$visitor->appointment->visitor->firstname}}</h6>
+                                        <span class="text-xs">250 in stock, <span class="font-weight-bold">346+ sold</span></span>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i class="ni ni-bold-right" aria-hidden="true"></i></button>
+                                </div>
+                            </li>
+                            @endforeach
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                        <tr>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Visitor</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employee</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Purpose</th>
+                            <th class="text-secondary opacity-7"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($appointments as $appointment)
+                            <tr>
+                                <td>
+                                    <div class="d-flex px-2 py-0">
+                                        <div>
+                                            <img src="{{__($appointment->visitor->picture)}}" class="avatar avatar-sm me-3">
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-xs">{{$appointment->visitor->firstname}}</h6>
+                                            <p class="text-xs text-secondary mb-0">{{__($appointment->visitor->email)}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">{{__($appointment->employee->firstname)}}</p>
+                                    <p class="text-xs text-secondary mb-0">{{__($appointment->employee->department)}}</p>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="badge badge-sm text-dark">{{($appointment->created_at)}}</span>
+                                </td>
+                                <td class="align-middle text-start" data-bs-toggle="tooltip" data-bs-placement="left" title="{{($appointment->purpose)}}">
+                                    <span class="text-secondary text-xs font-weight-bold">{{Str::words($appointment->purpose, 5)}}</span>
+                                </td>
+                                <td class="align-middle">
+                                    <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                        Edit
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
