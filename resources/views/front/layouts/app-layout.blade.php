@@ -11,7 +11,7 @@
     <meta name="theme-color" content="#000000">
     <title>Welcome | {{ isset($pageTitle) ? $pageTitle : 'Laravel' }}</title>
     <meta name="description" content="Management Visitor">
-    <meta name="keywords" content="bootstrap 5, cordova, phonegap, html"/>
+    <meta name="keywords" content="bootstrap 5, html"/>
     @include('front.layouts.styles.css')
 
 </head>
@@ -119,6 +119,7 @@
                 </path>
                 <path d="M4 20l1.768 -1.768"></path>
             </svg>
+            sds
         </div>
     </a>
     @endif
@@ -170,7 +171,10 @@
                      class="imaged rounded">
             </div>
             <div class="in">
-                    <strong>{{ __('Visitor '.auth()->user()->firstname." ".auth()->user()->id) }}</strong>
+                    <strong>{{ __(auth()->user()->firstname )}}</strong>
+                @if(auth()->user()->role_id != 4)
+                    <strong>{{ auth()->user()->kodeEmp->kode_emp}}</strong>
+                @endif
                 <div class="text-muted">
                     <ion-icon name="location"></ion-icon>
                     Indonesia, DKI Ja

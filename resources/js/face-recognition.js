@@ -120,7 +120,7 @@ const faceRecognition = () => {
           intervalId = setInterval(runFaceDetection, 1000)
             console.log(intervalId)
         }
-        // start()
+        start()
         function stop() {
             clearInterval(intervalId)
         }

@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
+Broadcast::routes([
+    'middleware' => 'web'
+]);
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-//Broadcast::channel('m', function ($user){
-//    return false;
-//});
-//Broadcast::channel('Appointment', function ($user){
-//    return true;
-//});
+Broadcast::channel('handle-notif', function ($user){
+    return true;
+});

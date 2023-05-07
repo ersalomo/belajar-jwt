@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class VisitorRequest extends FormRequest
+class UserReq extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,7 +34,6 @@ class VisitorRequest extends FormRequest
 //            'picture'    => 'mimes:image/png,image/jpeg,image/jpg|file|max:2048',
             'password'   => 'required|string',
             'is_blocked' => 'string',
-
         ];
     }
     public function messages()

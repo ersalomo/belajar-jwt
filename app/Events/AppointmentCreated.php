@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class AppointmentCreated
+class AppointmentCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -35,16 +35,16 @@ class AppointmentCreated
      *
      * @return Channel|array
      */
-    public function broadcastOn()
+    public function broadcastOn():Channel | array
     {
         return new Channel('Appointment');
     }
 
-    public function broadcastAs() {
+    public function broadcastAs(): string {
         return 'appointment';
     }
 
-    public function broadcastWith() {
+    public function broadcastWith():array {
         return [
             'data' => $this->user
         ];

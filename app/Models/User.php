@@ -3,13 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable
 {
@@ -21,9 +20,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
+        'username',
         'email',
+        'phone',
+        'address',
+        'picture',
         'password',
+        'is_blocked',
     ];
 
     /**
@@ -43,34 +48,51 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_blocked' => 'boolean'
     ];
-    protected function password(): Attribute
+
+    protected $with = [
+        'department'
+    ];
+
+    protected function firstname(): Attribute
     {
         return new Attribute(
-            set: fn ($value) => bcrypt($value),
+            get: fn($firstname, $e) => $firstname . " " . $this->lastname
         );
     }
 
-    // implements method
-    public function getJWTIdentifier()
+    protected function picture(): Attribute
     {
-        return $this->getKey();
-    }
-    public function getJWTCustomClaims(): array
-    {
-        return [];
-    }
-    public function articles(): HasMany
-    {
-        return $this->hasMany(Article::class);
-    }
-    public function article_comments(): HasMany
-    {
-        return $this->hasMany(ArticleComment::class);
+        return Attribute::make(
+            get: fn($val) => $val ? '/storage/users/' . $val : '/storage/users/img.png',
+        );
     }
 
-    public function appointment()
+    protected function password(): Attribute
     {
-        return $this->hasMany(Appointment::class, 'user_id');
+        return new Attribute(
+            set: fn($value) => bcrypt($value),
+        );
+    }
+
+    public function department()
+    {
+        return $this->hasOne(Department::class ,'kode_emp');
+    }
+
+    public function kodeEmp()
+    {
+        return $this->hasOne(KodeEmp::class, 'emp_id');
+    }
+
+    public function appointmentVisitor(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'visitor_id');
+    }
+
+    public function appointmentEmp(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'kode_emp');
     }
 }

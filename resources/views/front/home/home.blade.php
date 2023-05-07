@@ -1,16 +1,15 @@
 <x-app-layout pageTitle="Home">
     <div class="section mt-3 mb-3">
-
         <div class="card">
             <div class="card-body d-flex justify-content-between align-items-end">
                 <div>
                     <h6 class="card-subtitle">Welcome</h6>
                     <h5 class="card-title mb-0 d-flex align-items-center justify-content-between">
-                        @if(auth('visitor')->check())
-                            {{ __('User '.auth('visitor')->user()->firstname) }}
-                        @elseif(auth('employee')->check())
-                            {{ __('Karyawan '.auth('employee')->user()->firstname) }}
+                            {{ __('User '.auth()->user()->firstname) }}
+                        @if(auth()->user()->role_id != 4)
+                            {{ __('Kode '.auth()->user()->kodeEmp->kode_emp ?? '') }}
                         @endif
+
                     </h5>
                 </div>
                 <div class="form-check form-switch">
@@ -136,6 +135,5 @@
             </div>
         </div>
     </div>
-
 
 </x-app-layout>

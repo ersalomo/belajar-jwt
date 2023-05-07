@@ -7,11 +7,11 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite",
+    "run-all": "npm-run-all --parallel serve dev socket",
     "build": "vite build",
-    "socket": "php artisan websockets:serve",
-    "postinstall": "node node_modules/datatables.net-editor/install.js ./Editor.zip"
+      "serve": "php artisan serve",
+      "dev": "vite",
+      "socket": "php artisan websockets:serve"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "axios": "^1.2.5",
+    "concurrently": "^8.0.1",
     "laravel-datatables-vite": "^0.5.2",
     "laravel-vite-plugin": "^0.7.3",
     "lodash": "^4.17.21",

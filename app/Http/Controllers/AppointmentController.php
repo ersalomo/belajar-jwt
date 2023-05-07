@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{
-    Appointment,
-    Visit
-};
+use App\Models\{Appointment, KodeEmp, Visitor};
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -36,15 +34,20 @@ class AppointmentController extends Controller
         $user = auth()->user();
         ServerCreated::dispatch($user->lastname);
         AppointmentCreated::dispatch($user->email);
-
         return view('front.home.list-appointment');
     }
 
     public function getAppointmentsCurrentUser(Request $request): JsonResponse
     {
+        $user = auth()->user();
+        if ($user['role_id'] == 4){
+            $appointments = $user->appointmentVisitor()->get();
+        }else{
+            $appointments = $user->appointmentEmp()->get();
+        }
         return response()->json([
             'status' => 'success',
-            'data' => auth()->user()->appointment()->latest()->get()
+            'data' => $appointments
         ]);
     }
 
@@ -55,9 +58,9 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        if ($this->check_image()) {
-            return to_route('home.home-user');
-        }
+//        if ($this->check_image()) {
+//            return to_route('home.home-user');
+//        }
         return view('front.home.appointment');
     }
 
@@ -82,16 +85,16 @@ class AppointmentController extends Controller
         }
         $res = [];
         $user = auth()->user();
-        $count_appointments = $user->appointment()
+        $count_appointments = $user->appointmentVisitor()
                 ?->whereDate('created_at', now()->today())
                 ->get(['id']) || false;
 
         if ($count_appointments) {
-            $appointment = $user->appointment()->create([
-                'kode_emp' => $request->kode_emp,
+            $emp_id = KodeEmp::where('kode_emp',$request->kode_emp)->first()['emp_id'];
+            $appointment = $user->appointmentVisitor()->create([
+                'kode_emp' => $emp_id,
                 'purpose' => $request->purpose,
                 'type' => $request->type,
-                'names_of' => $request->names_of
             ]);
             if ($appointment) {
                 AppointmentCreated::dispatch($user);
@@ -120,7 +123,7 @@ class AppointmentController extends Controller
         if ($isAppproved) {
             $appoinment->update(['status' => 'pending']);
         }else{
-        $appoinment->update(['status' => 'approved']);
+             $appoinment->update(['status' => 'approved']);
         }
         AppointmentCreated::dispatch(auth()->user());
         // insert into table visits

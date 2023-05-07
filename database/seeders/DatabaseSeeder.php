@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\{User, Visit, Visitor, Employee};
+use App\Models\{KodeEmp, User, Visit, Visitor, Employee};
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//         User::factory(10)->create();
+
+//         User::factory(90)->create();
 //         User::create([
 //                 'name' => fake()->name(),
 //                 'username' => fake()->userName(),
@@ -28,7 +29,7 @@ class DatabaseSeeder extends Seeder
 //             ]);
 //         Visitor::factory(100)->create();
 //         Employee::factory(100)->create();
-        Visit::factory(30)->create();
+//        Visit::factory(30)->create();
 //         Employee::create([
 //             'firstname' => "Ersalomo",
 //             'lastname' => "Sitors",

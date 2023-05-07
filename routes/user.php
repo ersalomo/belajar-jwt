@@ -6,6 +6,7 @@ use App\Http\Controllers\FaceDetectionController as FaceDetection;
 use App\Http\Controllers\{
     User\UserController,
     Back\VisitController,
+    HomePageController
 };
 
 
@@ -13,25 +14,25 @@ Route::get('face-detection', [FaceDetection::class, 'index'])->name('face-detect
 Route::post('face-detection', [FaceDetection::class, 'store'])->name('store.face-detection');
 Route::get('labeled-faces', [FaceDetection::class, 'labeledFaces'])->name('labeled-faces');
 Route::get('face-verified', [FaceDetection::class, 'faceVerify'])->name('face-verified');
-Route::get('visitors', [UserController::class, 'get_visitors'])->name('visitors');
+//Route::get('visitors', [UserController::class, 'get_visitors'])->name('visitors');
 Route::get('appointment-visitors', [AppointmentController::class, 'getVisitorHasAppointment'])->name('visitors');
 Route::post('post-visit', [VisitController::class, 'store'])->name('post-visit');
 
 
 Route::get('/', fn () => to_route('auth'));
 Route::group([
+    'middleware' => ['guest:web'],
     'as' => 'auth'
 ], function () {
     Route::view('/auth', 'front.auth.authentication');
 });
 
 Route::group([
-    'middleware' => ['auth:visitor,employee'], // wtf
-//    'middleware' => ['guest:visitor,employee'],
+    'middleware' => ['auth:web,visitor,employee'],
     'prefix' => 'oa',
     'as' => 'home.'
 ], function () {
-    Route::view('/', 'front.home.home')->name('home-user');
+    Route::get('/', [HomePageController::class, 'index'])->name('home-user');
     Route::get('list-appointment', [AppointmentController::class, 'index'])->name('list-appointment');
     Route::post('appointment', [AppointmentController::class, 'store'])->name('appointment.store');
     Route::get('appointment', [AppointmentController::class, 'create'])->name('appointment.create');

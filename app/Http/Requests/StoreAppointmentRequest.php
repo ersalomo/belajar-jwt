@@ -24,7 +24,7 @@ class StoreAppointmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'kode_emp' => ['required', 'integer', 'exists:employees,id'],
+            'kode_emp' => ['required', 'string', 'exists:kode_emps,kode_emp'],
             'purpose' => ['required'],
         ];
     }

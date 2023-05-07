@@ -127,9 +127,9 @@
                             @foreach($visitors_checkin as $visitor)
                             <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                                 <div class="d-flex align-items-center">
-                                    <img src="{{__($visitor->appointment->visitor->picture)}}" class="img rounded-1 w-15 me-3"/>
+                                    <img src="{{__($visitor->appointment?->visitor->picture)}}" class="img rounded-1 w-15 me-3"/>
                                     <div class="d-flex flex-column">
-                                        <h6 class="mb-1 text-dark text-sm">{{$visitor->appointment->visitor->firstname}}</h6>
+                                        <h6 class="mb-1 text-dark text-sm">{{$visitor->appointment?->visitor->firstname}}</h6>
                                         <span class="text-xs">250 in stock, <span class="font-weight-bold">346+ sold</span></span>
                                     </div>
                                 </div>
@@ -173,7 +173,7 @@
                                 </td>
                                 <td>
                                     <p class="text-xs font-weight-bold mb-0">{{__($appointment->employee->firstname)}}</p>
-                                    <p class="text-xs text-secondary mb-0">{{__($appointment->employee->department)}}</p>
+{{--                                    <p class="text-xs text-secondary mb-0">{{__($appointment->employee->department)}}</p>--}}
                                 </td>
                                 <td class="align-middle text-center text-sm">
                                     <span class="badge badge-sm text-dark">{{($appointment->created_at)}}</span>

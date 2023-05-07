@@ -39,31 +39,21 @@ class Auth extends Component
     }
     public function loginHandler()
     {
-        $fieldType = filter_var($this->login_id, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $fieldType = filter_var($this->login_id, FILTER_VALIDATE_EMAIL) ? 'username' : 'email';
         $credentials = $this->validate();
-        if (auth('visitor')->attempt($credentials, $this->remainMe)) {
-            return to_route('home.home-user');
-            $user = Visitor::where('email', $credentials['email'])->first();
-            $this->nextReturn($user);
-            dd("salahv", $credentials['password']);
+        if (Guard::attempt($credentials, $this->remainMe)) {
+            $user = User::where($fieldType, $credentials['email'])->first();
+            if( (bool) $user["is_blocked"]) {
+                auth()->logout();
+                return redirect()->route('auth')->with('fail','your account has been blocked');
+            }
+            return $this->returnUrl === null ?
+                to_route('home.home-user') :
+                redirect()->to($this->returnUrl);
         }
-        if(auth('employee')->attempt($credentials, $this->remainMe)) {
-            return to_route('home.home-user');
-            $user = Employee::where('email', $credentials['email'])->first();
-            $this->nextReturn($user);
-            dd("salahe", $credentials['password']);
-        }
+        return redirect()->route('auth')->with('fail','This account does\'nt match to our records');
     }
-    private  function nextReturn($user) {
-//        $this->reset();
-        if($user->is_blocked) {
-            auth()->logout();
-            return redirect()->route('auth')->with('fail','your account has been blocked');
-        }
-        if($this->returnUrl !== null) return redirect()->to($this->returnUrl);
-        return to_route('home.home-user');
-        dd('masuk 2');
-        }
+
     public function registerHandler()
     {
         dd('regis');

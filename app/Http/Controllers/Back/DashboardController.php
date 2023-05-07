@@ -10,8 +10,8 @@ class DashboardController extends Controller
 {
     public function index(Request $request) {
         return view('back.content.dashboard', [
-            'appointments' => Appointment::all(),
             'visitors_checkin' => Visit::where('checkin', 1)->paginate(5),
+            'appointments' => Appointment::all(),
         ]);
     }
 }

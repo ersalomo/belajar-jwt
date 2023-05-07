@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Visitor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends Factory<Visitor>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
-class VisitorFactory extends Factory
+class UserFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -26,7 +25,9 @@ class VisitorFactory extends Factory
             'phone' => fake('id_ID')->phoneNumber(),
             'address' => fake()->address(),
             'email_verified_at' => now(),
-            'password' => bcrypt(12345678),
+            'password' => '$2y$10$v8Fg/gQrudWlEeYBaZvW2uG9Azp2AxD3YkH8niDztI6k9Mquw57Q2',
+            'role_id' => fake()->numberBetween(1,4),
+            'gender' => fake()->randomElement([1,0]),
             'remember_token' => Str::random(10),
         ];
     }

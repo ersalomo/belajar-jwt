@@ -86,6 +86,7 @@
                             $.each(res.responseJSON.errors, (prefix, val) => {
                                 $("span." + prefix + "_error").text(val[0]);
                             });
+                            console.log(res.responseJSON.message)
                         }
 
                     })

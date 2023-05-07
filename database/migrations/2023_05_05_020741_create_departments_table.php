@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('visitors', function (Blueprint $table) {
-            $table->text('image_base64')->nullable();
-            $table->enum('gender',['male','female'])->nullable();
+        Schema::create('departments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('kode_emp')->nullable()->constrained('users');
+            $table->text('department');
+            $table->text('title');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('departments');
     }
 };

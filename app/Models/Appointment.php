@@ -17,11 +17,11 @@ class   Appointment extends Model
     ];
 
     public function employee() {
-        return $this->belongsTo(Employee::class, 'kode_emp');
+        return $this->belongsTo(User::class, 'kode_emp');
     }
 
     public function visitor() {
-        return $this->belongsTo(Visitor::class, 'user_id');
+        return $this->belongsTo(User::class, 'visitor_id');
     }
     public function visit(): HasMany
     {

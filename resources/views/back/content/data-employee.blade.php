@@ -80,7 +80,7 @@
                                     </td>
                                     <td>
                                         <p class="text-xs font-weight-bold mb-0">{{__($employee->phone)}}</p>
-                                        {{--                                    <p class="text-xs text-secondary mb-0">Organization</p>--}}
+                                        <p class="text-xs text-secondary mb-0">{{__($employee->department->department)}}</p>
                                     </td>
                                     <td class="align-middle text-center text-sm">
                                         @if(!$employee->is_blocked)
@@ -91,7 +91,7 @@
                                     </td>
                                     <td class="align-middle text-center">
                                         <span
-                                            class="text-end text-secondary text-xs font-weight-bold">{{__($employee->department)}}</span>
+                                            class="text-end text-secondary text-xs font-weight-bold">{{__($employee->department->department)}}</span>
                                         <p class="text-xs text-secondary mb-0">{{__($employee->title)}}</p>
                                     </td>
 

@@ -37,7 +37,7 @@
                             const p = $('<p>').addClass('card-text').text(val.purpose);
                             divCardBody.append(h6, p);
 
-                            @auth('employee')
+                            @if(auth()->user()->role_id !== 4)
                             const form = $('<form>')
                                 .attr('action', `appointment/update-approve/${val.id}`)
                                 .attr('method', 'post')
@@ -47,7 +47,7 @@
                             form.append(csrf,method, button);
                             form.on('submit', approve)
                             divCardBody.append(form);
-                            @endauth
+                            @endif
                             divCard.append(divCardBody);
                             divSection.append(divCard);
 
@@ -62,10 +62,11 @@
                     });
                 }
                 loadData();
+
                 window.Echo.channel("Appointment").listen(".appointment", (e) => {
-                    console.log(e.data)
                     container.empty(); // kosongkan container terlebih dahulu sebelum mengambil data yang baru
                     loadData();
+                    console.log(e)
                 });
 
                 const approve = (e) => {

@@ -23,7 +23,7 @@ class Authenticate extends Middleware
                 return route('auth', [
                     'fail' => true,
                     'returnUrl' => $returnUrl,
-                ],);
+                ]);
             }
         }
     }

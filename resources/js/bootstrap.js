@@ -25,34 +25,33 @@ import Pusher from "pusher-js";
 
 window.Pusher = Pusher;
 window.Echo = new Echo({
-    // broadcaster: "pusher",
-    // key: import.meta.env.VITE_PUSHER_APP_KEY,
     wsHost: window.location.hostname,
-    // // wsHost: import.meta.env.VITE_PUSHER_HOST
-    // //     ? import.meta.env.VITE_PUSHER_HOST
-    // //     : `ws-${import.meta.env.VITE_PUSHER_APP_CLUSTER}.pusher.com`,
-    // wsPort: import.meta.env.VITE_PUSHER_PORT ?? 80,
-    // // wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
-    // // forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? "https") === "https",
-    // forceTLS: false,
-    // enabledTransports: ["ws", "wss"],
-    // cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER, //added this line
-
     broadcaster: 'pusher',
     key: import.meta.env.VITE_PUSHER_APP_KEY,
-    // wsHost: import.meta.env.VITE_PUSHER_HOST ?? `ws-${import.meta.env.MIX_PUSHER_APP_CLUSTER}.pusher.com`,
     wsPort: import.meta.env.VITE_PUSHER_PORT ?? 80,
     wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
     enabledTransports: ['ws', 'wss'],
     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER, //added this line
+    // auth : {
+    //     headers: {
+    //
+    //     }
+    // }
 });
 
 window.addEventListener("DOMContentLoaded", (e) => {
         window.Echo
-            .channel("m")
-            .listen(".t", (e) => {
-                console.log(e.data);
-            });
+            .private('handle-notif')
+            .listen('.handle.notif', (e)=>{
+                console.log(e.data)
+                alert(e.data.firstname)
+            })
+
+        // window.Echo
+        //     .channel("m")
+        //     .listen(".t", (e) => {
+        //         console.log(e.data);
+        //         alert(e.data)
+        //     });
 });
-// Echo.channel('m').listen('.t', ({data})=>alert(data))
