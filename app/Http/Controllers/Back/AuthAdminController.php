@@ -18,10 +18,13 @@ class AuthAdminController extends Controller
             'password' => 'required'
         ]);
 
-        if(auth('employee')->attempt($credential, $request->rememberMe))
-            if((boolean)auth('employee')->user()->is_blocked) {
-                auth('employee')->logout();
+        if(auth()->attempt($credential, $request->rememberMe))
+            if((boolean)auth()->user()->is_blocked) {
+                auth()->logout();
                 return to_route('admin-auth.index')->with('error', 'your account has been blocked!');
+            }
+            if(auth()->user()->role_id != 4){
+                return to_route('admin-auth.index')->with('error', 'Only admin can access this page!');
             }
             return to_route('admin.dashboard');
 

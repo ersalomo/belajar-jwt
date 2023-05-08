@@ -1,26 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{
-    UserController,
-    ArticleController,
-    ArticleCommentController,
-};
-use App\Http\Controllers\{
-    Api\UserController as UserApiController
-};
 
-Route::group(
-    [
-        'as' => 'api.',
-    ],
-    function ($router) {
-        Route::post('login', [UserApiController::class, 'login'])->name('login');
-        Route::post('register', [UserApiController::class, 'register'])->name('register');
-        Route::post('logout', [UserApiController::class, 'logout'])->name('logout');
-        Route::get('profile/me', [UserApiController::class, 'me'])->name('profile');
-    }
-);
 
 // Route::group([
 //     'middleware' => ['auth:api'],

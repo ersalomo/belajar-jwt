@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use const http\Client\Curl\AUTH_ANY;
 
 class RedirectIfAuthenticated
 {
@@ -23,6 +24,9 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
         foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check() and Auth::user()->role_id == 1) {
+                return redirect(RouteServiceProvider::HOME_ADMIN);
+            }
             if (Auth::guard($guard)->check()) {
                 return redirect(RouteServiceProvider::HOME);
             }
