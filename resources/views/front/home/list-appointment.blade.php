@@ -23,7 +23,7 @@
                 const loadData = () => {
                     $.get('{{ route('home.appointment.lists') }}', function ({data}, status) {
                         $.each(data, function (index, val) {
-                            const divSection = $('<div>').addClass('section mt-2');
+                            const divSection = $('<div>').addClass('section mt-2 ');
                             let divCard;
                             if (val.status === 'pending') {
                                 divCard = $('<div>').addClass('card bg-warning');
@@ -36,7 +36,8 @@
                             const h6 = $('<h6>').addClass('card-subtitle').text(`#APPOINTMENT ${index+1} ${val.status}`);
                             const p = $('<p>').addClass('card-text').text(val.purpose);
                             divCardBody.append(h6, p);
-
+                            divCardBody.hover(function() {$(this).css('cursor','pointer');});
+                            divCardBody.on('click', (e)=> {(window.location.href = 'detail-appointment/' + val.id)})
                             @if(auth()->user()->role_id !== 4)
                             const form = $('<form>')
                                 .attr('action', `appointment/update-approve/${val.id}`)

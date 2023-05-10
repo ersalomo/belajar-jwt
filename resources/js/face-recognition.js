@@ -62,7 +62,9 @@ const faceRecognition = () => {
         }
 
         faceapi.matchDimensions(canvas, displaySize)
+        let isFaceDetectionActive = true
         const runFaceDetection = async () => {
+            if(!isFaceDetectionActive) return;
             const detections = await faceapi
                 .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
                 .withFaceLandmarks()
@@ -91,7 +93,7 @@ const faceRecognition = () => {
                         const box = resizedFloat32Array.detection.box;
                         const drawBox = new faceapi.draw.DrawBox(box, {label: firstname})
                         drawBox.draw(canvas)
-                        stop()
+                        // stop()
                         const answer = confirm(`This is you ${firstname}`)
                         console.log('exucuting running', answer)
                         if (answer) {
@@ -107,6 +109,7 @@ const faceRecognition = () => {
                                      window.location.href = 'face-verified?id_visit=' + idVisit
                                  })
                                  .catch(e => console.log(e))
+                            isFaceDetectionActive  = false
                         }else{
                             start()
                         }
@@ -120,11 +123,10 @@ const faceRecognition = () => {
           intervalId = setInterval(runFaceDetection, 1000)
             console.log(intervalId)
         }
-        start()
         function stop() {
             clearInterval(intervalId)
         }
-
+        setTimeout(start, 1000)
     })
 }
 

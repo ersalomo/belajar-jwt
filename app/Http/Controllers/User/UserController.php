@@ -72,4 +72,12 @@ class UserController extends Controller
         }
         session()->flash('error', ' password tidak sesuai');
     }
+    public function showProfile(Request $request) {
+        return view('front.home.profile');
+    }
+    public function logout(Request $request) {
+        auth()->logout();
+        $request->session()->flush();
+        return to_route('auth');
+    }
 }

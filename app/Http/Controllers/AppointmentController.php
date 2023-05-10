@@ -117,13 +117,13 @@ class AppointmentController extends Controller
      * the purpose is to approve the appointment and
      * insert data to visits table
      */
-    public function approveAppointment(Appointment $appoinment)
+    public function approveAppointment(Appointment $appointment)
     {
-        $isAppproved = $appoinment["status"] != "pending";
+        $isAppproved = $appointment["status"] != "pending";
         if ($isAppproved) {
-            $appoinment->update(['status' => 'pending']);
+            $appointment->update(['status' => 'pending']);
         }else{
-             $appoinment->update(['status' => 'approved']);
+             $appointment->update(['status' => 'approved']);
         }
         AppointmentCreated::dispatch(auth()->user());
         // insert into table visits
@@ -153,7 +153,9 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        //
+        return view('front.home.detail-appointment', [
+            'appointment' => $appointment
+        ]);
     }
 
     /**
