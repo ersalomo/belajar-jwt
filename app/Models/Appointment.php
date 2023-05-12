@@ -25,6 +25,6 @@ class   Appointment extends Model
     }
     public function visit(): HasMany
     {
-        return $this->hasMany(Visit::class);
+        return $this->hasMany(Visit::class, 'id_appmt');
     }
 }

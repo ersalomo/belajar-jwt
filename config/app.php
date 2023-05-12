@@ -198,11 +198,10 @@ return [
 
         BeyondCode\LaravelWebSockets\WebSocketsServiceProvider::class,
 
-        Yajra\DataTables\DataTablesServiceProvider::class,
-        Yajra\DataTables\ButtonsServiceProvider::class,
-        Yajra\DataTables\EditorServiceProvider::class,
-
-
+//        Yajra\DataTables\DataTablesServiceProvider::class,
+//        Yajra\DataTables\ButtonsServiceProvider::class,
+//        Yajra\DataTables\EditorServiceProvider::class,
+            Maatwebsite\Excel\ExcelServiceProvider::class
 
     ],
 
@@ -222,6 +221,7 @@ return [
         'WebSockets' => BeyondCode\LaravelWebSockets\Facades\WebSockets::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
 
 ];

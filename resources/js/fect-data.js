@@ -10,9 +10,9 @@ const getVisitors = async () => {
     }
 }
 
-const getVisitorsHavaAppointment = async () => {
+const getVisitorsHaveAppointment = async () => {
     try {
-        const res = await axios.get('/appointment-visitors')
+        const res = await axios.get('/oa/appointment-visitors')
         const { data } = res.data
         return data
     }catch (e) {
@@ -20,12 +20,12 @@ const getVisitorsHavaAppointment = async () => {
     }
 }
 
-const postVisitToCheckin = async (data) => await axios.post('/post-visit', data)
+const postVisitToCheckin = async (data) => await axios.post('/oa/post-visit', data)
 
 
 
 export {
     getVisitors,
-    getVisitorsHavaAppointment,
+    getVisitorsHaveAppointment,
     postVisitToCheckin
 }

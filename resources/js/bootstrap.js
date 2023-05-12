@@ -45,7 +45,7 @@ window.addEventListener("DOMContentLoaded", (e) => {
             .private('handle-notif')
             .listen('.handle.notif', (e)=>{
                 console.log(e.data)
-                alert(e.data.firstname)
+                // alert(e.data.firstname)
             })
 
         // window.Echo

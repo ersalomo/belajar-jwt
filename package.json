@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "run-all": "npm-run-all --parallel serve dev socket",
+    "all": "npm-run-all --parallel serve dev socket",
     "build": "vite build",
       "serve": "php artisan serve",
       "dev": "vite",

@@ -1,12 +1,11 @@
 import * as faceapi from 'face-api.js'
 import {
     getVisitors,
-    getVisitorsHavaAppointment,
+    getVisitorsHaveAppointment,
     postVisitToCheckin
 } from "./fect-data";
 
 const video = document.getElementById('video');
-
 const startWebCam = () =>  {
     navigator.mediaDevices.getUserMedia({
         video: true,
@@ -21,7 +20,8 @@ const startWebCam = () =>  {
 
 const getLabeledFaceDescriptions = async () => {
     // const labels = await getVisitors()
-    const labels = await getVisitorsHavaAppointment()
+    console.log(await getVisitorsHaveAppointment())
+    const labels = await getVisitorsHaveAppointment()
     return Promise.all(
         labels.map(async (label) => {
             const {id, firstname, email, picture } = label.visitor
@@ -30,7 +30,7 @@ const getLabeledFaceDescriptions = async () => {
                 Object.assign(label.visitor, {idAppointment})
             )
             const descriptions = [];
-            const img = await faceapi.fetchImage(`.${picture}`)
+            const img = await faceapi.fetchImage(`${picture}`)
             const detections = await faceapi
                 .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
                 // .detectAllFaces(img)
@@ -93,7 +93,7 @@ const faceRecognition = () => {
                         const box = resizedFloat32Array.detection.box;
                         const drawBox = new faceapi.draw.DrawBox(box, {label: firstname})
                         drawBox.draw(canvas)
-                        // stop()
+                        stop()
                         const answer = confirm(`This is you ${firstname}`)
                         console.log('exucuting running', answer)
                         if (answer) {
@@ -120,7 +120,7 @@ const faceRecognition = () => {
 
         let intervalId
         function start() {
-          intervalId = setInterval(runFaceDetection, 1000)
+          intervalId = setInterval(runFaceDetection, 2000)
             console.log(intervalId)
         }
         function stop() {

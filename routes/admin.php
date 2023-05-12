@@ -8,11 +8,12 @@ use App\Http\Controllers\Back\{
     DataAppointmentController,
     DataEmployeeController,
     VisitController,
-    DashboardController
+    DashboardController,
+    DapartmentController
 };
 
 Route::group([
-    'middleware' => ['guest'],
+    'middleware' => ['guest:web'],
     'prefix' => 'auth',
     'as' => 'admin-auth.'
 ], function () {
@@ -47,6 +48,13 @@ Route::group([
             //Visitation
 
             Route::resource('visit', VisitController::class);
-        });
 
+            Route::controller(VisitController::class)->as('visit.')->group(function (){
+                Route::get('visitation-overview', 'visitationOverview')->name('overview-visitation');
+            });
+
+            Route::controller(DapartmentController::class)->as('department.')->group(function (){
+                Route::get('departments', 'index')->name('index');
+            });
+        });
     });

@@ -23,7 +23,8 @@ class AuthAdminController extends Controller
                 auth()->logout();
                 return to_route('admin-auth.index')->with('error', 'your account has been blocked!');
             }
-            if(auth()->user()->role_id != 4){
+        $id_role_admin = 1;
+            if(auth()->user()->role_id != $id_role_admin){
                 return to_route('admin-auth.index')->with('error', 'Only admin can access this page!');
             }
             return to_route('admin.dashboard');

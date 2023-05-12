@@ -16,7 +16,6 @@ Route::group([
 ], function () {
     Route::view('/auth', 'front.auth.authentication');
 });
-Route::get('/', fn() => to_route('home.home-user'));
 
 Route::group([
     'middleware' => ['auth:web'],
@@ -41,19 +40,19 @@ Route::group([
     });
 
     Route::controller(AppointmentController::class)->group(function () {
-        Route::get('list-appointment',  'index')->name('list-appointment');
+        Route::get  ('list-appointment',  'index')->name('list-appointment');
         Route::post('appointment', 'store')->name('appointment.store');
-        Route::get('appointment', 'create')->name('appointment.create');
-        Route::get('detail-appointment/{appointment}', 'show')->name('appointment.show');
-        Route::get('get-appointments', 'getAppointmentsCurrentUser')->name('appointment.lists');
+        Route::get  ('appointment', 'create')->name('appointment.create');
+        Route::get  ('detail-appointment/{appointment}', 'show')->name('appointment.show');
+        Route::get  ('get-appointments', 'getAppointmentsCurrentUser')->name('appointment.lists');
         Route::post('appointment/update-approve/{appointment}', 'approveAppointment')->name('update-approve');
-        Route::get('appointment-visitors', 'getVisitorHasAppointment')->name('visitors');
+        Route::get  ('appointment-visitors', 'getVisitorHasAppointment')->name('visitors');
     });
 
     Route::controller(FaceDetection::class)->group( function () {
-        Route::get('face-detection', 'index')->name('face-detection');
+        Route::get  ('face-detection', 'index')->name('face-detection');
         Route::post('face-detection', 'store')->name('store.face-detection');
-        Route::get('labeled-faces', 'labeledFaces')->name('labeled-faces');
-        Route::get('face-verified',  'faceVerify')->name('face-verified');
+        Route::get  ('face-labeled', 'labeledFaces')->name('labeled-faces');
+        Route::get  ('face-verified',  'faceVerify')->name('face-verified');
     });
 });

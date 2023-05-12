@@ -38,7 +38,7 @@
                 <p>Nama: Sphia</p>
             </div>
             <div style="align-items: center; justify-content: center">
-                <img src="storage/icons/checkmark.gif" alt="ersalomo" width="400vw" height="400vh" />
+                <img src="/storage/icons/checkmark.gif" alt="ersalomo" width="400vw" height="400vh" />
                 <p>Checkin: Rabu 09.45 WIB </p>
             </div>
         </div>

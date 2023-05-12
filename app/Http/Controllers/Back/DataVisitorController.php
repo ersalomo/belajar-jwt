@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Back;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\{User};
-use App\Http\Requests\VisitorRequest;
+use App\Http\Requests\UserReq;
 use Illuminate\Support\Facades\Storage;
 
 class DataVisitorController extends Controller
@@ -20,7 +20,7 @@ class DataVisitorController extends Controller
         return view('back.content.add-data.create-visitor');
     }
 
-    public function store(VisitorRequest $request) {
+    public function store(UserReq $request) {
         $visitor = $request->all();
         if ($request->hasFile('picture')) {
             $path = Storage::putFile('public/images/employee', $request->file('picture'));
