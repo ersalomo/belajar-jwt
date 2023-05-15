@@ -31,7 +31,7 @@
                     data: {
                         labels: ["Feb","May", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                         datasets: [{
-                            label: "Mobile apps",
+                            label: "Visitors",
                             tension: 0.4,
                             pointRadius: 0,
                             borderColor: "#5e72e4",

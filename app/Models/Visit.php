@@ -15,10 +15,13 @@ class Visit extends Model
     protected $with = [
         "appointment"
     ];
+    protected $casts = [
+      'checkout' => 'boolean'
+    ];
 
+    // seharusnya relasi 1:1 karena tidak bisa 2 appointment dalam satu kunjungan
     public function appointment(): BelongsTo {
-
-        return $this->belongsTo(Appointment::class, 'id_appmt', 'id');
+        return $this->belongsTo(Appointment::class, 'id_appmt');
     }
 
 }

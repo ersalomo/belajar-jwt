@@ -2,7 +2,8 @@ import * as faceapi from 'face-api.js'
 import {
     getVisitors,
     getVisitorsHaveAppointment,
-    postVisitToCheckin
+    postVisitToCheckin,
+    checkInVisit
 } from "./fect-data";
 
 const video = document.getElementById('video');
@@ -81,8 +82,8 @@ const faceRecognition = () => {
             labeledDescriptors.forEach((label) => {
 
                 const faceDescriptor = label.descriptors[0]
-                const appointment = JSON.parse(label.label)
-                const {id, firstname, email, idAppointment} = appointment
+                const visitor = JSON.parse(label.label)
+                const {id, firstname, email, idAppointment} = visitor
                 const resizedFloat32Array = resizedDetections[0]
                 if (resizedFloat32Array) {
                     const bestMatch = faceapi.euclideanDistance(
@@ -95,20 +96,13 @@ const faceRecognition = () => {
                         drawBox.draw(canvas)
                         stop()
                         const answer = confirm(`This is you ${firstname}`)
-                        console.log('exucuting running', answer)
                         if (answer) {
-                             postVisitToCheckin({
-                                "id_appmt"      : idAppointment,
-                                 "visit_date"   : "2023-04-26",
-                                 "checkin"      : 1,
-                                 "checkout"     : 0,
-                                 "notes"        : "",
-                            })
-                                 .then((res) => {
-                                     const {id: idVisit} = res.data.visit
-                                     window.location.href = 'face-verified?id_visit=' + idVisit
-                                 })
-                                 .catch(e => console.log(e))
+                            checkInVisit(idAppointment,{
+                                checkin: 1
+                            }).then((res)=>{
+                                const idVisit = res.data.data.id
+                                window.location.href = '/oa/face-verified?id_visit=' + idVisit;
+                            }).catch(err => console.log(err))
                             isFaceDetectionActive  = false
                         }else{
                             start()
@@ -120,7 +114,7 @@ const faceRecognition = () => {
 
         let intervalId
         function start() {
-          intervalId = setInterval(runFaceDetection, 2000)
+          intervalId = setInterval(runFaceDetection, 800)
             console.log(intervalId)
         }
         function stop() {

@@ -20,12 +20,14 @@ const getVisitorsHaveAppointment = async () => {
     }
 }
 
-const postVisitToCheckin = async (data) => await axios.post('/oa/post-visit', data)
+const postVisitToCheckin = async (data) => axios.post('/oa/post-visit', data)
+const checkInVisit = async (id, data) => axios.post(`/oa/checkin-visit/${id}`, data)
 
 
 
 export {
     getVisitors,
     getVisitorsHaveAppointment,
-    postVisitToCheckin
+    postVisitToCheckin,
+    checkInVisit
 }

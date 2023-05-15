@@ -13,7 +13,7 @@
     <meta name="description" content="Management Visitor">
     <meta name="keywords" content="bootstrap 5, html"/>
     @include('front.layouts.styles.css')
-
+    <livewire:styles/>
 </head>
 
 <body>

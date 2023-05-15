@@ -24,7 +24,7 @@ return new class extends Migration
             $table->text('picture')->nullable();
             $table->boolean('gender')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->text('remember_token');
+            $table->text('remember_token')->nullable();
             $table->string('password');
             $table->foreignId('role_id')
                 ->default(4)

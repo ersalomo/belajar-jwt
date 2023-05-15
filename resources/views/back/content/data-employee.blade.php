@@ -1,5 +1,10 @@
 <x-back.app-layout page-title="Data Employee">
-
+    @if(session()->has('success'))
+        <div class="alert alert-success">
+            <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+            <span class="text text-bold text-xs">{{session()->get('success')}}</span>
+        </div>
+    @endif
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
@@ -46,7 +51,10 @@
                                                 <path d="M4 20l1.768 -1.768"></path>
                                             </svg>
                                         </a>
-                                        <a href="javascript:void();" class="btn btn-bitcoin btn-xs btn-danger" data-toggle="tooltip"
+                                        <form class="d-inline-block" action="{{route('admin.delete-employee', $employee->id)}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                        <button class="btn btn-bitcoin btn-xs btn-danger" data-toggle="tooltip"
                                                data-original-title="Edit user">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -56,7 +64,9 @@
                                                 <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
                                                 <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
                                             </svg>
-                                        </a>
+                                        </button>
+                                        </form>
+
                                         <a href="javascript:void();" class="btn btn-bitcoin btn-xs btn-info" data-toggle="tooltip"
                                                data-original-title="Edit user">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -80,7 +90,7 @@
                                     </td>
                                     <td>
                                         <p class="text-xs font-weight-bold mb-0">{{__($employee->phone)}}</p>
-                                        <p class="text-xs text-secondary mb-0">{{__($employee->department->department)}}</p>
+                                        <p class="text-xs text-secondary mb-0">{{__($employee->department?->department ?? 'Not set')}}</p>
                                     </td>
                                     <td class="align-middle text-center text-sm">
                                         @if(!$employee->is_blocked)
@@ -91,7 +101,7 @@
                                     </td>
                                     <td class="align-middle text-center">
                                         <span
-                                            class="text-end text-secondary text-xs font-weight-bold">{{__($employee->department->department)}}</span>
+                                            class="text-end text-secondary text-xs font-weight-bold">{{__($employee->department?->department  ?? 'Not set')}}</span>
                                         <p class="text-xs text-secondary mb-0">{{__($employee->title)}}</p>
                                     </td>
 

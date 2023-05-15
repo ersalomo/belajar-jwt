@@ -11,7 +11,7 @@
         </a>
     </div>
     <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+    <div class="" >
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link {{request()->is('admin/dashboard') ? 'active' : ''}}"
@@ -94,20 +94,20 @@
                         <li class="nav-item ">
                             <a class="nav-link " data-bs-toggle="collapse" aria-expanded="false" href="#usersExample">
                                 <span class="sidenav-mini-icon"> U </span>
-                                <span class="sidenav-normal"> Users <b class="caret"></b></span>
+                                <span class="sidenav-normal"> visitation status <b class="caret"></b></span>
                             </a>
                             <div class="collapse" id="usersExample">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link " href="../../pages/pages/users/reports.html">
-                                            <span class="sidenav-mini-icon text-xs"> R </span>
-                                            <span class="sidenav-normal"> Reports </span>
+                                        <a class="nav-link " href="">
+                                            <span class="sidenav-mini-icon text-xs"> C </span>
+                                            <span class="sidenav-normal">Checkin</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link " href="../../pages/pages/users/new-user.html">
+                                        <a class="nav-link " href="">
                                             <span class="sidenav-mini-icon text-xs"> N </span>
-                                            <span class="sidenav-normal"> New User </span>
+                                            <span class="sidenav-normal"> Checkout </span>
                                         </a>
                                     </li>
                                 </ul>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class   Appointment extends Model
@@ -13,7 +14,8 @@ class   Appointment extends Model
 
     protected $with = [
       'employee',
-      'visitor'
+      'visitor',
+        'visit'
     ];
 
     public function employee() {
@@ -23,8 +25,8 @@ class   Appointment extends Model
     public function visitor() {
         return $this->belongsTo(User::class, 'visitor_id');
     }
-    public function visit(): HasMany
+    public function visit(): BelongsTo
     {
-        return $this->hasMany(Visit::class, 'id_appmt');
+        return $this->belongsTo(Visit::class, 'id_appmt');
     }
 }

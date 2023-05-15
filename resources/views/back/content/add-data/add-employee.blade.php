@@ -78,6 +78,24 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="phone" class="form-control-label">Role</label>
+                        <select class="form-control" name="role_id">
+                            <option value="0" class="text-black">--choose--</option>
+                            @foreach(\App\Models\Role::all() as $role)
+                            <option value="{{$role->id}}" class="text-black">{{$role->role_name}}</option>
+                            @endforeach
+                        </select>
+                        @error('role_id')
+                        <span class="text-danger fa-sm">
+                               {{$message}}
+                           </span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <label for="pic" class="form-control-label">Picture</label>
                 <input class="form-control" name="picture" type="file" value="" id="pic">
@@ -85,8 +103,8 @@
                 <span class="text-danger fa-sm">{{$message}}</span>
                 @enderror
             </div>
-            <div class="row">
-
+            @if(false)
+            <div class="row" id="department-field">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="department" class="form-control-label">Department</label>
@@ -110,6 +128,8 @@
                     </div>
                 </div>
             </div>
+            @endif
+
             <div class="form-group">
                 <label for="password" class="form-control-label">Password</label>
                 <input class="form-control" placeholder="password..." type="password" name="password" value="" id="password">

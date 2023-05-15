@@ -34,6 +34,7 @@ class UserReq extends FormRequest
 //            'picture'    => 'mimes:image/png,image/jpeg,image/jpg|file|max:2048',
             'password'   => 'required|string',
             'is_blocked' => 'string',
+            'role_id' => 'in:1,2,3,4'
         ];
     }
     public function messages()
@@ -42,6 +43,7 @@ class UserReq extends FormRequest
             '*.required' => 'Kolom ini tidak boleh kosong!',
             'picture.mimes' => 'File harus berupa gambar',
             '*.string' => 'Kolom ini harus berupa string',
+            'role_id.in' => 'give value for role'
         );
     }
 }

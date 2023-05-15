@@ -13,7 +13,6 @@ class VisitController extends Controller
     public function index(Request $request)
     {
         $visitations = Visit::all();
-
         return view('back.content.visitaion', [
             'visitations' => $visitations
         ]);
@@ -54,24 +53,28 @@ class VisitController extends Controller
         }
     }
 
-    public function checkin(Request $request, $visitor_id) {
+    public function checkin(Request $request, $idAppointment) { // today
         $data = $request->validate([
             'checkin' => 'required',
         ]);
-        Visit::update([
-            'checkin' => $data['checkin'],
-        ]);
+        $visitation = Visit::where('id_appmt', $idAppointment)->first();
+
+        $visitation->update(['checkin' => $data['checkin']]);
+
         return response()->json([
             'status' => 'success',
+            'data' => $visitation
         ]);
     }
 
-    public function checkout(Request $request, $visitor_id) {
+    public function checkout(Request $request, $idAppointment) {
         $data = $request->validate([
             'checkout' => 'required',
             'notes' => 'nullable|string',
         ]);
-        Visit::update([
+
+        $visitation = Visit::where('id_appmt', $idAppointment)->first();
+        $visitation->update([
             'checkout' => $data['checkout'],
             'notes' => $data['notes'],
         ]);

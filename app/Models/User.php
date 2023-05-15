@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -29,6 +30,8 @@ class User extends Authenticatable
         'picture',
         'password',
         'is_blocked',
+        'remember_token',
+        'role_id'
     ];
 
     /**
@@ -52,7 +55,8 @@ class User extends Authenticatable
     ];
 
     protected $with = [
-        'department'
+        'department',
+//        'appointmentEmp'
     ];
 
     protected function firstname(): Attribute
@@ -78,7 +82,7 @@ class User extends Authenticatable
 
     public function department()
     {
-        return $this->hasOne(Department::class ,'kode_emp');
+        return $this->hasOne(Department::class, 'kode_emp');
     }
 
     public function kodeEmp()
@@ -91,8 +95,19 @@ class User extends Authenticatable
         return $this->hasMany(Appointment::class, 'visitor_id');
     }
 
-    public function appointmentEmp(): HasMany
+    public function appointmentEmp(): HasOne
     {
-        return $this->hasMany(Appointment::class, 'kode_emp');
+        return $this->hasOne(Appointment::class, 'kode_emp');
+    }
+
+    public function isVisitor(): bool
+    {
+        $user = auth()->user();
+        if ($user->role_id == 4) {
+            $id_appt = auth()->user()->appointmentVisitor()->first()["id"];
+            $visitExits = Visit::where('id_appmt', $id_appt)->first();
+            return boolval($visitExits);
+        }
+        return false;
     }
 }

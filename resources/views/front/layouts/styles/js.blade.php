@@ -27,4 +27,6 @@
             }
         })
     </script>
+    <livewire:scripts/>
     @stack('scripts')
+

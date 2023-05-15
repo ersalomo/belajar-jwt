@@ -12,7 +12,9 @@ class DataVisitorController extends Controller
 {
     public function index(Request $request) {
         return view('back.content.data-visitor', [
-            'visitors' => User::where('role_id',4)->paginate(20),
+            'visitors' => User::where('role_id',4)
+                ->latest()
+                ->paginate(20),
         ]);
     }
 

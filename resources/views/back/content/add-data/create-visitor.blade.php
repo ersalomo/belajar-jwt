@@ -77,7 +77,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="add" class="form-control-label">Address</label>
-                        <input class="form-control" name="address" placeholder="address..." type="tel" value=""
+                        <input class="form-control" name="address" placeholder="address..." type="text" value=""
                                id="add">
                         @error('address')
                         <span class="text-danger fa-sm">

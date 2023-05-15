@@ -39,16 +39,6 @@
                         </svg>
                     </a>
                 </div>
-                {{--                <div class="col card py-1">--}}
-                {{--                    <button class="btn">--}}
-                {{--                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-writing" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">--}}
-                {{--                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>--}}
-                {{--                            <path d="M20 17v-12c0 -1.121 -.879 -2 -2 -2s-2 .879 -2 2v12l2 2l2 -2z"></path>--}}
-                {{--                            <path d="M16 7h4"></path>--}}
-                {{--                            <path d="M18 19h-13a2 2 0 1 1 0 -4h4a2 2 0 1 0 0 -4h-3"></path>--}}
-                {{--                        </svg>--}}
-                {{--                    </button>--}}
-                {{--                </div>--}}
                 <div class="col card py-1">
                     <a class="btn" href="{{route('home.list-visitations')}}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users-group"
@@ -67,7 +57,7 @@
             </div>
             <div class="row pt-2 px-4 pb-0 gap-4">
                 <div class="col card py-1">
-                    <a class="btn">
+                    <a class="btn" href="{{route('home.approval.index')}}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-check"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -78,8 +68,38 @@
                         </svg>
                     </a>
                 </div>
-                <div class="col card py-1">
-                    <a class="btn" href="{{route('home.face-detection')}}">
+                @if(auth()->user()->isVisitor())
+                <div class="card py-1 col-md-2 col-sm-2">
+                    <a class="btn" href="">
+                        <span class="text-success">Checkout
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled"
+                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                             fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                             <path
+                                 d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z"
+                                 stroke-width="0" fill="currentColor"></path>
+                        </svg>
+                    </span>
+                    </a>
+                </div>
+                <div class="card py-1 col-md-2 col-sm-2">
+                    <a class="btn" href="">
+                       <span class="text-danger">Not checkout
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-letter-x"
+                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                 fill="none" stroke-linecap="round" stroke-linejoin="round">
+                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                               <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                               <path d="M10 8l4 8"></path>
+                               <path d="M10 16l4 -8"></path>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+                @endif
+                <div class="col-sm-2 col-md-4 card py-1">
+                    <a class="btn" href="{{route('home.face-recog')}}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-laptop"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -163,7 +183,8 @@
     </div>
     <div id="verified-visitor" class="toast-box toast-top">
         <div class="in">
-            <ion-icon name="checkmark-circle" class="text-success md hydrated" role="img" aria-label="checkmark circle"></ion-icon>
+            <ion-icon name="checkmark-circle" class="text-success md hydrated" role="img"
+                      aria-label="checkmark circle"></ion-icon>
             <div class="text">
                 You're already verified
             </div>
@@ -172,7 +193,8 @@
     </div>
     <div id="not-verified-visitor" class="toast-box toast-top">
         <div class="in">
-            <ion-icon name="close-outline" class="text-danger md hydrated" role="img" aria-label="close-outline"></ion-icon>
+            <ion-icon name="close-outline" class="text-danger md hydrated" role="img"
+                      aria-label="close-outline"></ion-icon>
             <div class="text">
                 You're not verified yet
             </div>

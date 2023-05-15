@@ -23,8 +23,11 @@ class FaceDetectionController extends Controller
     public function faceVerify(Request $request) {
         $id = $request->get('id_visit');
         $data = Visit::find($id);
-        return view('face-recognation.visitor-verified',[
+        return view('front.home.face-recog.visitor-verified',[
             'data' => $data
         ]);
+    }
+    public function faceRecog() {
+        return view('front.home.face-recog.face-recognation');
     }
 }
