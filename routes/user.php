@@ -1,13 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\FaceDetectionController as FaceDetection;
 use App\Http\Controllers\{
     User\UserController,
     Back\VisitController,
     Back\ApprovalVisitationController,
-    HomePageController
+    HomePageController,
+    FaceDetectionController as FaceDetection,
+    AppointmentController
 };
 
 
