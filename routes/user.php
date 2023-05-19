@@ -11,6 +11,7 @@ use App\Http\Controllers\{
 };
 
 
+Route::get('/', fn() => redirect()->to('/auth'));
 Route::group([
     'middleware' => ['guest:web'],
     'as' => 'auth'
@@ -24,42 +25,42 @@ Route::group([
     'as' => 'home.'
 ], function () {
 
-    Route::controller(HomePageController::class)->group(function (){
+    Route::controller(HomePageController::class)->group(function () {
         Route::get('/', 'index')->name('home-user');
     });
 
     Route::controller(VisitController::class)->group(function () {
         Route::post('post-visit', 'store')->name('post-visit');
         Route::post('checkin-visit/{id}', 'checkin')->name('checkin-visit');
-        Route::get  ('list-visitations', 'listVisitationVisitors')->name('list-visitations');
+        Route::get('list-visitations', 'listVisitationVisitors')->name('list-visitations');
     });
 
     Route::controller(UserController::class)->group(function () {
-        Route::get ('me/profile', 'showProfile')->name('me.profile');
-        Route::put ('me/change-password', 'changePassword')->name('me.change-password');
+        Route::get('me/profile', 'showProfile')->name('me.profile');
+        Route::put('me/change-password', 'changePassword')->name('me.change-password');
         Route::post('change-profile-picture', 'changeProfile')->name('change-profile-picture');
         Route::post('logout', 'logout')->name('logout');
     });
 
     Route::controller(AppointmentController::class)->group(function () {
-        Route::get  ('list-appointment',  'index')->name('list-appointment');
+        Route::get('list-appointment', 'index')->name('list-appointment');
         Route::post('appointment', 'store')->name('appointment.store');
-        Route::get  ('appointment', 'create')->name('appointment.create');
-        Route::get  ('detail-appointment/{appointment}', 'show')->name('appointment.show');
-        Route::get  ('get-appointments', 'getAppointmentsCurrentUser')->name('appointment.lists');
-        Route::post('appointment/update-approve/{appointment}', 'approveAppointment')->name('update-approve');
-        Route::get  ('appointment-visitors', 'getVisitorHasAppointment')->name('visitors');
+        Route::get('appointment', 'create')->name('appointment.create');
+        Route::get('detail-appointment/{appointment}', 'show')->name('appointment.show');
+        Route::get('get-appointments', 'getAppointmentsCurrentUser')->name('appointment.lists');
+        Route::post('appointment/update-approve/{appointment}', 'approveAppointment')->name('appointment.update-approve');
+        Route::get('appointment-visitors', 'getVisitorHasAppointment')->name('visitors');
     });
 
-    Route::controller(FaceDetection::class)->group( function () {
-        Route::get  ('face-detection', 'index')->name('face-detection');
+    Route::controller(FaceDetection::class)->group(function () {
+        Route::get('face-detection', 'index')->name('face-detection');
         Route::post('face-detection', 'store')->name('store.face-detection');
-        Route::get  ('face-labeled', 'labeledFaces')->name('labeled-faces');
-        Route::get  ('face-verified',  'faceVerify')->name('face-verified');
-        Route::get  ('face-recog',  'faceRecog')->name('face-recog');
+        Route::get('face-labeled', 'labeledFaces')->name('labeled-faces');
+        Route::get('face-verified', 'faceVerify')->name('face-verified');
+        Route::get('face-recog', 'faceRecog')->name('face-recog');
     });
 
-    Route::controller(ApprovalVisitationController::class)->as('approval.')->group(function (){
+    Route::controller(ApprovalVisitationController::class)->as('approval.')->group(function () {
         Route::get('approval-visitors', 'index')->name('index');
     });
 });

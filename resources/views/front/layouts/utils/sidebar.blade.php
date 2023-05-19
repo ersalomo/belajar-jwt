@@ -3,7 +3,7 @@
         <!-- profile box -->
         <div class="profileBox">
             <div class="image-wrapper">
-                <img src="/front/view29/assets/img/sample/avatar/avatar1.jpg" alt="image"
+                <img src="{{__(auth()->user()->picture)}}" alt="image"
                      class="imaged rounded">
             </div>
             <div class="in">

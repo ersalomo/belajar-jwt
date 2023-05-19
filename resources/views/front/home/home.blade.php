@@ -9,7 +9,6 @@
                         @if(auth()->user()->role_id != 4)
                             {{ __('Kode '.auth()->user()->kodeEmp->kode_emp ?? '') }}
                         @endif
-
                     </h5>
                 </div>
                 <div class="form-check form-switch">
@@ -39,6 +38,7 @@
                         </svg>
                     </a>
                 </div>
+                @if(auth()->user()->role_id !== 4)
                 <div class="col card py-1">
                     <a class="btn" href="{{route('home.list-visitations')}}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users-group"
@@ -54,8 +54,10 @@
                         </svg>
                     </a>
                 </div>
+                @endif
             </div>
             <div class="row pt-2 px-4 pb-0 gap-4">
+            @if(auth()->user()->role_id !==4)
                 <div class="col card py-1">
                     <a class="btn" href="{{route('home.approval.index')}}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-check"
@@ -68,6 +70,7 @@
                         </svg>
                     </a>
                 </div>
+                @endif
                 @if(auth()->user()->isVisitor())
                 <div class="card py-1 col-md-2 col-sm-2">
                     <a class="btn" href="">
@@ -97,7 +100,6 @@
                         </span>
                     </a>
                 </div>
-                @endif
                 <div class="col-sm-2 col-md-4 card py-1">
                     <a class="btn" href="{{route('home.face-recog')}}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-laptop"
@@ -138,6 +140,8 @@
                 </div>
 
             </div>
+            @endif
+
             <div class="row pt-2 px-4 pb-4 gap-4">
                 <div class="col card py-1">
                     <a class="btn">
@@ -151,6 +155,7 @@
                         </svg>
                     </a>
                 </div>
+                @if(auth()->user()->role_id ===4)
                 <div class="col card py-1">
                     @if(auth()->id() != 3)
                         <a class="btn text-primary" onclick="toastbox('verified-visitor', 3500)">
@@ -178,6 +183,8 @@
                         </a>
                     @endif
                 </div>
+                @endif
+
             </div>
         </div>
     </div>

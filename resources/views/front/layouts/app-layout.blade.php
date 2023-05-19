@@ -106,6 +106,9 @@
 </div>
 @include('front.layouts.styles.js')
 @vite(['resources/js/bootstrap.js'])
+<script>
+    // notification('notification-welcome')
+</script>
 </body>
 
 </html>

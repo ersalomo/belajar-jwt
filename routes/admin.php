@@ -12,6 +12,8 @@ use App\Http\Controllers\Back\{
     DapartmentController
 };
 
+Route::get('/', fn() => to_route('admin-auth.index'));
+
 Route::group([
     'middleware' => ['guest:web'],
     'prefix' => 'auth',

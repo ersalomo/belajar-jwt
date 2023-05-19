@@ -40,6 +40,7 @@
             </div>
         </a>
     @endif
+    @if(auth()->user()->role_id !== 3)
     <a href="{{ route('home.list-appointment') }}" class="item">
         <div class="col">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layers-intersect"
@@ -51,6 +52,8 @@
             </svg>
         </div>
     </a>
+    @endif
+
     <a href="#sidebarPanel" class="item" data-bs-toggle="offcanvas">
         <div class="col">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24"

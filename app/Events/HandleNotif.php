@@ -20,9 +20,11 @@ class HandleNotif implements ShouldBroadcast
      * @return void
      */
     public $user;
-    public function __construct($user)
+    private int $idTargetUser;
+    public function __construct($user, $idTargetUser)
     {
         $this->user = $user;
+        $this->idTargetUser = $idTargetUser;
     }
 
     /**
@@ -32,7 +34,7 @@ class HandleNotif implements ShouldBroadcast
      */
     public function broadcastOn(): Channel | array
     {
-        return new PrivateChannel('handle-notif');
+        return new PrivateChannel('handle-notif-' . $this->idTargetUser);
     }
      public function broadcastAs() : string {return 'handle.notif';}
 

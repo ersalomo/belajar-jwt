@@ -2,22 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Appointment, KodeEmp, Visitor};
+use App\Models\{Appointment, KodeEmp, User, Visitor};
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\{
     StoreAppointmentRequest,
     UpdateAppointmentRequest
 };
-use App\Events\{
-    ServerCreated,
-    AppointmentCreated,
-};
+use App\Events\{HandleNotif, ServerCreated, AppointmentCreated};
 use App\Traits\Helper;
 
 class AppointmentController extends Controller
@@ -29,11 +23,8 @@ class AppointmentController extends Controller
      *
      * @return View
      */
-    public function index()
+    public function index() : View
     {
-        $user = auth()->user();
-        ServerCreated::dispatch($user->lastname);
-        AppointmentCreated::dispatch($user->email);
         return view('front.home.list-appointment');
     }
 
@@ -97,7 +88,9 @@ class AppointmentController extends Controller
                 'type' => $request->type,
             ]);
             if ($appointment) {
-                AppointmentCreated::dispatch($user);
+                // send event when visitor create appointment
+                HandleNotif::dispatch(auth()->user(), $emp_id);
+
                 $res = [
                     'success' => 'berhasil',
                     'msg' => 'Appointment berhasil dibuat'
@@ -119,13 +112,16 @@ class AppointmentController extends Controller
      */
     public function approveAppointment(Appointment $appointment)
     {
+//        $emp_id = KodeEmp::where('kode_emp',$appointment->kode_emp)->first()['emp_id'];
+        $visitor = User::find($appointment->visitor_id);
         $isAppproved = $appointment["status"] != "pending";
         if ($isAppproved) {
             $appointment->update(['status' => 'pending']);
         }else{
              $appointment->update(['status' => 'approved']);
         }
-        AppointmentCreated::dispatch(auth()->user());
+        // employee send notif to visitor
+        HandleNotif::dispatch(auth()->user(), $visitor->id);
         // insert into table visits
 //        $visit = Visit::create([
 //            'id_appmt' => $appoinment->id,

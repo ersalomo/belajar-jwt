@@ -10,7 +10,7 @@ class HomePageController extends Controller
 {
     public function index(Request $request) {
          $user = auth()->user();
-        HandleNotif::dispatch($user);
+//        HandleNotif::dispatch($user);
         return view('front.home.home');
     }
 }

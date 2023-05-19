@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Employee;
-use App\Models\Visitor;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
+use Livewire\Redirector;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth as Guard;
 class Auth extends Component
@@ -25,7 +25,7 @@ class Auth extends Component
         'email.email' => 'masukkan alamt email yang valid!',
         'password.required' => 'masukkan password!'
     ];
-    public function mount()
+    public function mount() : void
     {
         $this->returnUrl = request()->returnUrl;
         $this->mode = request()->query('mode', 'login');
@@ -37,7 +37,7 @@ class Auth extends Component
         else return view('livewire.auth.login');
         // return view('livewire.auth');
     }
-    public function loginHandler()
+    public function loginHandler() : Redirector
     {
         $fieldType = filter_var($this->login_id, FILTER_VALIDATE_EMAIL) ? 'username' : 'email';
         $credentials = $this->validate();
@@ -46,6 +46,11 @@ class Auth extends Component
             if( (bool) $user["is_blocked"]) {
                 auth()->logout();
                 return redirect()->route('auth')->with('fail','your account has been blocked');
+            }
+            $role_admin  = 1;
+            if ($user->role_id === $role_admin) {
+                auth()->logout();
+                return redirect()->route('auth')->with('fail','you not may encounter this page');
             }
             return $this->returnUrl === null ?
                 to_route('home.home-user') :

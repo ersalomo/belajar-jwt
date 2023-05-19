@@ -1,5 +1,8 @@
 <x-app-layout pageTitle="List Appointment">
-    <div id="list-appointments"></div>
+    <div class="section-full">
+        <ul id="list-appointments" class="listview image-listview flush">
+        </ul>
+    </div>
     <div id="success-approved" class="toast-box toast-bottom bg-success ">
         <div class="in">
             <div class="text">
@@ -16,81 +19,149 @@
         </div>
         <button type="button" class="btn btn-sm btn-text-light close-button">OK</button>
     </div>
+    <div class="modal fade dialogbox " id="DialogIconedButtonInline" data-bs-backdrop="static" tabindex="-1"
+         style="display: none;" aria-modal="true" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Approve Visitor</h5>
+                </div>
+                <div class="modal-body">
+                    <img src="" class="image" width="45px">
+                    <p>
+                        Are you sure to approve this visitor?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-inline">
+                        <form method="post">
+                            <button class="btn btn-text-info" data-bs-dismiss="modal">
+                                <ion-icon name="checkmark-outline" role="img" class="md hydrated"
+                                          aria-label="checkmark-outline"></ion-icon>
+                                Approve
+                            </button>
+                        </form>
+                        <a href="#" class="btn btn-text-danger" data-bs-dismiss="modal">
+                            <ion-icon name="close-outline" role="img" class="md hydrated"
+                                      aria-label="close-outline"></ion-icon>
+                            Close
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="notification-approve" class="notification-box">
+
+    </div>
     @push('scripts')
         <script>
             $(document).ready(function () {
-                const container = $('#list-appointments');
+                const ul = $('#list-appointments');
+
+                let emp = {}
                 const loadData = () => {
+                    ul.empty();
                     $.get('{{ route('home.appointment.lists') }}', function ({data}, status) {
                         $.each(data, function (index, val) {
-                            const divSection = $('<div>').addClass('section mt-2 ');
-                            let divCard;
-                            if (val.status === 'pending') {
-                                divCard = $('<div>').addClass('card bg-warning');
-                            } else if (val.status === 'rejected') {
-                                divCard = $('<div>').addClass('card bg-danger');
-                            } else {
-                                divCard = $('<div>').addClass('card bg-success');
-                            }
-                            const divCardBody = $('<div>').addClass('card-body');
-                            const h6 = $('<h6>').addClass('card-subtitle').text(`#APPOINTMENT ${index+1} ${val.status}`);
-                            const p = $('<p>').addClass('card-text').text(val.purpose);
-                            divCardBody.append(h6, p);
-                            divCardBody.hover(function() {$(this).css('cursor','pointer');});
-                            divCardBody.on('click', (e)=> {(window.location.href = 'detail-appointment/' + val.id)})
-                            @if(auth()->user()->role_id !== 4)
-                            const form = $('<form>')
-                                .attr('action', `appointment/update-approve/${val.id}`)
-                                .attr('method', 'post')
-                            const csrf = $('<input>').attr('type', 'hidden').attr('name', '_token').val('{{ csrf_token() }}');
-                            const method = $('<input>').attr('type', 'hidden').attr('name', '_method').val('PUT');
-                            const button = $('<button>').attr('type', 'submit').addClass('btn btn-android').text('approve');
-                            form.append(csrf,method, button);
-                            form.on('submit', approve)
-                            divCardBody.append(form);
-                            @endif
-                            divCard.append(divCardBody);
-                            divSection.append(divCard);
+                            emp = val["employee"]
+                            const visitor = val["visitor"];
+                            const li = $('<li>').addClass("");
+                            const item = ` <a href="#" class="item" data-id="${val["id"]}">
+                                <img src="${visitor["picture"]}" alt="image" class="image">
+                                <div class="in">
+                                    <div>
+                                        <input type="hidden" value="${val["id"]}"/>
+                                        <div class="mb-05"><strong>${visitor["firstname"]}</strong></div>
+                                        <div class="text-small mb-05">${val["purpose"]}</div>
+                                        <div class="text-xsmall">${val["created_at"]}</div>
+                                    </div>
+                                    <span class="badge ${val['status'] === 'approved' ? 'badge-primary' : 'badge-danger'} badge-empty"></span>
+                                </div>
+                            </a>`;
 
-                            // Tambahkan animasi ketika menambahkan elemen terakhir pada container
+                            li.html(item);
                             if (index === data.length - 1) {
-                                divSection.hide().appendTo(container).fadeIn('slow');
+                                li.hide().appendTo(ul).fadeIn('slow');
                             } else {
-                                container.append(divSection);
+                                ul.append(li);
                             }
                         });
 
                     });
-                }
+                }; //end
+
                 loadData();
 
-                window.Echo.channel("Appointment").listen(".appointment", (e) => {
-                    container.empty(); // kosongkan container terlebih dahulu sebelum mengambil data yang baru
-                    loadData();
-                    console.log(e)
+                @if(auth()->user()->role_id === 2)
+                let id;
+                $('#list-appointments').on('click', 'li', function (e) {
+                    const visitor = $(this).find('img').attr('src');
+                    id = $(this).find('input').val()
+                    $('#DialogIconedButtonInline').modal('show');
+                    $('#DialogIconedButtonInline img').attr('src', visitor);
                 });
 
-                const approve = (e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        const ths = e.target
-                        $.ajax({
-                            url: ths.action,
-                            method: ths.method,
-                            processData: false,
-                            contentType: false,
-                            dataType: 'json',
-                            success(res){
-                                toastbox('success-approved', 2500)
-                                container.empty()
-                                loadData()
-                            },
-                            error(res){
-                                console.log(res)
-                                toastbox('fail-approved', 2500)
-                            },
-                        })
+                $('#DialogIconedButtonInline').on('submit', 'form', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const url = "/oa/appointment/update-approve/" + id;
+                    const method = "post";
+                    $.ajax({
+                        url,
+                        method,
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
+                        success(res) {
+                            loadData()
+                            toastbox('success-approved', 2500);
+                        },
+                        error(res) {
+                            console.log(res);
+                            toastbox('fail-approved', 2500);
+                        },
+                    });
+                });
+                @endif
+
+                const notificationElementPopup = (user) => {
+                    const {firstname, picture} = user
+                    document.getElementById('notification-approve').innerHTML = `
+                    <div class="notification-dialog ios-style">
+                                <div class="notification-header">
+                                    <div class="in">
+                                        <img src="${picture}" alt="image" class="imaged w24 rounded">
+                                        <strong>Pablo Cambeiro</strong>
+                                    </div>
+                                    <div class="right">
+                                        <span>just now</span>
+                                        <a href="#" class="close-button">
+                                            <ion-icon name="close-circle" role="img" class="md hydrated" aria-label="close circle"></ion-icon>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="notification-content">
+                                    <div class="in">
+                                        <h3 class="subtitle">Hello There</h3>
+                                        <div class="text">
+                                            ${firstname} has been approved your appointment
+                                        </div>
+                                    </div>
+                                    <div class="icon-box text-success">
+                                        <ion-icon name="checkmark-circle-outline" role="img" class="md hydrated" aria-label="checkmark circle outline"></ion-icon>
+                                    </div>
+                                </div>
+                            </div>`
                 }
+                window.Echo
+                    .private(`handle-notif-{{auth()->user()->id}}`)
+                    .listen('.handle.notif', (e) => {
+                        const emp = e.data
+                        notificationElementPopup(emp)
+                        notification('notification-approve' , 2500)
+                        loadData();
+                    })
             });
         </script>
     @endpush
