@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Appointment, KodeEmp, User, Visitor};
+use App\Models\{Appointment, KodeEmp, User, Visitor, Visit};
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -23,7 +23,7 @@ class AppointmentController extends Controller
      *
      * @return View
      */
-    public function index() : View
+    public function index(): View
     {
         return view('front.home.list-appointment');
     }
@@ -31,9 +31,9 @@ class AppointmentController extends Controller
     public function getAppointmentsCurrentUser(Request $request): JsonResponse
     {
         $user = auth()->user();
-        if ($user['role_id'] == 4){
+        if ($user['role_id'] == 4) {
             $appointments = $user->appointmentVisitor()->get();
-        }else{
+        } else {
             $appointments = $user->appointmentEmp()->get();
         }
         return response()->json([
@@ -81,7 +81,7 @@ class AppointmentController extends Controller
                 ->get(['id']) || false;
 
         if ($count_appointments) {
-            $emp_id = KodeEmp::where('kode_emp',$request->kode_emp)->first()['emp_id'];
+            $emp_id = KodeEmp::where('kode_emp', $request->kode_emp)->first()['emp_id'];
             $appointment = $user->appointmentVisitor()->create([
                 'kode_emp' => $emp_id,
                 'purpose' => $request->purpose,
@@ -112,33 +112,35 @@ class AppointmentController extends Controller
      */
     public function approveAppointment(Appointment $appointment)
     {
-//        $emp_id = KodeEmp::where('kode_emp',$appointment->kode_emp)->first()['emp_id'];
         $visitor = User::find($appointment->visitor_id);
-        $isAppproved = $appointment["status"] != "pending";
-        if ($isAppproved) {
-            $appointment->update(['status' => 'pending']);
-        }else{
-             $appointment->update(['status' => 'approved']);
-        }
+        $isAppproved = $appointment["status"] == "approved";
         // employee send notif to visitor
         HandleNotif::dispatch(auth()->user(), $visitor->id);
-        // insert into table visits
-//        $visit = Visit::create([
-//            'id_appmt' => $appoinment->id,
-//            'checkin' => false,
-//            'checkout' => false,
-//            'notes' => '',
-//            'visit_date' => now()
-//        ]);
-//        if ($visit)
-//            return response()->json([
-//                'status' => 'success',
-//                'msg' => 'Successfully approved'
-//            ]);
-        return response()->json([
-            'status' => 'success',
-            'msg' => 'there something went wrong!'
-        ]);
+        if ($isAppproved) {
+            $appointment->update(['status' => 'pending']);
+            $visit = Visit::where('id_appmt', $appointment->id);
+            $visit->delete();
+            return response()->json([
+                'status' => 'success',
+                'msg' => 'Successfully change status to pending'
+            ]);
+        } else {
+            $appointment->update(['status' => 'approved']);
+            // insert into table visits for the first time status approved
+            $visit = Visit::create([
+                'id_appmt' => $appointment->id,
+                'checkin' => false,
+                'checkout' => false,
+                'notes' => '',
+                'visit_date' => now()
+            ]);
+            if ($visit) {
+                return response()->json([
+                    'status' => 'success',
+                    'msg' => 'Successfully approved'
+                ]);
+            }
+        }
     }
 
     /**

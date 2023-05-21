@@ -19,6 +19,7 @@
         </div>
         <button type="button" class="btn btn-sm btn-text-light close-button">OK</button>
     </div>
+
     <div class="modal fade dialogbox " id="DialogIconedButtonInline" data-bs-backdrop="static" tabindex="-1"
          style="display: none;" aria-modal="true" role="dialog">
         <div class="modal-dialog" role="document">
@@ -51,6 +52,7 @@
             </div>
         </div>
     </div>
+
     <div id="notification-approve" class="notification-box">
 
     </div>

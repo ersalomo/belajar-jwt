@@ -7,11 +7,11 @@
     "test": "tests"
   },
   "scripts": {
-    "all": "npm-run-all --parallel serve dev socket",
-    "build": "vite build",
-      "serve": "php artisan serve",
-      "dev": "vite",
-      "socket": "php artisan websockets:serve"
+         "all": "npm-run-all --parallel serve dev socket",
+         "build": "vite build",
+         "serve": "php artisan serve",
+         "dev": "vite",
+         "socket": "php artisan websockets:serve"
   },
   "repository": {
     "type": "git",

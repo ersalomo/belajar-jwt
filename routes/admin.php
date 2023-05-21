@@ -13,6 +13,7 @@ use App\Http\Controllers\Back\{
 };
 
 Route::get('/', fn() => to_route('admin-auth.index'));
+Route::get('export', [\App\Http\Controllers\User\UserController::class, 'exportUsers']);
 
 Route::group([
     'middleware' => ['guest:web'],

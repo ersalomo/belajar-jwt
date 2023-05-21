@@ -5,12 +5,15 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{File, Validator, Hash};
-use App\Models\{
-    Visitor,
-};
+use Maatwebsite\Excel\Facades\Excel;
+use App\Models\{User, Visitor};
+use App\Exports\UsersExport;
 
 class UserController extends Controller
 {
+    public function exportUsers() {
+        return Excel::download(new  UsersExport, 'user-data.xlsx');
+    }
     public function index()
     {
     }
