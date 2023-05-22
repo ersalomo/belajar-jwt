@@ -2,10 +2,19 @@
     <div class="card z-index-2 h-100">
         <div class="card-header pb-0 pt-3 bg-transparent">
             <h6 class="text-capitalize">Visitation overview</h6>
-            <p class="text-sm mb-0">
-                <i class="fa fa-arrow-up text-success"></i>
-                <span class="font-weight-bold">4% more</span> in 2023
-            </p>
+
+            <a class="btn" href="#">export to excel
+                <span class="text-success">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-spreadsheet" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+                    <path d="M8 11h8v7h-8z"></path>
+                    <path d="M8 15h8"></path>
+                    <path d="M11 11v7"></path>
+                </svg>
+                </span>
+            </a>
         </div>
         <div class="card-body p-3">
             <div class="chart">

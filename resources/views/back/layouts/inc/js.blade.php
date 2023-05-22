@@ -21,3 +21,4 @@
 <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
 @stack('scripts')
+<livewire:scripts/>

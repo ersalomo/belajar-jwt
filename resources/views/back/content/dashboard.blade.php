@@ -1,4 +1,12 @@
 <x-back.app-layout page-title="Dashboard">
+    @section('breadcrumb')
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:">Admin</a></li>
+                <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+            </ol>
+        </nav>
+    @endsection
         <div class="row">
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                 <div class="card">
@@ -6,19 +14,15 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Visitors</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Visitors</p>
                                     <h5 class="font-weight-bolder">
-                                        14
+                                        {{__($total_employees)}}
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+55%</span>
-                                        Total yesterday
-                                    </p>
                                 </div>
                             </div>
                             <div class="col-4 text-end">
                                 <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                                    <i class="ni ni-user-run text-lg opacity-10" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </div>
@@ -31,14 +35,11 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Visitors</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Employees</p>
                                     <h5 class="font-weight-bolder">
-                                        2,300
+                                        {{__($total_visitors)}}
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+3%</span>
-                                        since last week
-                                    </p>
+
                                 </div>
                             </div>
                             <div class="col-4 text-end">
@@ -58,12 +59,8 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Appointments</p>
                                     <h5 class="font-weight-bolder">
-                                        10
+                                        {{__($total_appointments)}}
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-danger text-sm font-weight-bolder">-2%</span>
-                                        since last quarter
-                                    </p>
                                 </div>
                             </div>
                             <div class="col-4 text-end">
@@ -81,18 +78,15 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Employees</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Visitations</p>
                                     <h5 class="font-weight-bolder">
-                                        50
+                                        {{__($total_visitations)}}
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
-                                    </p>
-                                </div>
+</div>
                             </div>
                             <div class="col-4 text-end">
                                 <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                                    <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                                    <i class="ni ni-archive-2 text-lg opacity-10" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +106,7 @@
                             @foreach($visitors_checkin as $visitor)
                             <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                                 <div class="d-flex align-items-center">
-                                    <img src="{{__($visitor->appointment?->visitor->picture)}}" class="img rounded-1 w-15 me-3"/>
+                                    <img src="{{__($visitor->appointment?->visitor->picture)}}" class="img avatar-sm rounded-1 me-3"/>
                                     <div class="d-flex flex-column">
                                         <h6 class="mb-1 text-dark text-sm">{{$visitor->appointment?->visitor->firstname}}</h6>
                                         <span class="text-xs">250 in stock, <span class="font-weight-bold">346+ sold</span></span>
@@ -187,9 +181,9 @@
                             © <script>
                                 document.write(new Date().getFullYear())
                             </script>,
-                            made with <i class="fa fa-heart"></i> by
-                            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                            for a better web.
+                            Visitor Management System
+                            <i class="fa fa-users"></i> by
+                            <a href="#" class="font-weight-bold" target="_blank">Z</a>.
                         </div>
                     </div>
                 </div>

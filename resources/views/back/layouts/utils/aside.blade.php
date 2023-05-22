@@ -40,28 +40,18 @@
                 <div class="collapse" id="pagesTable" style="">
                     <ul class="nav ms-4">
                         <li class="nav-item">
-                            <a class="nav-link {{request()->is('admin/employee-table') ? 'active' : ''}}"
-                               href="{{route('admin.employee-table')}}">
+                            <a class="nav-link {{request()->is('admin/user/index') ? 'active' : ''}}"
+                               href="{{route('admin.user.index')}}#">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
                                 </div>
-                                <span class="nav-link-text ms-1">Employees</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{request()->is('admin/visitor-table') ? 'active' : ''}}"
-                               href="{{route('admin.visitor-table')}}">
-                                <div
-                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
-                                </div>
-                                <span class="nav-link-text ms-1">Visitor</span>
+                                <span class="nav-link-text ms-1">Users</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{request()->is('admin/list-appointments') ? 'active' : ''}}"
-                               href="{{route('admin.list-appointments')}}">
+                               href="{{route('admin.list-appointments')}}#">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
@@ -133,29 +123,6 @@
                         </li>
                     </ul>
                 </div>
-            </li>
-            <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Add Data</h6>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{request()->is('admin/add-employee') ? 'active' : ''}}"
-                   href="{{route('admin.add-employee')}}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Add Employee</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{request()->is('admin/create-visitor') ? 'active' : ''}}"
-                   href="{{route('admin.create-visitor')}}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Add Visitor</span>
-                </a>
             </li>
             <li class="nav-item">
                 <form action="{{route('admin.logout')}}" class="nav-link" method="post">

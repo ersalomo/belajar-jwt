@@ -26,6 +26,14 @@
         </label>
     </div>
     <div class="col">
+        <label>Role
+        <select class="form-control" name="role">
+            <option value="visitor">visitor</option>
+            <option value="karyawan">karyawan</option>
+        </select>
+        </label>
+    </div>
+    <div class="col">
         <label>Search
             <input type="text" class="search-result form-control"/>
         </label>

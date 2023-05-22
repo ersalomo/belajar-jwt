@@ -25,7 +25,7 @@ class AppointmentController extends Controller
      */
     public function index(): View
     {
-        return view('front.home.list-appointment');
+        return view('front.home.appointment.list-appointment');
     }
 
     public function getAppointmentsCurrentUser(Request $request): JsonResponse
@@ -52,7 +52,7 @@ class AppointmentController extends Controller
 //        if ($this->check_image()) {
 //            return to_route('home.home-user');
 //        }
-        return view('front.home.appointment');
+        return view('front.home.appointment.appointment');
     }
 
     /**
@@ -151,7 +151,7 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        return view('front.home.detail-appointment', [
+        return view('front.home.appointment.detail-appointment', [
             'appointment' => $appointment
         ]);
     }

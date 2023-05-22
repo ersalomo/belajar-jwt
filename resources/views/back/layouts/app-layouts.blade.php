@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" href="/argon/assets/img/favicon.png">
     <title>Admin B7 | {{ isset($pageTitle) ? $pageTitle : '' }}</title>
     @include('back.layouts.inc.css')
+    <livewire:styles/>
 
 </head>
 
@@ -22,9 +23,9 @@
     {{$slot}}
     </div>
 </main>
-
-
 @include('back.layouts.inc.js')
+
+
 </body>
 
 </html>
