@@ -26,6 +26,8 @@ class StoreAppointmentRequest extends FormRequest
         return [
             'kode_emp' => ['required', 'string', 'exists:kode_emps,kode_emp'],
             'purpose' => ['required'],
+            'visit_date' => ['required'],
+            'company_name' => ['string','nullable']
         ];
     }
 
@@ -34,7 +36,7 @@ class StoreAppointmentRequest extends FormRequest
         return [
             'kode_emp.exists' => 'Kode karyawan tidak ditemukan',
             'kode_emp.required' => 'kolom ini harus diisi',
-            'purpose.required' => 'Kolom ini tidak boleh kosong'
+            'purpose.required' => 'Kolom ini tidak boleh kosong',
         ];
     }
 }

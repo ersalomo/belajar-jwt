@@ -8,8 +8,8 @@
                     onclick="event.preventDefault();document.getElementById('changeAuthorPictureFile'). click();">
                 <span class="justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit-circle" width="24"
-                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
+                         height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                         stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M12 15l8.385 -8.415a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3z"></path>
                         <path d="M16 5l3 3"></path>
@@ -20,7 +20,6 @@
             <h4 class="card-title">{{ __(auth()->user()->name) }}</h4>
             <div class="card-text">Sep 23, 2020</div>
             <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet leo eget maximus ultricies.
             </div>
         </div>
     </div>
@@ -33,19 +32,19 @@
                     <ul class="nav nav-tabs style1" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-bs-toggle="tab" href="#profile" role="tab"
-                                aria-selected="true">
+                               aria-selected="true">
                                 Profile
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#contact" role="tab"
-                                aria-selected="false">
+                               aria-selected="false">
                                 Contact
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#change-password" role="tab"
-                                aria-selected="false">
+                               aria-selected="false">
                                 Change password
                             </a>
                         </li>
@@ -62,12 +61,12 @@
                                     <div class="form-group mt-1">
                                         <label for="">name</label>
                                         <input type="text" class="form-control" id="name"
-                                            value="{{ __(auth()->user()->name) }}" placeholder="">
+                                               value="{{ __(auth()->user()['firstname']) }}" placeholder="">
                                     </div>
                                     <div class="form-group mt-1">
                                         <label for="email">Email</label>
                                         <input type="text" class="form-control" id="email" disabled
-                                            value="{{ __(auth()->user()->email) }}" placeholder="">
+                                               value="{{ __(auth()->user()['email']) }}" placeholder="">
                                     </div>
 
                                     <div class="form-group mt-1">
@@ -80,8 +79,15 @@
                             <div>
                                 <label for="phone">Phone
                                     <input type="text" disabled
-                                        value="{{ auth()->user()->phone ?? '0852-****-0988' }}" class="form-control"
-                                        id="phone" placeholder="">
+                                           value="{{ auth()->user()->phone }}" class="form-control"
+                                           id="phone" placeholder="">
+                                </label>
+                                <label for="phone">Address
+                                    <textarea type="text"
+                                              class="form-control"
+                                              col="50"
+                                              id="address" placeholder="">{{ auth()->user()->address }}
+                                    </textarea>
                                 </label>
                             </div>
                         </div>
@@ -92,25 +98,25 @@
                                 <div class="form-group mt-1">
                                     <label for="old-password">Old password</label>
                                     <input type="text" class="form-control" id="old-password" name="password"
-                                        placeholder="old password">
+                                           placeholder="old password">
                                     @error('password')
-                                        <em class="text text-danger">{{ $message }}</em>
+                                    <em class="text text-danger">{{ $message }}</em>
                                     @enderror
                                 </div>
                                 <div class="form-group mt-1">
                                     <label for="new-password">New password</label>
                                     <input type="text" class="form-control" name="new_password" id="new-password"
-                                        placeholder="new password">
+                                           placeholder="new password">
                                     @error('new_password')
-                                        <em class="text text-danger">{{ $message }}</em>
+                                    <em class="text text-danger">{{ $message }}</em>
                                     @enderror
                                 </div>
                                 <div class="form-group mt-1">
                                     <label for="new-password">Confirm new password</label>
                                     <input type="text" class="form-control" id="new-password"
-                                        name="confirm_new_password" placeholder="confirm new password">
+                                           name="confirm_new_password" placeholder="confirm new password">
                                     @error('confirm_new_password')
-                                        <em class="text text-danger">{{ $message }}</em>
+                                    <em class="text text-danger">{{ $message }}</em>
                                     @enderror
                                 </div>
                                 <div class="form-group mt-1">
@@ -140,6 +146,7 @@
                     }, time);
                 }
             }
+
             $("#changeAuthorPictureFile").ijaboCropTool({
                 preview: '',
                 setRatio: 1,
@@ -148,12 +155,12 @@
                 buttonsColor: ['#30bf7d', '#ee5155', -15],
                 processUrl: "{{ route('home.change-profile-picture') }}",
                 withCSRF: ['_token', '{{ csrf_token() }}'],
-                onSuccess: function(message, element, status) {
+                onSuccess: function (message, element, status) {
                     // Livewire.emit('UpdateAuthorProfileHeader');
                     // Livewire.emit('UpdateTopHeader');
                     toastbox('toast-3', 5000)
                 },
-                onError: function(message, element, status) {
+                onError: function (message, element, status) {
                     // toastr.error(message)
                     toastbox('toast-3', 5000)
                     console.log(message)

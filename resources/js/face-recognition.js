@@ -21,7 +21,6 @@ const startWebCam = () =>  {
 
 const getLabeledFaceDescriptions = async () => {
     // const labels = await getVisitors()
-    console.log(await getVisitorsHaveAppointment())
     const labels = await getVisitorsHaveAppointment()
     return Promise.all(
         labels.map(async (label) => {
@@ -51,7 +50,6 @@ const getLabeledFaceDescriptions = async () => {
 
 const faceRecognition = () => {
     video.addEventListener('playing', async () => {
-        console.log('playing')
         const labeledFaceDescriptions = (await getLabeledFaceDescriptions()).filter((d) => d !== undefined);
         const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptions, 0.6);
         const canvas = faceapi.createCanvasFromMedia(video)

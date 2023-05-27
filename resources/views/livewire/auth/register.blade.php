@@ -5,43 +5,87 @@
             <h4>Fill the form to join us</h4>
         </div>
         <div class="section mt-2 mb-5">
-            <form wire:submit.prevent="registerHandler">
+            <form wire:submit.prevent.lazy="registerHandler">
 
                 <div class="form-group boxed">
                     <div class="input-wrapper">
-                        <input type="email" class="form-control" id="name1" placeholder="Full name">
+                        <input type="text" wire:model.lazy="fullname" class="form-control" id="name1" placeholder="Full name">
+                    </div>
+                    @error('fullname')
+                    <div class="text-start text-danger">
+                        {{$message}}
+                    </div>
+                    @enderror
+                </div>
+                <div class="form-group boxed">
+                    <div class="input-wrapper">
+                        <input type="text" wire:model.lazy="username" class="form-control" id="name1" placeholder="Username">
+                    </div>
+                    @error('username')
+                    <div class="text-start text-danger">
+                        {{$message}}
+                    </div>
+                    @enderror
+                </div>
+                <div class="form-group boxed">
+                    <div class="input-wrapper">
+                        <input type="tel" wire:model.lazy="phone" class="form-control" id="name1" placeholder="Phone">
+                    </div>
+                    @error('phone')
+                    <div class="text-start text-danger">
+                        {{$message}}
+                    </div>
+                    @enderror
+                </div>
 
+                <div class="form-group boxed">
+                    <div class="input-wrapper">
+                        <input type="email"  wire:model.lazy="email" class="form-control" id="email1" placeholder="Email address">
+
+                    @error('email')
+                    <div class="text-start text-danger">
+                        {{$message}}
+                    </div>
+                    @enderror
                     </div>
                 </div>
 
                 <div class="form-group boxed">
                     <div class="input-wrapper">
-                        <input type="email" class="form-control" id="email1" placeholder="Email address">
-
-                    </div>
-                </div>
-
-                <div class="form-group boxed">
-                    <div class="input-wrapper">
-                        <input type="password" class="form-control" id="password1" autocomplete="off"
+                        <input type="password" wire:model.lazy="password" class="form-control" id="password1" autocomplete="off"
                             placeholder="Password">
-
+                    @error('password')
+                    <div class="text-start text-danger">
+                        {{$message}}
+                    </div>
+                    @enderror
                     </div>
                 </div>
 
                 <div class="form-group boxed">
                     <div class="input-wrapper">
-                        <input type="password" class="form-control" id="password2" autocomplete="off"
+                        <input type="password" wire:model.lazy="confirmation_password" class="form-control" id="password2" autocomplete="off"
                             placeholder="Password (again)">
                     </div>
+                    @error('confirmation_password')
+                    <div class="text-start text-danger">
+                        {{$message}}
+                    </div>
+                    @enderror
                 </div>
 
                 <div class=" mt-1 text-start">
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="customCheckb1">
+                        <input type="checkbox" wire:model.lazy="term_condition" class="form-check-input" id="customCheckb1">
                         <label class="form-check-label" for="customCheckb1">I Agree <a href="#">Terms &amp;
-                                Conditions</a></label>
+                                Conditions</a>
+                        </label>
                     </div>
+                        @error('term_condition')
+                        <span class="text-danger">
+                            {{$message}}
+                        </span>
+                        @enderror
 
                 </div>
 

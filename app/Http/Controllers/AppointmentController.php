@@ -23,7 +23,7 @@ class AppointmentController extends Controller
      *
      * @return View
      */
-    public function index(): View
+    public function index()
     {
         return view('front.home.appointment.list-appointment');
     }
@@ -86,6 +86,8 @@ class AppointmentController extends Controller
                 'kode_emp' => $emp_id,
                 'purpose' => $request->purpose,
                 'type' => $request->type,
+                'company_name' => $request->company_name,
+                'visit_Date' => $request->visit_date,
             ]);
             if ($appointment) {
                 // send event when visitor create appointment

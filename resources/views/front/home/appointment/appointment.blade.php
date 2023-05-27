@@ -15,24 +15,36 @@
                 <div class="form-group boxed">
                     <div class="input-wrapper">
                         <label class="form-label" for="kode">* <span class="text-danger">Kode Employee</span></label>
-                        <input type="text" name="kode_emp" class="form-control" id="kode" placeholder="Enter kode employee">
+                        <input type="text" name="kode_emp" class="form-control" id="kode"
+                               placeholder="Enter kode employee">
                         <span class="text-danger error-text kode_emp_error"></span>
                     </div>
-                <div class="form-group boxed">
-                    <div class="input-wrapper">
-                        <label class="form-label" for="kode">* <span class="text-dark">Type kunjungan</span></label>
-                        <select class="form-control" name="type">
-                            <option value="personil">personil</option>
-                            <option value="group">group</option>
-                        </select>
-                    </div>
-                </div>
                     <div class="form-group boxed">
-                    <div class="input-wrapper">
-                        <label class="form-label" for="kode">* <span class="text-dark">Names (jika group)</span></label>
-                        <input type="text" class="form-control" id="kode" placeholder="Enter names">
+                        <div class="input-wrapper">
+                            <label class="form-label" for="kode">* <span class="text-dark">Type kunjungan</span></label>
+                            <select class="form-control" name="type">
+                                <option value="personil">personil</option>
+                                <option value="group">group</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label class="form-label" for="kode">* <span
+                                    class="text-dark">Visit date</span></label>
+                            <input type="date" name="visit_date" class="form-control" id="kode" placeholder="company name">
+                        </div>
+                        <span class="text-danger error-text visit_date_error"></span>
+                    </div>
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label class="form-label" for="kode">* <span
+                                    class="text-dark">Company Name (optional)</span></label>
+                            <input type="text" name="company_name" class="form-control" id="kode" placeholder="company name">
+                        </div>
+                        <span class="text-danger error-text company_name_error"></span>
+                    </div>
                 </div>
 
                 <div class="form-group boxed">
@@ -52,7 +64,8 @@
     </div>
     <div id="success-created" class="toast-box toast-top">
         <div class="in">
-            <ion-icon name="checkmark-circle" class="text-success md hydrated" role="img" aria-label="checkmark circle"></ion-icon>
+            <ion-icon name="checkmark-circle" class="text-success md hydrated" role="img"
+                      aria-label="checkmark circle"></ion-icon>
             <div class="text">
                 Successfully created
             </div>
@@ -73,7 +86,7 @@
                         dataType: 'json',
                         contentType: false,
                         processData: false,
-                        beforeSend: function() {
+                        beforeSend: function () {
                             $(form).find("span.error-text").text("");
                         },
                         success: function (res) {

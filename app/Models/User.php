@@ -110,8 +110,11 @@ class User extends Authenticatable
     {
         $user = auth()->user();
         if ($user->role_id == 4) {
-            $id_appt = auth()->user()->appointmentVisitor()->first()["id"];
-            $visitExits = Visit::where('id_appmt', $id_appt)->first();
+            $id_appt = auth()->user()->appointmentVisitor()->first();
+            $visitExits = null;
+            if($id_appt){
+                $visitExits = Visit::where('id_appmt', $id_appt['id'])->first();
+            }
             return boolval($visitExits);
         }
         return false;
