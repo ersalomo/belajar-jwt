@@ -12,12 +12,6 @@ use App\Http\Controllers\{
 
 
 Route::get('/', fn() => redirect()->to('/auth'));
-Route::group([
-    'middleware' => ['guest:web'],
-    'as' => 'auth'
-], function () {
-    Route::view('/auth', 'front.auth.authentication');
-});
 
 Route::group([
     'middleware' => ['auth:web'],
