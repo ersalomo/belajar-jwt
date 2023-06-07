@@ -57,11 +57,11 @@ class User extends Authenticatable
     {
         return new Attribute(
 //            get: fn($firstname, $e) => $firstname . " " . $this->lastname
-        get: function ($fn,$user) {
-            if($user['role_id'] == 2) return "Karyawan" . " " . $this->lastname;
-            if($user['role_id'] == 3) return "Securiry" . " " . $this->lastname;
-            return $fn . " " . $this->lastname;
-            }
+//        get: function ($fn,$user) {
+//            if($user['role_id'] == 2) return "Karyawan" . " " . $this->lastname;
+//            if($user['role_id'] == 3) return "Securiry" . " " . $this->lastname;
+//            return $fn . " " . $this->lastname;
+//            }
         );
     }
 

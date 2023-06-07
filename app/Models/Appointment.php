@@ -25,15 +25,17 @@ class   Appointment extends Model
         return $this->belongsTo(User::class, 'visitor_id')->where('role_id', 4);
     }
 
-//    public function visit(): BelongsTo
-//    {
-//        return $this->belongsTo(Visit::class, 'appointment_id');
-//    }
 
     protected function createdAt(): Attribute
     {
         return Attribute::make(
-            get: fn($val) => Carbon::create($val)->diffForHumans(),
+            get: fn($val) => Carbon::create($val)->format('Y-m-d'),
+        );
+    }
+    protected function arrivalTime(): Attribute
+    {
+        return Attribute::make(
+            get: fn($val) => Carbon::create($val)->format('H:i'),
         );
     }
 }

@@ -92,4 +92,12 @@ class UserController extends Controller
     {
         //
     }
+    public function getAllEmployees(Request $request){
+        $role_id = 2;
+        $employees = User::where('role_id', $role_id)
+            ->orderBy('name','asc')
+            ->limit(5)
+            ->get(['id','name','role_id']);
+        return response()->json($employees);
+    }
 }

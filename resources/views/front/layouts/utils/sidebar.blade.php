@@ -9,7 +9,7 @@
             <div class="in">
                 <strong>{{ __(auth()->user()->name )}}</strong>
                 @if(auth()->user()?->role_id != 4)
-                    <strong>{{ auth()->user()?->kodeEmp->kode_emp}}</strong>
+{{--                    <strong>{{ auth()->user()?->kodeEmp->kode_emp}}</strong>--}}
                 @endif
                 <div class="text-muted">
                     <ion-icon name="location"></ion-icon>

@@ -85,8 +85,8 @@
 
 
             <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link collapsed"
-                   aria-controls="pagesExamples" role="button" aria-expanded="false">
+                <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link"
+                   aria-controls="pagesExamples" role="button" aria-expanded="true">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
                         <i class="ni ni-ungroup text-warning text-sm opacity-10"></i>
                     </div>
@@ -100,6 +100,11 @@
                             </a>
                         </li>
                         <li class="nav-item ">
+                            <a class="nav-link" aria-expanded="false" href="{{ route('admin.visit.create-new-visitation') }}">
+                                <span class="sidenav-normal"> Create visitation <b class="caret"></b></span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link " data-bs-toggle="collapse" aria-expanded="false" href="#usersExample">
                                 <span class="sidenav-mini-icon"> U </span>
                                 <span class="sidenav-normal"> visitation status <b class="caret"></b></span>

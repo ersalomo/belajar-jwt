@@ -32,9 +32,9 @@ class AppointmentController extends Controller
     {
         $user = auth()->user();
         if ($user['role_id'] == 4) {
-            $appointments = $user->appointmentVisitor()->get();
+            $appointments = $user->visitor()->get();
         } else {
-            $appointments = $user->appointmentEmp()->get();
+//            $appointments = $user->appointmentEmp()->get();
         }
         return response()->json([
             'status' => 'success',
@@ -71,28 +71,24 @@ class AppointmentController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'fail',
-                'errros' => $validator->errors()->toArray()
-            ]);
+                'errors' => $validator->errors()->toArray()
+            ], 420);
         }
+
         $res = [];
         $user = auth()->user();
-        $count_appointments = $user->appointmentVisitor()
+        $count_appointments = $user->visitor()
                 ?->whereDate('created_at', now()->today())
                 ->get(['id']) || false;
 
         if ($count_appointments) {
-            $emp_id = KodeEmp::where('kode_emp', $request->kode_emp)->first()['emp_id'];
-            $appointment = $user->appointmentVisitor()->create([
-                'kode_emp' => $emp_id,
-                'purpose' => $request->purpose,
-                'type' => $request->type,
-                'company_name' => $request->company_name,
-                'visit_Date' => $request->visit_date,
-            ]);
+//            $emp_id = KodeEmp::where('kode_emp', $request->kode_emp)->first()['emp_id'];
+            $appointment = $user->visitor()->create(
+                $validator->validate()
+            );
             if ($appointment) {
                 // send event when visitor create appointment
-                HandleNotif::dispatch(auth()->user(), $emp_id);
-
+//                HandleNotif::dispatch(auth()->user(), $emp_id);
                 $res = [
                     'success' => 'berhasil',
                     'msg' => 'Appointment berhasil dibuat'

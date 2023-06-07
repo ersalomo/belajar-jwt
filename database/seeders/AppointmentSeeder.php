@@ -22,11 +22,12 @@ class AppointmentSeeder extends Seeder
                 'visitor_id' => $id['id'],
                 'name_emp' => fake()->name,
                 'purpose' => fake()->sentence(),
-                'visit_date' => now(),
+                'visit_date' => fake()->dateTimeInInterval('+1 week'),
+                'arrival_time' => fake('id_ID')->time(),
                 'company_name' => fake()->company(),
                 'number_plate' => fake()->randomNumber(4),
                 'transportation' => fake()->word(),
-                'type' => fake()->randomElement(['persnal', 'group', 'vip']),
+                'visitation_type' => fake()->randomElement(['pribadi', 'private', 'business','dinas']),
                 'status' => 'pending',
             ]);
         }

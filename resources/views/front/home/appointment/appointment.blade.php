@@ -13,19 +13,17 @@
             <form method="post" action="{{ route('home.appointment.store') }}" id="appoinment-form">
                 @csrf
                 <div class="form-group boxed">
-                    <div class="input-wrapper">
-                        <label class="form-label" for="kode">* <span class="text-danger">Kode Employee</span></label>
-                        <input type="text" name="kode_emp" class="form-control" id="kode"
-                               placeholder="Enter kode employee">
-                        <span class="text-danger error-text kode_emp_error"></span>
-                    </div>
                     <div class="form-group boxed">
                         <div class="input-wrapper">
-                            <label class="form-label" for="kode">* <span class="text-dark">Type kunjungan</span></label>
-                            <select class="form-control" name="type">
-                                <option value="personil">personil</option>
-                                <option value="group">group</option>
+                            <label class="form-label" for="kode">* <span class="text-dark">Visitation Type</span></label>
+                            <select class="form-control" name="visitation_type">
+                                <option value="">--choose--</option>
+                                <option value="pribadi">pribadi</option>
+                                <option value="dinas">dinas</option>
+                                <option value="private">private</option>
+                                <option value="business">business</option>
                             </select>
+                        <span class="text-danger error-text visitation_type_error"></span>
                         </div>
                     </div>
 
@@ -37,12 +35,14 @@
                         </div>
                         <span class="text-danger error-text visit_date_error"></span>
                     </div>
+
                     <div class="input-wrapper">
-                        <label class="form-label" for="kode">* <span class="">Nama Empoyee</span></label>
-                        <input type="text" name="nama_employee" class="form-control" id="kode"
+                        <label class="form-label" for="kode">* <span class="">Employee Name</span></label>
+                        <input type="text" name="name_emp" class="form-control" id="kode"
                                placeholder="Enter employee name">
-                        <span class="text-danger error-text nama_employee_error"></span>
+                        <span class="text-danger error-text name_emp_error"></span>
                     </div>
+
                     <div class="form-group boxed">
                         <div class="input-wrapper">
                             <label class="form-label" for="kode">* <span
@@ -50,6 +50,30 @@
                             <input type="text" name="company_name" class="form-control" id="kode" placeholder="company name">
                         </div>
                         <span class="text-danger error-text company_name_error"></span>
+                    </div>
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label class="form-label" for="kode">* <span
+                                    class="text-dark">Plate Number (optional)</span></label>
+                            <input type="number" name=number_plate class="form-control" id="kode" placeholder="plate number">
+                        </div>
+                        <span class="text-danger error-text number_plate_error"></span>
+                    </div>
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label class="form-label" for="kode">* <span
+                                    class="text-dark">Transportation (optional)</span></label>
+                            <input type="text" name=transportation class="form-control" id="kode" placeholder="transportation name">
+                        </div>
+                        <span class="text-danger error-text transportation_error"></span>
+                    </div>
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label class="form-label" for="kode">* <span
+                                    class="text-dark">Visitation time</span></label>
+                            <input type="time" name=arrival_time class="form-control" id="kode" placeholder="company name">
+                        </div>
+                        <span class="text-danger error-text arrival_time_error"></span>
                     </div>
                 </div>
 

@@ -20,13 +20,14 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->string('name_emp');
-            $table->text('purpose')->nullable();
+            $table->string('purpose')->nullable();
             $table->date('visit_date')->nullable();
             $table->string('company_name')->nullable();
             $table->string('number_plate')->nullable();
             $table->string('transportation')->nullable();
-            $table->string('type')->default('personal');
+            $table->string('visitation_type');
             $table->string('status')->default('pending');
+            $table->time('arrival_time');
             $table->timestamps();
         });
     }

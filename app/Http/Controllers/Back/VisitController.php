@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use App\Http\Requests\VisitRequest;
@@ -22,6 +23,43 @@ class VisitController extends Controller
     {
 
     }
+
+    public function createVisitation(Request $request)
+    {
+        if ($id = $request->query('id')) {
+            $appointment = Appointment::find($id);
+        } else {
+            $appointment = [];
+        }
+        return view('back.content.visitation.create', compact('appointment'));
+    }
+
+    public function storeVisitation(Request $request)
+    {
+        if (!$id = $request->id_ap){
+            return back()->with('missing', 'appoinment not found!');
+        }
+
+        $data = $request->validate([
+            'emp_id' => 'required|exists:users,id',
+            'visit_date' => 'nullable'
+        ], [
+            'emp_id.required' => 'harus diisi',
+            'emp_id.exists' => 'Karyawan tidak ditemukan',
+        ]);
+
+        return Visit::create([
+            'appointment_id' =>$id,
+            'emp_id' => $data['emp_id'],
+            'visit_date' => $data['visit_date'],
+            'checkin' => false,
+            'checkout' => false,
+            'notes' => '',
+        ]) ? back()->with('success', 'created') :
+            back()->with('fail', 'created');
+
+    }
+
 
     public function store(VisitRequest $request)
     {
@@ -53,7 +91,8 @@ class VisitController extends Controller
         }
     }
 
-    public function checkin(Request $request, $idAppointment) { // today
+    public function checkin(Request $request, $idAppointment)
+    { // today
         $data = $request->validate([
             'checkin' => 'required',
         ]);
@@ -67,7 +106,8 @@ class VisitController extends Controller
         ]);
     }
 
-    public function checkout(Request $request, $idAppointment) {
+    public function checkout(Request $request, $idAppointment)
+    {
         $data = $request->validate([
             'checkout' => 'required',
             'notes' => 'nullable|string',
@@ -89,29 +129,32 @@ class VisitController extends Controller
 
     }
 
-    public function listVisitationVisitors(Request $request){
-        $visitations = Visit::where('id_appmt','!=', null)->get();
+    public function listVisitationVisitors(Request $request)
+    {
+        $visitations = Visit::where('id_appmt', '!=', null)->get();
         return view(
             'front.home.visitation.list-visitation', [
-                  'visitations' => $visitations
+                'visitations' => $visitations
             ]
         );
     }
 
-    public function detailVisitorVisitation(Request $request)  {
-        $id_appointment_visitor  = $request->query('id');
-        $visitor = Visit::where('id_appmt' ,$id_appointment_visitor)->first();
-        if(!$visitor) return back();
+    public function detailVisitorVisitation(Request $request)
+    {
+        $id_appointment_visitor = $request->query('id');
+        $visitor = Visit::where('id_appmt', $id_appointment_visitor)->first();
+        if (!$visitor) return back();
         return view('front.home.visitation.detail-visitation-visitor', [
             'visitor' => $visitor
         ]);
     }
 
-    public function visitationOverview() {
-      $count_each_visitors_by_mount = Visit::all()->count();
-      return response()->json([
-          'status' => 'success',
-          'data' => $count_each_visitors_by_mount
-      ]);
+    public function visitationOverview()
+    {
+        $count_each_visitors_by_mount = Visit::all()->count();
+        return response()->json([
+            'status' => 'success',
+            'data' => $count_each_visitors_by_mount
+        ]);
     }
 }

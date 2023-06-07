@@ -7,7 +7,7 @@
                     <h5 class="card-title mb-0 d-flex align-items-center justify-content-between">
                         {{ __('User '.auth()->user()->firstname) }}
                         @if(auth()->user()->role_id != 4)
-                            {{ __('Kode '.auth()->user()->kodeEmp->kode_emp ?? '') }}
+{{--                            {{ __('Kode '.auth()->user()->kodeEmp->kode_emp ?? '') }}--}}
                         @endif
                     </h5>
                 </div>

@@ -21,22 +21,29 @@ class StoreAppointmentRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'kode_emp' => ['required', 'string', 'exists:kode_emps,kode_emp'],
+//            'kode_emp' => ['required', 'string', 'exists:kode_emps,kode_emp'],
+            'name_emp' => ['required'],
             'purpose' => ['required'],
+            'company_name' => ['required','string', 'nullable'],
+            'number_plate' => ['required','string', 'nullable'],
             'visit_date' => ['required'],
-            'company_name' => ['string','nullable']
+            'transportation' => ['required'],
+            'visitation_type' => ['required'],
+//            'status' => ['required'],
+            'arrival_time' => ['required'], // jam kedatangan
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'kode_emp.exists' => 'Kode karyawan tidak ditemukan',
-            'kode_emp.required' => 'kolom ini harus diisi',
-            'purpose.required' => 'Kolom ini tidak boleh kosong',
+//            'kode_emp.exists' => 'Kode karyawan tidak ditemukan',
+//            'kode_emp.required' => 'kolom ini harus diisi',
+            '*.required' => 'required',
+//            'purpose.required' => 'Kolom ini tidak boleh kosong',
         ];
     }
 }

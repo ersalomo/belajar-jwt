@@ -34,6 +34,8 @@ Route::group([
                 Route::get('index', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
                 Route::post('store', 'store')->name('store');
+                Route::get('get-all-employees', 'getAllEmployees')->name('get-all-employees');
+
 //                Route::delete('{user}', 'destroy')->name('destroy');
             });
 
@@ -46,7 +48,9 @@ Route::group([
             Route::resource('visit', VisitController::class);
 
             Route::controller(VisitController::class)->as('visit.')->group(function (){
-                Route::get('visitation-overview', 'visitationOverview')->name('overview-visitation');
+                Route::get('visitation/visitation-overview', 'visitationOverview')->name('overview-visitation');
+                Route::get('visitation/create-new-visitation', 'createVisitation')->name('create-new-visitation');
+            Route::post('visitation/store-new-visitation', 'storeVisitation')->name('store-new-visitation');
             });
 
             Route::controller(DapartmentController::class)->as('department.')->group(function (){
