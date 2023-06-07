@@ -10,7 +10,7 @@ class Visit extends Model
 {
     use HasFactory;
 
-    protected $table = "visits";
+    protected $table = "visitations";
     protected $guarded = ['id'];
     protected $with = [
         "appointment"

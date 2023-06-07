@@ -18,12 +18,9 @@ class DepartmentSeeder extends Seeder
      */
     public function run()
     {
-        $emp_ids = User::where('role_id', '!=', 4)->get(['id']);
-        foreach ($emp_ids as $id) {
+        foreach (range(1,10) as $i) {
             Department::create([
-                'kode_emp' => $id['id'],
                 'department' => fake()->jobTitle(),
-                'title' => fake()->company()
             ]);
         }
     }

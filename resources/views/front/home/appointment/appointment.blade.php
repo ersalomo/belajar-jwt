@@ -37,6 +37,12 @@
                         </div>
                         <span class="text-danger error-text visit_date_error"></span>
                     </div>
+                    <div class="input-wrapper">
+                        <label class="form-label" for="kode">* <span class="">Nama Empoyee</span></label>
+                        <input type="text" name="nama_employee" class="form-control" id="kode"
+                               placeholder="Enter employee name">
+                        <span class="text-danger error-text nama_employee_error"></span>
+                    </div>
                     <div class="form-group boxed">
                         <div class="input-wrapper">
                             <label class="form-label" for="kode">* <span

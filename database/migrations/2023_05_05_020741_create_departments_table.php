@@ -15,9 +15,7 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kode_emp')->nullable()->constrained('users');
             $table->text('department');
-            $table->text('title');
             $table->timestamps();
         });
     }

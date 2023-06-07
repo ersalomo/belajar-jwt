@@ -93,14 +93,14 @@
                                         {{$visitation->visit_date}}
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        @if(!$visitation->checkin)
+                                        @if($visitation->checkin)
                                             <span class="badge badge-sm bg-gradient-success">Checkin</span>
                                         @else
                                             <span class="badge badge-sm bg-gradient-danger">Not Checkin</span>
                                         @endif
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        @if(!$visitation->checkout)
+                                        @if($visitation->checkout)
                                             <span class="badge badge-sm bg-gradient-success">Checkout</span>
                                         @else
                                             <span class="badge badge-sm bg-gradient-danger">Not Checkout</span>

@@ -21,17 +21,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'firstname',
-        'lastname',
-        'username',
         'email',
-        'phone',
-        'address',
-        'picture',
+        'name',
         'password',
+        'role_id',
+        'gender',
         'is_blocked',
-        'remember_token',
-        'role_id'
     ];
 
     /**
@@ -55,27 +50,18 @@ class User extends Authenticatable
     ];
 
     protected $with = [
-        'department',
-//        'appointmentEmp'
+        'detail'
     ];
 
-    protected function firstname(): Attribute
+    protected function name(): Attribute
     {
         return new Attribute(
 //            get: fn($firstname, $e) => $firstname . " " . $this->lastname
         get: function ($fn,$user) {
             if($user['role_id'] == 2) return "Karyawan" . " " . $this->lastname;
             if($user['role_id'] == 3) return "Securiry" . " " . $this->lastname;
-            if($user['role_id'] == 4) return "Visitor" . " " . $this->lastname;;
             return $fn . " " . $this->lastname;
             }
-        );
-    }
-
-    protected function picture(): Attribute
-    {
-        return Attribute::make(
-            get: fn($val) => $val ? '/storage/users/' . $val : '/storage/users/img.png',
         );
     }
 
@@ -86,34 +72,22 @@ class User extends Authenticatable
         );
     }
 
-    public function department()
-    {
-        return $this->hasOne(Department::class, 'kode_emp');
-    }
-
-    public function kodeEmp()
-    {
-        return $this->hasOne(KodeEmp::class, 'emp_id');
-    }
-
-    public function appointmentVisitor(): HasMany
+    public function visitor(): HasMany
     {
         return $this->hasMany(Appointment::class, 'visitor_id');
     }
-
-    public function appointmentEmp(): HasOne
+    public function detail(): HasOne
     {
-        return $this->hasOne(Appointment::class, 'kode_emp');
+        return $this->hasOne(DetailUser::class);
     }
-
     public function isVisitor(): bool
     {
         $user = auth()->user();
         if ($user->role_id == 4) {
-            $id_appt = auth()->user()->appointmentVisitor()->first();
+            $id_appt = auth()->user()->visitor()->first();
             $visitExits = null;
             if($id_appt){
-                $visitExits = Visit::where('id_appmt', $id_appt['id'])->first();
+                $visitExits = Visit::where('appointment_id', $id_appt['id'])->first();
             }
             return boolval($visitExits);
         }

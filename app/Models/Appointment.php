@@ -12,26 +12,26 @@ use Carbon\Carbon;
 class   Appointment extends Model
 {
     use HasFactory;
+
     protected $guarded = ['id'];
 
     protected $with = [
-      'employee',
-      'visitor',
-        'visit'
+        'visitor',
+//        'visit'
     ];
 
-    public function employee() {
-        return $this->belongsTo(User::class, 'kode_emp');
+    public function visitor(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'visitor_id')->where('role_id', 4);
     }
 
-    public function visitor() {
-        return $this->belongsTo(User::class, 'visitor_id');
-    }
-    public function visit(): BelongsTo
+//    public function visit(): BelongsTo
+//    {
+//        return $this->belongsTo(Visit::class, 'appointment_id');
+//    }
+
+    protected function createdAt(): Attribute
     {
-        return $this->belongsTo(Visit::class, 'id_appmt');
-    }
-    protected function createdAt(): Attribute {
         return Attribute::make(
             get: fn($val) => Carbon::create($val)->diffForHumans(),
         );

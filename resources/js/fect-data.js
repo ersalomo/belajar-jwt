@@ -1,14 +1,5 @@
 import axios from "axios";
 
-const getVisitors = async () => {
-    try {
-        const res = await axios.get('/visitors')
-        const { data } = res.data
-        return data
-    }catch (err){
-        console.log(err)
-    }
-}
 
 const getVisitorsHaveAppointment = async () => {
     try {
@@ -20,13 +11,12 @@ const getVisitorsHaveAppointment = async () => {
     }
 }
 
-const postVisitToCheckin = async (data) => axios.post('/oa/post-visit', data)
-const checkInVisit = async (id, data) => axios.post(`/oa/checkin-visit/${id}`, data)
+const postVisitToCheckin = async (data) => axios.post('/oa/post-visit', data).catch((err) => console.log(err))
+const checkInVisit = async (id, data) => axios.post(`/oa/checkin-visit/${id}`, data).catch((e=>console.log(e)))
 
 
 
 export {
-    getVisitors,
     getVisitorsHaveAppointment,
     postVisitToCheckin,
     checkInVisit

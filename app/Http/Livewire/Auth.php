@@ -17,7 +17,7 @@ class Auth extends Component
     public bool $remainMe = false;
     public $returnUrl;
     public $login_id;
-    public $fullname, $confirmation_password, $term_condition, $username, $phone;
+    public $name, $confirmation_password, $term_condition, $username, $phone, $gender;
 
     public function mount(): void
     {
@@ -33,7 +33,7 @@ class Auth extends Component
         // return view('livewire.auth');
     }
 
-    public function loginHandler(): Redirector
+    public function loginHandler()
     {
         $fieldType = filter_var($this->login_id, FILTER_VALIDATE_EMAIL) ? 'username' : 'email';
         $credentials = $this->validate([
@@ -61,20 +61,25 @@ class Auth extends Component
     public function registerHandler()
     {
         $data = $this->validate([
-            'fullname' => 'string',
             'email' => 'email|required',
+            'name' => 'required',
             'password' => 'required|min:5|max:16',
             'phone' => 'required',
+            'gender' => 'required',
             'term_condition' => 'required|boolean',
             'username' => 'required|min:5|max:10',
             'confirmation_password' => 'same:password'
         ]);
         $user = User::create([
-            'firstname' => $data['fullname'],
-            'username'  => $data['username'],
+            'name' => $data['name'],
+            'email'  => $data['email'],
+            'gender'  => $data['gender'],
             'password'  => $data['password'],
-            'email'     => $data['email'],
+        ])->detail()->create([
+            'phone' => $data['phone'],
+            'username' => $data['username'],
         ]);
+
         if($user){
             $user = [
                 'email' => $data['email'],

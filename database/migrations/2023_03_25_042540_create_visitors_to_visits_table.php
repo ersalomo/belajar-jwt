@@ -20,9 +20,8 @@ return new class extends Migration
         */
         Schema::create('visitors_to_visit', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_visit')->constrained('visits');
-            $table->foreignId('visitor_id')
-                ->nullable()
+            $table->foreignId('id_visit')->constrained('visitations');
+            $table->foreignId('visitor_id')->nullable()
                 ->constrained('users');
             $table->text('visitor_name');
             $table->timestamps();

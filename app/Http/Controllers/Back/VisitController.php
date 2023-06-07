@@ -13,7 +13,7 @@ class VisitController extends Controller
     public function index(Request $request)
     {
         $visitations = Visit::all();
-        return view('back.content.visitaion', [
+        return view('back.content.visitation', [
             'visitations' => $visitations
         ]);
     }

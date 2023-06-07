@@ -9,6 +9,7 @@ class UserData extends Component
 {
     public function render()
     {
+
         return view('livewire.user-data', [
             'users' => User::whereNot('id', auth()->user()->id)
                 ->latest()

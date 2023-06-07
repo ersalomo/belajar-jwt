@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kode_emps', function (Blueprint $table) {
+        Schema::create('emp_departments', function (Blueprint $table) {
             $table->unsignedBigInteger('emp_id');
             $table->foreign('emp_id')->references('id')->on('users')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->string('kode_emp')
-                ->unique();
+            $table->foreignId('department_id')->nullable()->constrained('departments');
+            $table->string('kode_emp')->unique();
+            $table->string('title');
             $table->timestamps();
             $table->primary('emp_id');
         });
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kode_emps');
+        Schema::dropIfExists('emp_departments');
     }
 };

@@ -15,9 +15,9 @@ return new class extends Migration
     {
         // bersifat jika sudah berapa di kawasan perusahaan  / offline
         // di approved dari tb appoinment maka data akan di insert disini
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::create('visitations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_appmt')
+            $table->foreignId('appointment_id')
                 /**
                  * nullable berlaku jika visitor
                  * tiba-tiba datang(offline) / mendadak
@@ -26,6 +26,7 @@ return new class extends Migration
                 */
                 ->nullable()
                 ->constrained('appointments');
+                $table->foreignId('emp_id')->nullable()->constrained('users');
                 $table->date('visit_date');
                 $table->boolean('checkin');
                 $table->boolean('checkout');
@@ -41,6 +42,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('visits');
+        Schema::dropIfExists('visitations');
     }
 };

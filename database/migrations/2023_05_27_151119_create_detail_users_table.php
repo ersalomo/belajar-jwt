@@ -11,18 +11,20 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up():void
     {
         Schema::create('detail_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->string('fn');
-            $table->string('ln');
-            $table->string('picture');
-            $table->string('phone');
-            $table->string('address');
-            $table->string('company_name');
-            $table->string('occupation');
+            $table->string('fn')->nullable();
+            $table->string('ln')->nullable();
+            $table->string('NIK',16)->nullable();
+            $table->string('username')->unique();
+            $table->string('picture')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('occupation')->nullable();
             $table->timestamps();
         });
     }
@@ -32,7 +34,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down():void
     {
         Schema::dropIfExists('detail_users');
     }

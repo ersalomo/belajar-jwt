@@ -16,18 +16,16 @@ return new class extends Migration
         // online
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('visitor_id')
-                ->constrained('users')
+            $table->foreignId('visitor_id')->constrained('users')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->foreignId('kode_emp')
-                ->constrained('users')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
-            $table->string('type')->default('personil');
+            $table->string('name_emp');
             $table->text('purpose')->nullable();
             $table->date('visit_date')->nullable();
             $table->string('company_name')->nullable();
+            $table->string('number_plate')->nullable();
+            $table->string('transportation')->nullable();
+            $table->string('type')->default('personal');
             $table->string('status')->default('pending');
             $table->timestamps();
         });

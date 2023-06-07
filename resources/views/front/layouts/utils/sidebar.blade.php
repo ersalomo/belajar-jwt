@@ -3,11 +3,11 @@
         <!-- profile box -->
         <div class="profileBox">
             <div class="image-wrapper">
-                <img src="{{__(auth()->user()->picture)}}" alt="image"
+                <img src="{{__(auth()->user()['detail']['picture'])}}" alt="image"
                      class="imaged rounded">
             </div>
             <div class="in">
-                <strong>{{ __(auth()->user()?->firstname )}}</strong>
+                <strong>{{ __(auth()->user()->name )}}</strong>
                 @if(auth()->user()?->role_id != 4)
                     <strong>{{ auth()->user()?->kodeEmp->kode_emp}}</strong>
                 @endif
