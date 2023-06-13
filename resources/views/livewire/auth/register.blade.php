@@ -6,12 +6,11 @@
         </div>
         <div class="section mt-2 mb-5">
             <form wire:submit.prevent.lazy="registerHandler">
-
                 <div class="form-group boxed">
                     <div class="input-wrapper">
-                        <input type="text" wire:model.lazy="fullname" class="form-control" id="name1" placeholder="Full name">
+                        <input type="text" wire:model.lazy="name" class="form-control" id="" placeholder="Name">
                     </div>
-                    @error('fullname')
+                    @error('name')
                     <div class="text-start text-danger">
                         {{$message}}
                     </div>
@@ -68,6 +67,21 @@
                             placeholder="Password (again)">
                     </div>
                     @error('confirmation_password')
+                    <div class="text-start text-danger">
+                        {{$message}}
+                    </div>
+                    @enderror
+                </div>
+
+                <div class="form-group boxed">
+                    <div class="input-wrapper">
+                        <select wire:model.lazy="gender" class="form-control">
+                            <option>--choose--</option>
+                            <option value="1">Male</option>
+                            <option value="0">Female</option>
+                        </select>
+                    </div>
+                    @error('gender')
                     <div class="text-start text-danger">
                         {{$message}}
                     </div>

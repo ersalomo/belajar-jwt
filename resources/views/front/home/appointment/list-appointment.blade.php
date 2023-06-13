@@ -74,7 +74,7 @@
                                 <div class="in">
                                     <div>
                                         <input type="hidden" value="${val["id"]}"/>
-                                        <div class="mb-05"><strong>${visitor.name}</strong></div>
+                                        <div class="mb-05"><strong>${val["name_emp"]}</strong></div>
                                         <div class="text-small mb-05">${val["purpose"]}</div>
                                         <div class="text-xsmall">${val["created_at"]}</div>
                                     </div>

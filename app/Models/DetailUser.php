@@ -28,6 +28,7 @@ class DetailUser extends Model
             get: fn($val) => $val ? '/storage/users/' . $val : '/storage/users/img.png',
         );
     }
+
     public function user(): HasOne {
         return $this->hasOne(User::class, 'user_id');
     }

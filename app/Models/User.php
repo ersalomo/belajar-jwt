@@ -57,11 +57,9 @@ class User extends Authenticatable
     {
         return new Attribute(
 //            get: fn($firstname, $e) => $firstname . " " . $this->lastname
-//        get: function ($fn,$user) {
-//            if($user['role_id'] == 2) return "Karyawan" . " " . $this->lastname;
-//            if($user['role_id'] == 3) return "Securiry" . " " . $this->lastname;
-//            return $fn . " " . $this->lastname;
-//            }
+            get: function ($name, $user) {
+                return $name;
+            }
         );
     }
 
@@ -76,17 +74,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(Appointment::class, 'visitor_id');
     }
+
+    public function emp_department(): HasOne
+    {
+        return $this->hasOne(EmpDepartment::class, 'emp_id');
+    }
+
     public function detail(): HasOne
     {
         return $this->hasOne(DetailUser::class);
     }
+
     public function isVisitor(): bool
     {
         $user = auth()->user();
         if ($user->role_id == 4) {
             $id_appt = auth()->user()->visitor()->first();
             $visitExits = null;
-            if($id_appt){
+            if ($id_appt) {
                 $visitExits = Visit::where('appointment_id', $id_appt['id'])->first();
             }
             return boolval($visitExits);

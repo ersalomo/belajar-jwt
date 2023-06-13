@@ -22,9 +22,9 @@ class UserData extends Component
 
     public function delete(User $user) {
         if ($user->role_id != 4) {
-            $user->department()->delete();
-            $user->kodeEmp()->delete();
+            $user->emp_department()->delete();
         }
+        $user->detail()->delete();
         $user->delete();
         return back();
     }

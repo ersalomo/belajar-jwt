@@ -6,9 +6,9 @@
 <script src="/argon/assets/js/plugins/smooth-scrollbar.min.js"></script>
 
 <script>
-    var win = navigator.platform.indexOf('Win') > -1;
+    const win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
-        var options = {
+        const options = {
             damping: '0.5'
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
@@ -23,5 +23,12 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 {{--end select 2--}}
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN' : $("meta[name=csrf-token]").attr('content')
+        }
+    })
+</script>
 @stack('scripts')
-<livewire:scripts/>
+@livewireScripts

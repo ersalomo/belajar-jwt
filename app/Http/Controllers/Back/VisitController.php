@@ -29,15 +29,16 @@ class VisitController extends Controller
         if ($id = $request->query('id')) {
             $appointment = Appointment::find($id);
         } else {
-            $appointment = [];
+            return back();
+//            $appointment = [];
         }
         return view('back.content.visitation.create', compact('appointment'));
     }
 
     public function storeVisitation(Request $request)
     {
-        if (!$id = $request->id_ap){
-            return back()->with('missing', 'appoinment not found!');
+        if (!$id = $request->id_ap) {
+            return back()->with('missing', 'appointment not found!');
         }
 
         $data = $request->validate([
@@ -48,15 +49,22 @@ class VisitController extends Controller
             'emp_id.exists' => 'Karyawan tidak ditemukan',
         ]);
 
-        return Visit::create([
-            'appointment_id' =>$id,
+        $visit = Visit::create([
+            'appointment_id' => $id,
             'emp_id' => $data['emp_id'],
             'visit_date' => $data['visit_date'],
             'checkin' => false,
             'checkout' => false,
             'notes' => '',
-        ]) ? back()->with('success', 'created') :
-            back()->with('fail', 'created');
+        ]);
+        if ($visit) {
+            Appointment::find($id)->update([
+                'status' => 'approved'
+            ]);
+            return back()->with('success', 'created');
+        }else{
+        return back()->with('fail', 'fail');
+        }
 
     }
 

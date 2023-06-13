@@ -61,38 +61,32 @@ class Auth extends Component
     public function registerHandler()
     {
         $data = $this->validate([
-            'email' => 'email|required',
             'name' => 'required',
+            'email' => 'email|required',
             'password' => 'required|min:5|max:16',
             'phone' => 'required',
-            'gender' => 'required',
+            'gender' => 'required|in:0,1',
             'term_condition' => 'required|boolean',
             'username' => 'required|min:5|max:10',
             'confirmation_password' => 'same:password'
         ]);
-        $user = User::create([
+        User::create([
             'name' => $data['name'],
-            'email'  => $data['email'],
-            'gender'  => $data['gender'],
-            'password'  => $data['password'],
+            'email' => $data['email'],
+            'gender' => $data['gender'],
+            'password' => $data['password'],
         ])->detail()->create([
             'phone' => $data['phone'],
             'username' => $data['username'],
         ]);
-
-        if($user){
-            $user = [
-                'email' => $data['email'],
-                'password' => $data['password']
-            ];
-            if(Guard::attempt($user, $this->remainMe)){
-                return to_route('home.home-user');
-            }
+        $user = [
+            'email' => $data['email'],
+            'password' => $data['password']
+        ];
+        if (Guard::attempt($user, $this->remainMe)) {
+            return to_route('home.home-user');
         }
-        return redirect()->back()->with('fail',' something went wrong!');
+        return redirect()->back()->with('fail', ' something went wrong!');
     }
 
-    private function login($credential, $isSaveSession): bool {
-
-    }
 }

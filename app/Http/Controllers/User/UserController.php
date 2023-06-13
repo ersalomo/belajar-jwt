@@ -30,6 +30,9 @@ class UserController extends Controller
     public function changeProfile(Request $request) {
 
 //        $image_base64 = base64_encode(file_get_contents($request->file('file')->path()));
+        try {
+
+
         $user = auth("visitor")->user();
         $path = "app/public/users/";
         $file = $request->file('file');
@@ -49,6 +52,9 @@ class UserController extends Controller
             return response()->json(['status' => 1, 'msg' => 'Your profile picture has been successfully updated.']);
         } else {
             return response()->json(['status' => 0, 'Something went wrong']);
+        }
+        }catch (\Exception $e){
+            return response()->json(['status' => 0, $e->getMessage()]);
         }
     }
 

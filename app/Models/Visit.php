@@ -12,16 +12,23 @@ class Visit extends Model
 
     protected $table = "visitations";
     protected $guarded = ['id'];
+
     protected $with = [
-        "appointment"
+        "appointment",
+
     ];
     protected $casts = [
-      'checkout' => 'boolean'
+      'checkout' => 'boolean',
+      'checkin' => 'boolean'
     ];
 
     // seharusnya relasi 1:1 karena tidak bisa 2 appointment dalam satu kunjungan
     public function appointment(): BelongsTo {
-        return $this->belongsTo(Appointment::class, 'id_appmt');
+        return $this->belongsTo(Appointment::class, 'appointment_id');
+    }
+    protected function employee():BelongsTo {
+        return $this->belongsTo(User::class, 'emp_id');
+
     }
 
 }

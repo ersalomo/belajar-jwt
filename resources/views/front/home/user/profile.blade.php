@@ -1,7 +1,7 @@
 <x-app-layout pageTitle="Make Appointment">
     <div class="section mt-2 mb-2">
         <div class="card bg-primary comment-box">
-            <img src="{{auth()->user()->picture}}" alt="avatar" class="imaged w140 rounded">
+            <img src="{{auth()->user()['detail']['picture']}}" alt="avatar" class="imaged w140 rounded">
             <input type="file" name="file" id="changeAuthorPictureFile" class="d-none" onchange="this.dispatchEvent(new InputEvent
 ('input'))">
             <button class="btn-sm mx-auto btn-primary rounded shadowed w16"
@@ -61,14 +61,23 @@
                                     <div class="form-group mt-1">
                                         <label for="">name</label>
                                         <input type="text" class="form-control" id="name"
-                                               value="{{ __(auth()->user()['firstname']) }}" placeholder="">
+                                               value="{{ __(auth()->user()['name']) }}" placeholder=""/>
                                     </div>
                                     <div class="form-group mt-1">
                                         <label for="email">Email</label>
                                         <input type="text" class="form-control" id="email" disabled
                                                value="{{ __(auth()->user()['email']) }}" placeholder="">
                                     </div>
-
+                                    <div class="form-group mt-1">
+                                        <label for="email">Username</label>
+                                        <input type="text" class="form-control" id="email" disabled
+                                               value="{{ __(auth()->user()['detail']['username']) }}" placeholder="">
+                                    </div>
+{{--                                    <div class="form-group mt-1">--}}
+{{--                                        <label for="email">Company Name</label>--}}
+{{--                                        <input type="text" class="form-control" id="email" disabled--}}
+{{--                                               value="{{ __(auth()->user()['']['username']) }}" placeholder="">--}}
+{{--                                    </div>--}}
                                     <div class="form-group mt-1">
                                         <button class="btn btn-primary btn-block" type="submit">Save Changes</button>
                                     </div>
@@ -79,16 +88,16 @@
                             <div>
                                 <label for="phone">Phone
                                     <input type="text" disabled
-                                           value="{{ auth()->user()->phone }}" class="form-control"
+                                           value="{{ auth()->user()->detail['phone'] }}" class="form-control"
                                            id="phone" placeholder="">
                                 </label>
+
+
                                 <label for="phone">Address
-                                    <textarea type="text"
+                                    <input type="text"
                                               class="form-control"
-                                              col="50"
-                                              id="address" placeholder="">{{ auth()->user()->address }}
-                                    </textarea>
-                                </label>
+                                              id="address" placeholder="" value="{{ auth()->user()->detail['address'] }}"/>
+                                    </label>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="change-password" role="tabpanel">
@@ -133,20 +142,6 @@
     @push('scripts')
 
         <script>
-            function toastbox(target, time) {
-                var a = document.getElementById(target);
-                closeToastBox()
-                setTimeout(() => {
-                    a.classList.add("show")
-                }, 100);
-                if (time) {
-                    time = time + 100;
-                    setTimeout(() => {
-                        closeToastBox()
-                    }, time);
-                }
-            }
-
             $("#changeAuthorPictureFile").ijaboCropTool({
                 preview: '',
                 setRatio: 1,
@@ -158,11 +153,11 @@
                 onSuccess: function (message, element, status) {
                     // Livewire.emit('UpdateAuthorProfileHeader');
                     // Livewire.emit('UpdateTopHeader');
-                    toastbox('toast-3', 5000)
+                    // toastbox('toast-3', 5000)
                 },
                 onError: function (message, element, status) {
                     // toastr.error(message)
-                    toastbox('toast-3', 5000)
+                    // toastbox('toast-3', 5000)
                     console.log(message)
                 }
             });

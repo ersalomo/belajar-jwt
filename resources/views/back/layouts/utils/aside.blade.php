@@ -95,7 +95,7 @@
                 <div class="collapse" id="pagesExamples" style="">
                     <ul class="nav ms-4">
                         <li class="nav-item ">
-                            <a class="nav-link" aria-expanded="false" href="{{ route('admin.visit.index') }}">
+                            <a class="nav-link" aria-expanded="false" href="{{ route('admin.visit.visitation-index') }}">
                                 <span class="sidenav-normal"> Visitation Visitor <b class="caret"></b></span>
                             </a>
                         </li>

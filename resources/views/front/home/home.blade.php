@@ -5,7 +5,7 @@
                 <div>
                     <h6 class="card-subtitle">Welcome</h6>
                     <h5 class="card-title mb-0 d-flex align-items-center justify-content-between">
-                        {{ __('User '.auth()->user()->firstname) }}
+                        {{ __('User '.auth()->user()->name) }}
                         @if(auth()->user()->role_id != 4)
 {{--                            {{ __('Kode '.auth()->user()->kodeEmp->kode_emp ?? '') }}--}}
                         @endif

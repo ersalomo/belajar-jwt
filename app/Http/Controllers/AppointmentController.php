@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Appointment, KodeEmp, User, Visitor, Visit};
+use App\Models\{Appointment, Conversation, KodeEmp, Notification, User, Visitor, Visit};
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -45,7 +45,7 @@ class AppointmentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
     public function create()
     {
@@ -59,7 +59,7 @@ class AppointmentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreAppointmentRequest $request
-     * @return Response
+     * @return JsonResponse
      */
     public function store(StoreAppointmentRequest $request): JsonResponse
     {
@@ -68,6 +68,7 @@ class AppointmentController extends Controller
             $request->rules(),
             $request->messages()
         );
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'fail',
@@ -79,16 +80,19 @@ class AppointmentController extends Controller
         $user = auth()->user();
         $count_appointments = $user->visitor()
                 ?->whereDate('created_at', now()->today())
-                ->get(['id']) || false;
+                ->get(['id']);
 
         if ($count_appointments) {
 //            $emp_id = KodeEmp::where('kode_emp', $request->kode_emp)->first()['emp_id'];
-            $appointment = $user->visitor()->create(
-                $validator->validate()
-            );
+            $appointment = $user->visitor()->create($validator->validate());
             if ($appointment) {
                 // send event when visitor create appointment
 //                HandleNotif::dispatch(auth()->user(), $emp_id);
+                Notification::create([
+                    'title' => 'New Appointment Created',
+                    'status' => 'waiting',
+                    'body' => $user['name'] ." has created new appointment"
+                ]);
                 $res = [
                     'success' => 'berhasil',
                     'msg' => 'Appointment berhasil dibuat'

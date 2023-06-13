@@ -16,16 +16,42 @@
                 </div>
             @endif
             <div class="row">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <h6>Visitor appointment</h6>
+                    </div>
+                    <div class="card-body p-3">
+                        <div class="timeline timeline-one-side" data-timeline-axis-style="dotted">
+                            <div class="timeline-block mb-3">
+                                <span class="timeline-step">
+                                <i class="ni ni-bell-55 text-success text-gradient"></i>
+                                </span>
+                                <div class="timeline-content">
+                                    <h6 class="text-dark text-sm font-weight-bold mb-0">{{$appointment->visitor['name']}}</h6>
+                                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{$appointment['created_at']}}</p>
+                                    <p class="text-sm mt-3 mb-2">
+                                        {{$appointment['purpose']}}
+                                    </p>
+                                    <span class="badge badge-sm bg-gradient-success">{{$appointment['status']}}</span>
+                                    <p class="text-sm mt-3 mb-2">
+                                        Ingin bertemu dengan <b>{{$appointment['name_emp']}}</b>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name" class="form-control-label">Employee Name
                             @if($appointment)
                                 (look for name {{$appointment['name_emp']}})
-                                                <input class="form-control" type="hidden" name="id_ap" value="{{$appointment['id']}}">
+                                <input class="form-control" type="hidden" name="id_ap" value="{{$appointment['id']}}">
                             @endif
                         </label>
                         <select id='sel_name' name="emp_id" class="form-control">
-                            <option value="">--select name--</option>
+                            <option value="0">--select name--</option>
                         </select>
                         @error('emp_id')
                         <span class="text-danger fa-sm">

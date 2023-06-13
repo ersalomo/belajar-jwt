@@ -32,9 +32,11 @@ class UserReq extends FormRequest
             'address'    => 'required|string',
             'picture'    => 'file|max:2048|image',
 //            'picture'    => 'mimes:image/png,image/jpeg,image/jpg|file|max:2048',
-            'password'   => 'required|string',
+            'password'   => 'string',
             'is_blocked' => 'string',
-            'role_id' => 'in:1,2,3,4'
+            'role_id' => 'in:1,2,3,4',
+//            'title' => 'string',
+//            'department_id' => 'required|exists:departments,id'
         ];
     }
     public function messages()
