@@ -113,7 +113,11 @@
                     </a>
                 </div>
                 <div class="col card py-1">
-                    <a class="btn">
+{{--                    tidak bisa karena relasi user dengan appointmrny hasMany sedangkan appt dengN VISIT 1:1--}}
+{{--                    <a class="btn" href="{{route('home.approval.create-feedback', auth()->user()->appointment()->visit())}}">--}}
+
+{{--                    @dd(\App\Models\Visit::orderBy('created_at')->first()['id'])--}}
+                    <a class="btn" href="{{route('home.approval.create-feedback', \App\Models\Visit::orderBy('created_at')->first()['id'])}}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-check"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">

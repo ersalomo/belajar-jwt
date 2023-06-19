@@ -3,12 +3,12 @@
         <li>
             <a href="#" class="item" wire:click="openModalApprove({{$visitation->id}})">
                 <div class="icon-box">
-                    <img src="{{$visitation->appointment->visitor->picture}}" class="image"/>
+                    <img src="{{$visitation->appointment->visitor['detail']->picture}}" class="image"/>
                 </div>
                 <div class="in">
                     <div>
-                        <div class="mb-05"><strong> {{$visitation->appointment->visitor->firstname}}</strong></div>
-                        <div class="text-small mb-05">Saya mo checkout</div>
+                        <div class="mb-05"><strong> {{$visitation->appointment->visitor['name']}}</strong></div>
+                        <div class="text-small mb-05">{{__($visitation['appointment']->purpose)}}</div>
                         <div class="text-xsmall">{{$visitation->created_at}}</div>
                     </div>
                     @if($visitation->checkout)
@@ -24,12 +24,14 @@
                     </span>
                     @else
                         <span class="text-danger">Not checkout
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-letter-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
-   <path d="M10 8l4 8"></path>
-   <path d="M10 16l4 -8"></path>
-</svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-letter-x"
+                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                 fill="none" stroke-linecap="round" stroke-linejoin="round">
+                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                               <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                               <path d="M10 8l4 8"></path>
+                               <path d="M10 16l4 -8"></path>
+                            </svg>
                         </span>
                     @endif
                 </div>

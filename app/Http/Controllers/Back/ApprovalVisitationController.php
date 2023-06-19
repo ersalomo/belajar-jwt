@@ -17,7 +17,7 @@ class ApprovalVisitationController extends Controller
     public function index()
     {
         // mendapatkan semua visit pada hari ini berdasarkan karyawan logged
-        return view( "front.home.approval.index", [
+        return view("front.home.approval.index", [
 //            'visitations' => Visit::all()
         ]);
     }
@@ -35,18 +35,27 @@ class ApprovalVisitationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function createFeedback(Request $request, Visit $visit){
+        return view('front.home.visitation.craete-feedback',compact('visit'));
+    }
+
+    public function storeFeedback(Request $request, Visit $visit)
     {
-        //
+        $data = $request->validate([
+            'notes' => 'required|min:10'
+        ]);
+        $visit->update($data);
+        return back()->with('success', 'updated');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -57,7 +66,7 @@ class ApprovalVisitationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -68,8 +77,8 @@ class ApprovalVisitationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -80,7 +89,7 @@ class ApprovalVisitationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -44,23 +44,25 @@ Route::group([
 
     Route::controller(AppointmentController::class)->group(function () {
         Route::get('list-appointment', 'index')->name('list-appointment');
-        Route::post('appointment', 'store')->name('appointment.store');
         Route::get('appointment', 'create')->name('appointment.create');
         Route::get('detail-appointment/{appointment}', 'show')->name('appointment.show');
         Route::get('get-appointments', 'getAppointmentsCurrentUser')->name('appointment.lists');
-        Route::post('appointment/update-approve/{appointment}', 'approveAppointment')->name('appointment.update-approve');
         Route::get('appointment-visitors', 'getVisitorHasAppointment')->name('visitors');
+        Route::post('appointment', 'store')->name('appointment.store');
+        Route::post('appointment/update-approve/{appointment}', 'approveAppointment')->name('appointment.update-approve');
     });
 
     Route::controller(FaceDetection::class)->group(function () {
         Route::get('face-detection', 'index')->name('face-detection');
-        Route::post('face-detection', 'store')->name('store.face-detection');
         Route::get('face-labeled', 'labeledFaces')->name('labeled-faces');
         Route::get('face-verified', 'faceVerify')->name('face-verified');
         Route::get('face-recog', 'faceRecog')->name('face-recog');
+        Route::post('face-detection', 'store')->name('store.face-detection');
     });
 
     Route::controller(ApprovalVisitationController::class)->as('approval.')->group(function () {
         Route::get('approval-visitors', 'index')->name('index');
+        Route::get('feedback-visitors/{visit}', 'createFeedback')->name('create-feedback');
+        Route::post('feedback-visitors', 'storeFeedback')->name('store-feedback');
     });
 });

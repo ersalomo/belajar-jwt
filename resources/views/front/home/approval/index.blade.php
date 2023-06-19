@@ -38,8 +38,19 @@
             </div>
         </div>
     </div>
+    <div id="notesIsNull" class="toast-box toast-center">
+        <div class="in">
+            <ion-icon name="alert-outline" class="text-danger md hydrated" role="img" aria-label=""></ion-icon>
+            <div class="text">
+                This visitor not fill feedback yet
+            </div>
+        </div>
+    </div>
     @push('scripts')
         <script>
+            Livewire.on('notifyNotFillTheNotes', (e) => {
+                toastbox('notesIsNull', 1500)
+            })
             Livewire.on('openModalApprove', ({id}) => {
                 $('#DialogIconedButtonInline').modal('show');
                 $('.modal-footer .btn-text-primary').on('click', function () {

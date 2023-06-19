@@ -41,7 +41,6 @@ Route::group([
             Route::delete('logout', [AuthAdminController::class, 'logout'])->name('logout');
             Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
             Route::get('list-appointments', [DataAppointmentController::class, 'index'])->name('list-appointments');
-
             Route::view('roles-list', 'back.content.roles-table')->name('roles-list');
 
 

@@ -8,12 +8,9 @@
             </div>
             <div class="in">
                 <strong>{{ __(auth()->user()->name )}}</strong>
-                @if(auth()->user()?->role_id != 4)
-{{--                    <strong>{{ auth()->user()?->kodeEmp->kode_emp}}</strong>--}}
-                @endif
                 <div class="text-muted">
                     <ion-icon name="location"></ion-icon>
-                    Indonesia, DKI Ja
+                    {{Str::words(auth()->user()['detail']['address'],5)}}
                 </div>
             </div>
             <a href="#" class="close-sidebar-button" data-bs-dismiss="offcanvas">
@@ -22,7 +19,6 @@
         </div>
         <!-- * profile box -->
         <ul class="listview flush transparent no-line image-listview mt-2">
-
             <li>
                 <a href="#" class="item">
                     <div class="icon-box bg-primary">
@@ -30,7 +26,7 @@
                     </div>
                     <div class="in">
                         <div>Notifications</div>
-                        <span class="badge badge-danger">{{ __(4) }}</span>
+                        <span class="badge badge-danger">{{\App\Models\Conversation::all(['id'])->count() || '10'}}</span>
                     </div>
                 </a>
             </li>

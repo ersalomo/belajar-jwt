@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -56,7 +57,6 @@ class User extends Authenticatable
     protected function name(): Attribute
     {
         return new Attribute(
-//            get: fn($firstname, $e) => $firstname . " " . $this->lastname
             get: function ($name, $user) {
                 return $name;
             }
@@ -69,11 +69,15 @@ class User extends Authenticatable
             set: fn($value) => bcrypt($value),
         );
     }
+    public function appointment():HasMany {
+        return $this->hasMany(Appointment::class,'user_id');
+    }
 
     public function visitor(): HasMany
     {
         return $this->hasMany(Appointment::class, 'visitor_id');
     }
+
 
     public function emp_department(): HasOne
     {
@@ -83,6 +87,11 @@ class User extends Authenticatable
     public function detail(): HasOne
     {
         return $this->hasOne(DetailUser::class);
+    }
+
+    public function visitation(): HasMany
+    {
+        return $this->hasMany(Visit::class, 'emp_id');
     }
 
     public function isVisitor(): bool

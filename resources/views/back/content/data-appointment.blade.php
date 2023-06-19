@@ -5,7 +5,7 @@
                 <div class="card-header pb-0">
                     <h6 class="">Appointment table</h6>
                     <div class="d-flex m-0">
-                        <button class="ms-auto btn btn-primary col-1">
+                        <button class="ms-auto btn btn-primary col-md-2">
                             <i class="fa fas-edit"></i>
                             add
                         </button>
@@ -16,40 +16,35 @@
                         <table class="table align-items-center mb-0">
                             <thead>
                             <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder">
 
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
                                     Visitor
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                     Employee
                                 </th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder">
                                     Purpose
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                     Visit Type
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                     Company Name
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                     Transportation
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    Number Plate
-                                </th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder">
                                     Status
                                 </th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder">
                                     created
                                 </th>
 
-                                <th class="text-secondary opacity-7">
-
-                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -75,44 +70,23 @@
                                     <td>
                                         <p class="text-xs font-weight-bold mb-0">{{__($appointment->name_emp)}}</p>
                                     </td>
-{{--                                    <td class="align-middle text-center">--}}
-{{--                                        <span--}}
-{{--                                            class="text-secondary text-xs font-weight-bold">{{__($appointment->purpose)}}</span>--}}
-{{--                                        --}}{{--                                        <p class="text-xs text-secondary mb-0">{{__($appointment->title)}}</p>--}}
-{{--                                    </td>--}}
-                                    <td class="align-middle text-center text-sm">
-                                        @if($appointment->type == 'personil')
-                                            <span class="badge badge-sm bg-gradient-info">personil</span>
-                                        @else
-                                            <span class="badge badge-sm bg-gradient-success">group</span>
-                                        @endif
+                                    <td class="align-middle text-start">
+                                        <span class="text-secondary text-xs font-weight-bold">{{__($appointment->purpose)}}</span>
                                     </td>
-                                    <td class="align-middle text-center">
+                                    <td class="align-middle text-center text-sm">
+                                            <span class="badge badge-sm bg-gradient-success">{{$appointment['visitation_type']}}</span>
+                                    </td>
+                                    <td class="align-middle text-start">
                                         <span
                                             class="text-secondary text-xs font-weight-bold">{{__($appointment->company_name)}}</span>
                                         {{--                                        <p class="text-xs text-secondary mb-0">{{__($appointment->title)}}</p>--}}
                                     </td>
-                                    <td class="align-middle text-center">
-                                        <span
-                                            class="text-secondary text-xs font-weight-bold">{{__($appointment->visit_date)}}</span>
-                                        {{--                                        <p class="text-xs text-secondary mb-0">{{__($appointment->title)}}</p>--}}
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <span
-                                            class="text-secondary text-xs font-weight-bold">{{__($appointment->number_plate)}}</span>
-                                        {{--                                        <p class="text-xs text-secondary mb-0">{{__($appointment->title)}}</p>--}}
-                                    </td>
-                                    <td class="align-middle text-center">
+                                    <td class="align-middle text-start">
                                         <span
                                             class="text-secondary text-xs font-weight-bold">{{__($appointment->transportation)}}</span>
-                                        {{--                                        <p class="text-xs text-secondary mb-0">{{__($appointment->title)}}</p>--}}
+                                                                                <p class="text-xs text-secondary mb-0">{{__($appointment->number_plate)}}</p>
                                     </td>
-                                    <td class="align-middle text-center">
-                                        <span
-                                            class="text-secondary text-xs font-weight-bold">{{__($appointment->transportation)}}</span>
-                                        {{--                                        <p class="text-xs text-secondary mb-0">{{__($appointment->title)}}</p>--}}
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle text-start text-sm">
                                         @if($appointment->status == 'pending')
                                             <span class="badge badge-sm bg-gradient-warning">pending</span>
                                         @else

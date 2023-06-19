@@ -2,10 +2,10 @@
     <div class="section mt-2 mb-2">
         <div class="card bg-primary comment-box">
             <img src="{{auth()->user()['detail']['picture']}}" alt="avatar" class="imaged w140 rounded">
-            <input type="file" name="file" id="changeAuthorPictureFile" class="d-none" onchange="this.dispatchEvent(new InputEvent
-('input'))">
+            <input type="file" name="file" id="changeAuthorPictureFile" class="d-none"
+                   onchange="this.dispatchEvent(new InputEvent('input'))">
             <button class="btn-sm mx-auto btn-primary rounded shadowed w16"
-                    onclick="event.preventDefault();document.getElementById('changeAuthorPictureFile'). click();">
+                    onclick="event.preventDefault();document.getElementById('changeAuthorPictureFile').click();">
                 <span class="justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit-circle" width="24"
                          height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -74,10 +74,15 @@
                                                value="{{ __(auth()->user()['detail']['username']) }}" placeholder="">
                                     </div>
 {{--                                    <div class="form-group mt-1">--}}
-{{--                                        <label for="email">Company Name</label>--}}
-{{--                                        <input type="text" class="form-control" id="email" disabled--}}
-{{--                                               value="{{ __(auth()->user()['']['username']) }}" placeholder="">--}}
+{{--                                        <label for="email">Firstname</label>--}}
+{{--                                        <input type="text" class="form-control" id="email"--}}
+{{--                                               value="{{ __(auth()->user()['detail']['fn']) }}" placeholder="">--}}
 {{--                                    </div>--}}
+                                    <div class="form-group mt-1">
+                                        <label for="email">Lastname</label>
+                                        <input type="text" class="form-control" id="email"
+                                               value="{{ __(auth()->user()['detail']['ln']) }}" placeholder="">
+                                    </div>
                                     <div class="form-group mt-1">
                                         <button class="btn btn-primary btn-block" type="submit">Save Changes</button>
                                     </div>
@@ -86,18 +91,33 @@
                         </div>
                         <div class="tab-pane fade" id="contact" role="tabpanel">
                             <div>
-                                <label for="phone">Phone
-                                    <input type="text" disabled
-                                           value="{{ auth()->user()->detail['phone'] }}" class="form-control"
-                                           id="phone" placeholder="">
-                                </label>
-
-
-                                <label for="phone">Address
-                                    <input type="text"
-                                              class="form-control"
-                                              id="address" placeholder="" value="{{ auth()->user()->detail['address'] }}"/>
-                                    </label>
+                                <form action="">
+                                    <div class="form-group mt-1">
+                                        <label for="phone">Phone</label>
+                                        <input type="text" disabled
+                                               value="{{ auth()->user()->detail['phone'] }}" class="form-control"
+                                               id="phone" placeholder="">
+                                    </div>
+                                    <div class="form-group mt-1">
+                                        <label for="phone">Address
+                                        </label>
+                                        <textarea class="form-control">{{auth()->user()->detail['address']}}</textarea>
+                                    </div>
+                                    <div class="form-group mt-1">
+                                        <label for="co">Company Name</label>
+                                        <input type="text"
+                                               value="{{ auth()->user()->detail['company_name'] ?? '-' }}"
+                                               class="form-control"
+                                               id="co" placeholder="">
+                                    </div>
+                                    <div class="form-group mt-1">
+                                        <label for="oc">Occupation</label>
+                                        <input type="text"
+                                               value="{{ auth()->user()->detail['occupation'] ?? '-' }}"
+                                               class="form-control"
+                                               id="oc" placeholder="">
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="change-password" role="tabpanel">
