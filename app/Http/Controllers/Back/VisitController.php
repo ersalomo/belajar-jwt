@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Models\Notification;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use App\Http\Requests\VisitRequest;
@@ -58,9 +59,16 @@ class VisitController extends Controller
             'notes' => '',
         ]);
         if ($visit) {
-            Appointment::find($id)->update([
+            Notification::create([
+                'title' => 'Appointment Approved',
+                'status' => 'success',
+                'body' => 'Your appointment has been approved by admin',
+            ]);
+            $ap = Appointment::find($id);
+            $ap->update([
                 'status' => 'approved'
             ]);
+
             return back()->with('success', 'created');
         }else{
         return back()->with('fail', 'fail');

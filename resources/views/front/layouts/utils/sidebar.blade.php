@@ -26,8 +26,16 @@
                     </div>
                     <div class="in">
                         <div>Notifications</div>
-                        <span class="badge badge-danger">{{\App\Models\Conversation::all(['id'])->count() || '10'}}</span>
+                        <span class="badge badge-danger">{{\App\Models\Notification::all(['id'])->count() }}</span>
                     </div>
+                </a>
+            </li>
+            <li>
+                <a data-bs-toggle="offcanvas" class="item" href="#offcanvas-right">
+                    <div class="icon-box bg-primary">
+                        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                    </div>
+                    Right
                 </a>
             </li>
 
@@ -47,7 +55,7 @@
                 </svg>
             </button>
         </form>
-        <a href="{{ route('home.me.profile') }}" class="button">
+        <a href="{{ route('home.me.profile', ['tab'=>'profile']) }}" class="button">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle"
                  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                  fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -60,3 +68,55 @@
     </div>
     <!-- * sidebar buttons -->
 </div>
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas-right" style="visibility: hidden;" aria-modal="true"
+     role="dialog">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Notifications</h5>
+        <a href="#" class="offcanvas-close" data-bs-dismiss="offcanvas">
+            <ion-icon name="close-outline" role="img" class="md hydrated" aria-label="close outline"></ion-icon>
+        </a>
+    </div>
+    <div class="offcanvas-body">
+        <div class="section">
+            <div class="pt-2 pb-2">
+                <!-- comment block -->
+                <div class="comment-block">
+                    @foreach(\App\Models\Notification::all() as $nf)
+
+                        <div class="item">
+                            {{--                        <div class="avatar">--}}
+                            {{--                            <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w32 rounded">--}}
+                            {{--                        </div>--}}
+                            <div class="in">
+                                <div class="comment-header">
+                                    <h4 class="title">{{$nf['title']}}</h4>
+                                    <span class="time">{{$nf['created_at']}}</span>
+                                </div>
+                                <div class="text">
+                                 {{$nf['body']}}
+                                </div>
+                                {{--                            <div class="comment-footer">--}}
+                                {{--                                <a href="#" class="comment-button">--}}
+                                {{--                                    <ion-icon name="heart-outline" role="img" class="md hydrated" aria-label="heart outline"></ion-icon>--}}
+                                {{--                                    Like (523)--}}
+                                {{--                                </a>--}}
+                                {{--                                <a href="#" class="comment-button">--}}
+                                {{--                                    <ion-icon name="chatbubble-outline" role="img" class="md hydrated" aria-label="chatbubble outline"></ion-icon>--}}
+                                {{--                                    Reply--}}
+                                {{--                                </a>--}}
+                                {{--                            </div>--}}
+                            </div>
+                        </div>
+                    @endforeach
+
+
+                </div>
+                <!-- * comment block -->
+            </div>
+        </div>
+    </div>
+</div>
+
+

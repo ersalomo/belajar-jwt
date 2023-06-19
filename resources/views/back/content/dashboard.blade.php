@@ -200,7 +200,7 @@
                                 </td>
                                 <td class="align-middle text-center text-sm">
                                     <span
-                                        class="badge badge-sm text-dark bg-gradient-faded-info">{{($appointment->status)}}</span>
+                                        class="badge badge-sm text-dark  {{($appointment->status == 'pending') ? 'bg-gradient-faded-primary':'bg-gradient-faded-success'}}">{{($appointment->status)}}</span>
                                 </td>
                                 <td class="align-middle text-start" data-bs-toggle="tooltip" data-bs-placement="left"
                                     title="{{($appointment->purpose)}}">

@@ -36,8 +36,8 @@ Route::group([
     });
 
     Route::controller(UserController::class)->group(function () {
-        Route::get('me/profile', 'showProfile')->name('me.profile');
-        Route::put('me/change-password', 'changePassword')->name('me.change-password');
+        Route::view('me/profile', 'front.home.user.profile')->name('me.profile');
+//        Route::put('me/change-password', 'changePassword')->name('me.change-password');
         Route::post('change-profile-picture', 'changeProfile')->name('change-profile-picture');
         Route::post('logout', 'logout')->name('logout');
     });

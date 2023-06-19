@@ -69,6 +69,12 @@
                                id="lastname">
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lastname" class="form-control-label">Message (optional)</label>
+                        <textarea class="form-control" name="message">{{old('message')}}</textarea>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="form-group">
