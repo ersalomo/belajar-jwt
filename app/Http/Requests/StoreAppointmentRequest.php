@@ -27,8 +27,8 @@ class StoreAppointmentRequest extends FormRequest
 //            'kode_emp' => ['required', 'string', 'exists:kode_emps,kode_emp'],
             'name_emp' => ['required'],
             'purpose' => ['required'],
-            'company_name' => ['required','string', 'nullable'],
-            'number_plate' => ['required','string', 'nullable'],
+            'company_name' => ['required', 'string', 'nullable'],
+            'number_plate' => ['required', 'string', 'regex:/^[A-Z]{1,2}\s\d{1,4}\s[A-Z]{1,3}$/'],
             'visit_date' => ['required'],
             'transportation' => ['required'],
             'visitation_type' => ['required'],
@@ -44,6 +44,7 @@ class StoreAppointmentRequest extends FormRequest
 //            'kode_emp.required' => 'kolom ini harus diisi',
             '*.required' => 'required',
 //            'purpose.required' => 'Kolom ini tidak boleh kosong',
+            'number_plate.regex' => "number plate tidak valid"
         ];
     }
 }

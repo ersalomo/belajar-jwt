@@ -44,14 +44,14 @@ Route::group([
             Route::view('roles-list', 'back.content.roles-table')->name('roles-list');
 
 
-            Route::controller(VisitController::class)->as('visit.')->group(function (){
+            Route::controller(VisitController::class)->as('visit.')->group(function () {
                 Route::get('visitation-index', 'index')->name('visitation-index');
                 Route::get('visitation/visitation-overview', 'visitationOverview')->name('overview-visitation');
                 Route::get('visitation/create-new-visitation', 'createVisitation')->name('create-new-visitation');
             Route::post('visitation/store-new-visitation', 'storeVisitation')->name('store-new-visitation');
             });
 
-            Route::controller(DapartmentController::class)->as('department.')->group(function (){
+            Route::controller(DapartmentController::class)->as('department.')->group(function () {
                 Route::get('departments', 'index')->name('index');
                 Route::post('departments', 'store')->name('store');
             });

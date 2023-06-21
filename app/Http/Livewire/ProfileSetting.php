@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Livewire\Event;
 
 class ProfileSetting extends Component
 {
@@ -14,8 +15,9 @@ class ProfileSetting extends Component
         $email,
         $gender,
         $phone,
+        $nik,
         $fn,
-        $ln = "",
+        $ln,
         $username,
         $address,
         $company_name,
@@ -27,16 +29,27 @@ class ProfileSetting extends Component
 
     public function updatingTab($val)
     {
+        $this->tab = $val;
+        $user = auth()->user();
+        if ($this->tab == 'contact') {
+            $detail = $user->detail()->first();
+            $this->nik = $detail['NIK'] ?? "";
+            $this->address = $detail['address'] ?? "";
+            $this->company_name = $detail['company_name'] ?? "";
+            $this->occupation = $detail['occupation'] ?? "";
+            $this->phone = $detail['phone'];
+        }
         $this->resetValidation();
-
     }
-    public function mount(){
+
+    public function mount()
+    {
         $user = auth()->user();
         if ($this->tab == 'profile') {
+            $this->email = $user['email'];
+            $this->username = $user["detail"]['username'];
             $this->name = $user['name'];
             $this->ln = $user['detail']?->ln ?? "";
-        }elseif($this->tab == 'contact'){
-            dd('');
         }
     }
 
@@ -44,24 +57,52 @@ class ProfileSetting extends Component
     {
         $this->validate([
             'name' => 'required',
-//    'email' => 'required',
             'ln' => 'required',
         ]);
         $user = auth()->user();
         $user->update([
             'name' => $this->name,
+            'gender' => $this->gender
         ]);
 
         $user->detail()->update([
             'ln' => $this->ln
         ]);
+        $this->showToaster('success', 'success updated');
     }
 
-    public function updateDetail()
+    public
+    function showToaster(string $type, $message): Event
     {
+        return $this->emit('alert:update', [
+            'type' => $type,
+            'message' => $message
+        ]);
     }
 
-    public function changePassword()
+    public
+    function updateDetail()
+    {
+        $this->validate([
+            'nik' => 'required|min:16|max:16|string',
+            'address' => 'required|min:4|string',
+            'company_name' => 'string',
+            'occupation' => 'string',
+        ], [
+            'nik.numeric' => 'enter valid number'
+        ]);
+
+        auth()->user()->detail()->update([
+            'nik' => $this->nik,
+            'address' => $this->address,
+            'company_name' => $this->company_name,
+            'occupation' => $this->occupation,
+        ]);
+        return $this->showToaster('success', 'updated');
+    }
+
+    public
+    function changePassword()
     {
         $this->validate([
             'password' => ['required'],
@@ -77,13 +118,14 @@ class ProfileSetting extends Component
             $user->update([
                 'password' => $new_password
             ]);
-            dd('updated');
+            return $this->showToaster('success', 'updated');
         }
-        session()->flash('error', ' password tidak sesuai');
+        return $this->showToaster('error', 'updated');
     }
 
 
-    public function render()
+    public
+    function render()
     {
         return view('livewire.profile-setting');
     }

@@ -93,6 +93,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Visit::class, 'emp_id');
     }
+    public function conversation():HasMany {
+        return $this->hasMany(Conversation::class, 'user1')->orWhere('user2', $this->getKey());
+    }
 
     public function isVisitor(): bool
     {

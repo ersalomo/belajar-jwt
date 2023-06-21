@@ -63,6 +63,6 @@ Route::group([
     Route::controller(ApprovalVisitationController::class)->as('approval.')->group(function () {
         Route::get('approval-visitors', 'index')->name('index');
         Route::get('feedback-visitors/{visit}', 'createFeedback')->name('create-feedback');
-        Route::post('feedback-visitors', 'storeFeedback')->name('store-feedback');
+        Route::post('feedback-visitors/{visit}', 'storeFeedback')->name('store-feedback');
     });
 });

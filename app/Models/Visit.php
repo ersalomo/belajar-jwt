@@ -15,8 +15,8 @@ class Visit extends Model
 
     protected $with = [
         "appointment",
-
     ];
+
     protected $casts = [
       'checkout' => 'boolean',
       'checkin' => 'boolean'

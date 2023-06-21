@@ -48,6 +48,7 @@
                             @if($appointment)
                                 (look for name {{$appointment['name_emp']}})
                                 <input class="form-control" type="hidden" name="id_ap" value="{{$appointment['id']}}">
+                                <input class="form-control" type="hidden" name="id_visitor" value="{{$appointment["visitor_id"]}}">
                             @endif
                         </label>
                         <select id='sel_name' name="emp_id" class="form-control">

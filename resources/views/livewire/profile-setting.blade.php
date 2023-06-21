@@ -5,19 +5,22 @@
             <div class="wide-block pt-2 pb-2">
                 <ul class="nav nav-tabs style1" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link {{$tab == 'profile' ? 'active' : ''}}" wire:click="$set('tab','profile')" data-bs-toggle="tab" href="#profile" role="tab"
+                        <a class="nav-link {{$tab == 'profile' ? 'active' : ''}}" wire:click.prevent="$set('tab','profile')"
+                           data-bs-toggle="tab" href="?tab=profile" role="tab"
                            aria-selected="false">
                             Profile
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{$tab == 'contact' ? 'active' : ''}}" data-bs-toggle="tab"   wire:click="$set('tab','contact')" href="#contact" role="tab"
+                        <a class="nav-link {{$tab == 'contact' ? 'active' : ''}}" data-bs-toggle="tab"
+                           wire:click.prevent="$set('tab','contact')" href="?tab=detail" role="tab"
                            aria-selected="false">
                             Detail
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{$tab == 'change-pwd' ? 'active' : ''}}"   data-bs-toggle="tab" wire:click="$set('tab','change-pwd')"  href="#change-password" role="tab"
+                        <a class="nav-link {{$tab == 'change-pwd' ? 'active' : ''}}" data-bs-toggle="tab"
+                           wire:click.prevent="$set('tab','change-pwd')" href="?tab=change-pwd" role="tab"
                            aria-selected="false">
                             Change password
                         </a>
@@ -44,29 +47,32 @@
                                 <div class="form-group mt-1">
                                     <label for="email">Email</label>
                                     <input type="text" class="form-control" id="email" disabled
-                                           value="{{ __(auth()->user()['email']) }}" placeholder="">
+                                          wire:model="email"  placeholder="">
                                     @error('email')
                                     <em class="text text-danger">{{ $message }}</em>
-
                                     @enderror
                                 </div>
                                 <div class="form-group mt-1">
                                     <label for="email">Username</label>
-                                    <input type="text" class="form-control" id="email" disabled
-                                           value="{{ __(auth()->user()['detail']['username']) }}" placeholder="">
+                                    <input type="text" wire:model="username" class="form-control" id="email" disabled
+                                            placeholder="">
                                 </div>
-                                {{--                                    <div class="form-group mt-1">--}}
-                                {{--                                        <label for="email">Firstname</label>--}}
-                                {{--                                        <input type="text" class="form-control" id="email"--}}
-                                {{--                                               value="{{ __(auth()->user()['detail']['fn']) }}" placeholder="">--}}
-                                {{--                                    </div>--}}
                                 <div class="form-group mt-1">
                                     <label for="email">Lastname</label>
                                     <input type="text" class="form-control" id="email" wire:model="ln"
-                                           value="{{ __(auth()->user()['detail']['ln']) }}" placeholder="">
+                                            placeholder="">
                                     @error('ln')
                                     <em class="text text-danger">{{ $message }}</em>
                                     @enderror
+                                </div>
+                                <div class="form-group mt-1">
+                                    <label for="email">Gender</label>
+                                    <select class="form-control" wire:model="gender">
+                                        @foreach(['Female','Male'] as $i => $g)
+                                            <option
+                                                value="{{$i}}" {{auth()->user()['gender']==$i ? 'selected': ''}} >{{$g}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="form-group mt-1">
@@ -81,32 +87,56 @@
                                 <div class="form-group mt-1">
                                     <label for="phone">Phone</label>
                                     <input type="text" disabled
-                                           value="{{ auth()->user()->detail['phone'] }}" class="form-control"
+                                            class="form-control"
+                                           wire:model="phone"
                                            id="phone" placeholder="">
+                                </div>
+                                <div class="form-group mt-1">
+                                    <label for="phone">NIK</label>
+                                    <input type="number"
+                                           wire:model="nik"
+                                            class="form-control"
+                                           id="phone" placeholder="">
+                                    @error('nik')
+                                    <em class="text text-danger">{{ $message }}</em>
+                                    @enderror
                                 </div>
                                 <div class="form-group mt-1">
                                     <label for="phone">Address
                                     </label>
-                                    <textarea class="form-control">{{auth()->user()->detail['address']}}</textarea>
+                                    <textarea wire:model="address" class="form-control"></textarea>
+                                    @error('address')
+                                    <em class="text text-danger">{{ $message }}</em>
+                                    @enderror
                                 </div>
                                 <div class="form-group mt-1">
                                     <label for="co">Company Name</label>
                                     <input type="text"
-                                           value="{{ auth()->user()->detail['company_name'] ?? '-' }}"
+                                           wire:model="company_name"
                                            class="form-control"
                                            id="co" placeholder="">
+                                    @error('company_name')
+                                    <em class="text text-danger">{{ $message }}</em>
+                                    @enderror
                                 </div>
                                 <div class="form-group mt-1">
                                     <label for="oc">Occupation</label>
                                     <input type="text"
-                                           value="{{ auth()->user()->detail['occupation'] ?? '-' }}"
+                                           wire:model="occupation"
                                            class="form-control"
                                            id="oc" placeholder="">
+                                    @error('occupation')
+                                    <em class="text text-danger">{{ $message }}</em>
+                                    @enderror
+                                </div>
+                                <div class="form-group mt-1">
+                                    <button class="btn btn-primary btn-block" type="submit">Save Changes</button>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <div class="tab-pane fade {{$tab == 'change-pwd' ? 'active show' : ''}}" id="change-password" role="tabpanel">
+                    <div class="tab-pane fade {{$tab == 'change-pwd' ? 'active show' : ''}}" id="change-password"
+                         role="tabpanel">
                         <form wire:submit.prevent.lazy="changePassword">
                             <div class="form-group mt-1">
                                 <label for="old-password">Old password</label>
@@ -144,3 +174,20 @@
     </div>
     <!-- * pilled tab -->
 </div>
+<div id="toast-update" class="toast-box toast-center">
+    <div class="in">
+        <div class="text">
+            Auto close in 2 seconds
+        </div>
+    </div>
+</div>
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            Livewire.on('alert:update', function (e) {
+                $('#toast-update .text').text(e.message)
+                toastbox('toast-update', 2000)
+            })
+        })
+    </script>
+@endpush

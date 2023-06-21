@@ -9,16 +9,16 @@
                     <li class="">
                         <a href="#" class="item">
                             <div class="imageWrapper">
-                                <img src="{{$visitation->appointment->visitor->picture}}" alt="image" class="image">
+                                <img src="{{$visitation->appointment->visitor["detail"]->picture}}" alt="image" class="image">
                             </div>
                             <div class="in">
                                 <div>
-                                    <b class="">{{$visitation->appointment->visitor->firstname}}</b>
+                                    <b class="">{{$visitation->appointment->visitor->name}}</b>
                                     <div class="text-bolder">
                                         <strong>purpose</strong>{{$visitation->appointment->purpose}}
                                     </div>
                                     <div class="text-bold">
-                                        <strong>Visitation by:</strong>{{$visitation->appointment->employee->firstname}}
+                                        <strong>Visitation by:</strong>{{$visitation->appointment->name_emp}}
                                     </div>
                                 </div>
                                 @if($visitation->checkin)

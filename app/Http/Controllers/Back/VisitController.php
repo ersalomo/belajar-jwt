@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Models\Conversation;
 use App\Models\Notification;
 use App\Models\Visit;
 use Illuminate\Http\Request;
@@ -38,17 +39,16 @@ class VisitController extends Controller
 
     public function storeVisitation(Request $request)
     {
-        if (!$id = $request->id_ap) {
-            return back()->with('missing', 'appointment not found!');
-        }
+        if (!$id = $request->input("id_ap")) return back()->with('missing', 'appointment not found!');
 
         $data = $request->validate([
             'emp_id' => 'required|exists:users,id',
             'visit_date' => 'nullable'
-        ], [
-            'emp_id.required' => 'harus diisi',
-            'emp_id.exists' => 'Karyawan tidak ditemukan',
-        ]);
+        ],
+            [
+                'emp_id.required' => 'harus diisi',
+                'emp_id.exists' => 'Karyawan tidak ditemukan',
+            ]);
 
         $visit = Visit::create([
             'appointment_id' => $id,
@@ -59,7 +59,9 @@ class VisitController extends Controller
             'notes' => '',
         ]);
         if ($visit) {
+            $conv = Conversation::createConversation($data["emp_id"], $request->input("id_visitor"));
             Notification::create([
+                "con_id" => $conv["id"],
                 'title' => 'Appointment Approved',
                 'status' => 'success',
                 'body' => 'Your appointment has been approved by admin',
@@ -68,11 +70,10 @@ class VisitController extends Controller
             $ap->update([
                 'status' => 'approved'
             ]);
-
             return back()->with('success', 'created');
-        }else{
-        return back()->with('fail', 'fail');
         }
+        return back()->with('fail', 'fail');
+
 
     }
 
@@ -147,7 +148,7 @@ class VisitController extends Controller
 
     public function listVisitationVisitors(Request $request)
     {
-        $visitations = Visit::where('id_appmt', '!=', null)->get();
+        $visitations = Visit::where('appointment_id', '!=', null)->get();
         return view(
             'front.home.visitation.list-visitation', [
                 'visitations' => $visitations

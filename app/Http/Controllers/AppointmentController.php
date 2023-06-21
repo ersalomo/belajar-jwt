@@ -17,12 +17,6 @@ use App\Traits\Helper;
 class AppointmentController extends Controller
 {
     use Helper;
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return View
-     */
     public function index()
     {
         return view('front.home.appointment.list-appointment');
@@ -42,11 +36,6 @@ class AppointmentController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
     public function create()
     {
 //        if ($this->check_image()) {
@@ -91,7 +80,7 @@ class AppointmentController extends Controller
                 Notification::create([
                     'title' => 'New Appointment Created',
                     'status' => 'waiting',
-                    'body' => $user['name'] ." has created new appointment"
+                    'body' => $user["name"] ." has created new appointment"
                 ]);
                 $res = [
                     'success' => 'berhasil',
@@ -114,11 +103,11 @@ class AppointmentController extends Controller
      */
     public function approveAppointment(Appointment $appointment)
     {
-        $visitor = User::find($appointment->visitor_id);
-        $isAppproved = $appointment["status"] == "approved";
-        // employee send notif to visitor
+        $visitor = User::find($appointment["visitor_id"]);
+        $isApproved = $appointment["status"] == "approved";
+        // employee send notify to visitor
         HandleNotif::dispatch(auth()->user(), $visitor->id);
-        if ($isAppproved) {
+        if ($isApproved) {
             $appointment->update(['status' => 'pending']);
             $visit = Visit::where('id_appmt', $appointment->id);
             $visit->delete();
@@ -145,51 +134,11 @@ class AppointmentController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Appointment $appointment
-     * @return Response
-     */
     public function show(Appointment $appointment)
     {
         return view('front.home.appointment.detail-appointment', [
             'appointment' => $appointment
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Appointment $appointment
-     * @return Response
-     */
-    public function edit(Appointment $appointment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param UpdateAppointmentRequest $request
-     * @param Appointment $appointment
-     * @return Response
-     */
-    public function update(UpdateAppointmentRequest $request, Appointment $appointment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Appointment $appointment
-     * @return Response
-     */
-    public function destroy(Appointment $appointment)
-    {
-        //
     }
 
     public function getVisitorHasAppointment(Request $request)

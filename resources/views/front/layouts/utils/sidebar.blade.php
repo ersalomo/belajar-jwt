@@ -1,3 +1,6 @@
+@php
+    $notifications = \App\Models\Notification::getNotifications(auth()->id());
+@endphp
 <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarPanel">
     <div class="offcanvas-body">
         <!-- profile box -->
@@ -20,22 +23,14 @@
         <!-- * profile box -->
         <ul class="listview flush transparent no-line image-listview mt-2">
             <li>
-                <a href="#" class="item">
+                <a  href="#offcanvas-right" class="item" data-bs-toggle="offcanvas">
                     <div class="icon-box bg-primary">
                         <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
                     </div>
                     <div class="in">
                         <div>Notifications</div>
-                        <span class="badge badge-danger">{{\App\Models\Notification::all(['id'])->count() }}</span>
+                        <span class="badge badge-danger">{{$notifications->count() }}</span>
                     </div>
-                </a>
-            </li>
-            <li>
-                <a data-bs-toggle="offcanvas" class="item" href="#offcanvas-right">
-                    <div class="icon-box bg-primary">
-                        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
-                    </div>
-                    Right
                 </a>
             </li>
 
@@ -83,8 +78,7 @@
             <div class="pt-2 pb-2">
                 <!-- comment block -->
                 <div class="comment-block">
-                    @foreach(\App\Models\Notification::all() as $nf)
-
+                    @foreach($notifications as $nf)
                         <div class="item">
                             {{--                        <div class="avatar">--}}
                             {{--                            <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w32 rounded">--}}

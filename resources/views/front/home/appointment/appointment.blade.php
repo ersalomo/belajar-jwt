@@ -55,7 +55,7 @@
                         <div class="input-wrapper">
                             <label class="form-label" for="kode">* <span
                                     class="text-dark">Plate Number (optional)</span></label>
-                            <input type="number" name=number_plate class="form-control" id="kode" placeholder="plate number">
+                            <input type="text" name=number_plate class="form-control" id="kode" placeholder="plate number">
                         </div>
                         <span class="text-danger error-text number_plate_error"></span>
                     </div>

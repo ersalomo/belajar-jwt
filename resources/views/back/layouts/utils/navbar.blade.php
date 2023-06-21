@@ -95,7 +95,7 @@
 {{--                                </div>--}}
 {{--                            </a>--}}
 {{--                        </li>--}}
-                        @foreach(\App\Models\Notification::all() as $notif)
+                        @foreach(\App\Models\Notification::getNotifyForAdmin() as $notif)
                             <li class="mb-2">
                                 <a class="dropdown-item border-radius-md" href="javascript:;">
                                     <div class="d-flex py-1">
@@ -103,7 +103,7 @@
                                             <img src="{{auth()->user()->detail['picture']}}" class="avatar avatar-sm  me-3 ">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="text-sm font-weight-normal mb-1 text-dark">
+                                            <h6 class="text-sm font-weight-normal mb-1" style="color: black;">
                                                 <span class="font-weight-bold">{{$notif['title']}}</span>
                                             </h6>
                                             <p class="text-xs text-secondary mb-0">
