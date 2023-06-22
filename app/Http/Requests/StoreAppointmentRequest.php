@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreAppointmentRequest extends FormRequest
 {
@@ -23,27 +24,37 @@ class StoreAppointmentRequest extends FormRequest
      */
     public function rules(): array
     {
+        $today = \Carbon\Carbon::today();
+        $nextDay = $today->addDay();
+        $twoWeeks = $today->addWeeks(2);
+        $validStartTime = '09:00';
+        $validEndTime = '16:00';
+
         return [
-//            'kode_emp' => ['required', 'string', 'exists:kode_emps,kode_emp'],
             'name_emp' => ['required'],
             'purpose' => ['required'],
             'company_name' => ['required', 'string', 'nullable'],
             'number_plate' => ['required', 'string', 'regex:/^[A-Z]{1,2}\s\d{1,4}\s[A-Z]{1,3}$/'],
-            'visit_date' => ['required'],
+            'visit_date' => ['required',
+                'date_format:Y-m-d',
+                "after:tomorrow",
+                'before_or_equal:' . $twoWeeks->format('Y-m-d'),],
             'transportation' => ['required'],
             'visitation_type' => ['required'],
-//            'status' => ['required'],
-            'arrival_time' => ['required'], // jam kedatangan
+            'arrival_time' => ['required',
+                'date_format:H:i',
+                'after_or_equal:'.$validStartTime,
+                "before_or_equal:".$validEndTime], // jam kedatangan
         ];
     }
 
     public function messages(): array
     {
         return [
-//            'kode_emp.exists' => 'Kode karyawan tidak ditemukan',
-//            'kode_emp.required' => 'kolom ini harus diisi',
             '*.required' => 'required',
-//            'purpose.required' => 'Kolom ini tidak boleh kosong',
+            'visit_date.date_format' => 'masukkan format yang sesuai',
+            'visit_date.after' => '2 hari setelah hari ini',
+            'visit_date.before_or_equal' => 'maksimal 2 minggu',
             'number_plate.regex' => "number plate tidak valid"
         ];
     }

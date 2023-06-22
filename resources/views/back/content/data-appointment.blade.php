@@ -1,6 +1,13 @@
 <x-back.app-layout page-title="Data Appointments">
     <div class="row">
         <div class="col-12">
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show p-2 mb-1" role="alert" id="successAlert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+            @endif
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     <h6 class="">Appointment table</h6>
@@ -11,6 +18,7 @@
                         </button>
                     </div>
                 </div>
+
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
@@ -55,6 +63,13 @@
                                            data-toggle="tooltip" data-original-title="Edit user">
                                             Edit
                                         </a>
+                                        <br>
+                                        <form action="{{route('admin.delete-appointment', $appointment->id)}}" method="post" class="">
+                                            @method('DELETE')
+                                            @csrf
+                                            <input type="submit" value="delete" class="text-secondary font-weight-bold text-xs btn-sm p-0 m-0"
+                                                   data-toggle="tooltip" data-original-title="Edit user">
+                                        </form>
                                     </td>
                                     <td>
                                         <div class="d-flex px-2 py-1">

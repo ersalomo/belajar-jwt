@@ -10,7 +10,11 @@ class DataAppointmentController extends Controller
 {
     public function index(Request $request){
         return view('back.content.data-appointment', [
-            'appointments' => Appointment::paginate(20),
+            'appointments' => Appointment::latest()->paginate(20),
         ]);
+    }
+    public function destroy(Appointment $appointment) {
+        $appointment->delete();
+        return back()->with('success','appointment berhasil di hapus');
     }
 }
