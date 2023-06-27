@@ -1,8 +1,7 @@
 import * as faceapi from 'face-api.js'
 import {
-    getVisitorsHaveAppointment,
-    postVisitToCheckin,
-    checkInVisit
+    getVisitors,
+    checkInVisitor
 } from "./fect-data";
 
 const video = document.getElementById('video');
@@ -19,16 +18,13 @@ const startWebCam = () => {
 
 
 const getLabeledFaceDescriptions = async () => {
-    const labels = await getVisitorsHaveAppointment()
+    const res = await getVisitors()
+    const{data:visitors} = res.data
     return Promise.all(
-        labels.map(async (label) => {
-            const {id, firstname, email, detail} = label.visitor
-            const idAppointment = label.id
-            const visitor = JSON.stringify(
-                Object.assign(label.visitor, {idAppointment})
-            )
+        visitors.map(async (value) => {
+            const visitor = JSON.stringify(value)
             const descriptions = [];
-            const img = await faceapi.fetchImage(`${detail.picture}`)
+            const img = await faceapi.fetchImage(`${value["visitor_picture"]}`)
             const detections = await faceapi
                 .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
                 // .detectAllFaces(img)
@@ -51,19 +47,23 @@ function run() {
         const labeledFaceDescriptions = (await getLabeledFaceDescriptions()).filter((d) => d !== undefined);
         const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptions, 0.6);
         const canvas = faceapi.createCanvasFromMedia(video)
+
         const displaySize = {
             width: video.width,
             height: video.height
         }
-        document.body.append(canvas)
+
+        // document.body.append(canvas)
+        video.insertAdjacentElement("afterend", canvas)
         faceapi.matchDimensions(canvas, displaySize)
-        const second = 800
+        const second = 800;
         const intervalId = setInterval(async () => {
             console.log('run')
             const faceDetection = await faceapi
                 .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
                 .withFaceLandmarks()
                 .withFaceDescriptors()
+
             // jika tidak sesuai dengan gambar pada webcame maka akan menampilkan array [] sehingga mmebuat descriptor menjadi null
             const faceDescriptions = faceapi.resizeResults(faceDetection, displaySize)
             canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
@@ -74,7 +74,7 @@ function run() {
             faceMatcher.labeledDescriptors.forEach((label, i) => {
                 const faceDescriptor = label.descriptors[0]
                 const visitor = JSON.parse(label.label)
-                const {id, name, email, idAppointment} = visitor
+                const {visit_id, emp_id, visitor_name, visitor_id} = visitor
 
                 if (faceDescriptions[0]) {
                     const bestMatch = faceapi.euclideanDistance(
@@ -83,25 +83,36 @@ function run() {
                     )
                     if (bestMatch < 0.6) {
                         const box = faceDescriptions[0].detection.box;
-                        const drawBox = new faceapi.draw.DrawBox(box, {label: name})
+                        const drawBox = new faceapi.draw.DrawBox(box, {label: visitor_name})
                         drawBox.draw(canvas)
-                        const answer = confirm(`This is you ${name}`)
-                       clearInterval(intervalId)
-                        if (answer) {
-                            // checkInVisit(idAppointment, {
-                            //     //     checkin: 1
-                            //     // }).then((res) => {
-                            //     //     const idVisit = res.data.data.id
-                            //     //     window.location.href = '/oa/face-verified?id_visit=' + idVisit;
-                            // }).catch(err => console.log(err))
-                        } else {
-                        }
+                        clearInterval(intervalId)
+                        checkInVisitor(visit_id).then((res)=> {
+                            let timerInterval
+                            if (res.statusText === "OK") {
+                                Swal.fire({
+                                    title: 'Checkin Success',
+                                    html: "Yeay! You have successfully checked in.<br> redirect in <b></b> milliseconds.",
+                                    icon: 'success',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                        const b = Swal.getHtmlContainer().querySelector('b')
+                                        timerInterval = setInterval(() => {
+                                            b.textContent = Swal.getTimerLeft()
+                                        }, 500)
+                                    },
+                                    willClose: () => {
+                                        clearInterval(timerInterval)
+                                        window.location.href = `/oa/view-visitations-checkin/${visit_id}`
+                                    }
+                                });
+                            }
+                        }).catch(err => console.log(err))
                     }
                 }
             })
-
         }, second)
-
     })
 }
 

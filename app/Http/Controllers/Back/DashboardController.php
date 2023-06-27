@@ -13,7 +13,7 @@ class DashboardController extends Controller
 
         return view('back.content.dashboard', [
             'visitors_checkin' => Visit::where('checkin', 1)->paginate(5), // get vsiistos who visit today
-            'appointments' => Appointment::all(),
+            'appointments' => Appointment::latest()->get(),
             'total_employees' => User::whereNot('role_id', 4)->count(['id']),
             'total_visitors' => User::where('role_id', 4)->count(['id']),
             'total_appointments' => Appointment::count(),

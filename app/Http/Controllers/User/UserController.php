@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{File, Validator, Hash};
+use Illuminate\Support\Facades\{File, Validator, Hash, Storage};
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\{User, Visitor};
 use App\Exports\UsersExport;
@@ -33,24 +33,24 @@ class UserController extends Controller
     public function changeProfile(Request $request)
     {
 
-//        $image_base64 = base64_encode(file_get_contents($request->file('file')->path()));
+        $user = auth()->user();
         try {
-
-            $user = auth("visitor")->user();
             $path = "app/public/users/";
             $file = $request->file('file');
-            $oldPicture = $user->picture;
-            $filePath = $path . $oldPicture;
+            $picture = explode("/", $user->detail["picture"]);
+            $oldPicture = end($picture);
+            $filePath = 'app\public\users\\' . $oldPicture;
             $new_picture_name = 'VISITOR' . $user->id . time() . rand(1, 10000) . ".jpg";
 
-            if ($oldPicture != null && File::exists(storage_path($filePath))) {
-                File::delete(storage_path($filePath));
+            if ($oldPicture != null && File::exists((storage_path($filePath)))) {
+                Storage::delete($path.$oldPicture);
+                File::delete(storage_path(storage_path($path . $oldPicture)));
             }
+
             $upload = $file->move(storage_path($path), $new_picture_name);
             if ($upload) {
-                $user->update([
+                $user->detail()->update([
                     'picture' => $new_picture_name,
-//                'image_base64' => $image_base64
                 ]);
                 return response()->json(['status' => 1, 'msg' => 'Your profile picture has been successfully updated.']);
             } else {

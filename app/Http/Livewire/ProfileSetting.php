@@ -50,6 +50,7 @@ class ProfileSetting extends Component
             $this->username = $user["detail"]['username'];
             $this->name = $user['name'];
             $this->ln = $user['detail']?->ln ?? "";
+            $this->gender = $user['gender'];
         }
     }
 

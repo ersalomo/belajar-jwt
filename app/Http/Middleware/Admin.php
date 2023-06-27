@@ -16,7 +16,7 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role_id != 1) {
+        if (auth()->user()["role_id"] != 1) {
             abort(
                 code: 403,
                 message: "Access denied, You don't have permission to access this page",

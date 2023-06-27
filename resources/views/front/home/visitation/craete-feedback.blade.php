@@ -19,7 +19,7 @@
             <p>Hy {{Auth::user()->name}}, bagaimana kunjungannya, kamu bisa mengisi form dibawah ini sebagai umpan balik pada kunjungan
             atau saran perbaikan
             </p>
-                <form action="{{route('home.approval.store-feedback', $visit['id'])}}" method="post">
+                <form action="{{route('home.checkout-visit', $visit['id'])}}" method="post">
                     @csrf
                     <div class="form-group boxed">
                         <div class="input-wrapper">

@@ -9,7 +9,8 @@
                     <li class="">
                         <a href="#" class="item">
                             <div class="imageWrapper">
-                                <img src="{{$visitation->appointment->visitor["detail"]->picture}}" alt="image" class="image">
+                                <img src="{{$visitation->appointment->visitor["detail"]->picture}}" alt="image"
+                                     class="image">
                             </div>
                             <div class="in">
                                 <div>
@@ -21,30 +22,41 @@
                                         <strong>Visitation by:</strong>{{$visitation->appointment->name_emp}}
                                     </div>
                                 </div>
-                                @if($visitation->checkin)
-                                    <span class="badge text-success">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     class="icon icon-tabler icon-tabler-circle-check-filled" width="24" height="24"
-                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                     stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path
-       d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z"
-       stroke-width="0" fill="currentColor"></path>
-</svg>
-                            </span>
-                                @else
-                                    <span class="badge text-danger">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     class="icon icon-tabler icon-tabler-square-rounded-x" width="24" height="24"
-                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                     stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M10 10l4 4m0 -4l-4 4"></path>
-   <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
-</svg>
-                            </span>
-                                @endif
+
+                                <span class="badge">
+                                    @foreach([$visitation->checkin, $visitation->checkout] as $status)
+                                        @if($status)
+                                        <span class="{{$status ? 'text-success': 'text-danger'}}">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 class="icon icon-tabler icon-tabler-circle-check-filled" width="24"
+                                                 height="24"
+                                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                                 stroke-linecap="round" stroke-linejoin="round">
+                                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                               <path
+                                                   d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z"
+                                                   stroke-width="0" fill="currentColor"></path>
+                                            </svg>
+                                        </span>
+                                        @else
+                                            <span class="{{$status ? 'text-success': 'text-danger'}}">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     class="icon icon-tabler icon-tabler-square-rounded-x" width="24"
+                                                     height="24"
+                                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                     fill="none"
+                                                     stroke-linecap="round" stroke-linejoin="round">
+                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                        <path d="M10 10l4 4m0 -4l-4 4"></path>
+                                                    <path
+                                                        d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
+                                                </svg>
+                                        </span>
+                                        @endif
+
+                                    @endforeach
+                                </span>
+
                             </div>
                         </a>
                     </li>

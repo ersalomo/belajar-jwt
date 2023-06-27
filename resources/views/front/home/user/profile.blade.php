@@ -18,7 +18,7 @@
                 </span>
             </button>
             <h4 class="card-title">{{ __(auth()->user()->name) }}</h4>
-            <div class="card-text">Sep 23, 2020</div>
+            <div class="card-text">{{auth()->user()->created_at}}</div>
             <div class="text">
             </div>
         </div>
@@ -26,24 +26,22 @@
     <livewire:profile-setting/>
     @push('scripts')
         <script>
-            $("#changeAuthorPictureFile").ijaboCropTool({
-                preview: '',
-                setRatio: 1,
-                allowedExtensions: ['jpg', 'jpeg', 'png'],
-                buttonsText: ['CROP', 'QUIT'],
-                buttonsColor: ['#30bf7d', '#ee5155', -15],
-                processUrl: "{{ route('home.change-profile-picture') }}",
-                withCSRF: ['_token', '{{ csrf_token() }}'],
-                onSuccess: function (message, element, status) {
-                    // Livewire.emit('UpdateAuthorProfileHeader');
-                    // Livewire.emit('UpdateTopHeader');
-                    // toastbox('toast-3', 5000)
-                },
-                onError: function (message, element, status) {
-                    // toastr.error(message)
-                    // toastbox('toast-3', 5000)
-                    console.log(message)
-                }
+            $(function () {
+                $("#changeAuthorPictureFile").ijaboCropTool({
+                    preview: '',
+                    setRatio: 1,
+                    allowedExtensions: ['jpg', 'jpeg', 'png'],
+                    buttonsText: ['CROP', 'QUIT'],
+                    buttonsColor: ['#30bf7d', '#ee5155', -15],
+                    processUrl: "{{ route('home.change-profile-picture') }}",
+                    withCSRF: ['_token', '{{ csrf_token() }}'],
+                    onSuccess: function (message, element, status) {
+                        console.log(message, element, status)
+                    },
+                    onError: function (message, element, status) {
+                        console.log("err",message,element,status)
+                    }
+                });
             });
         </script>
     @endpush

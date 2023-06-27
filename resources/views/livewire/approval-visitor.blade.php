@@ -1,18 +1,23 @@
 <ul class="listview image-listview flush">
     @foreach($visitations as $visitation)
         <li>
-            <a href="#" class="item" wire:click="openModalApprove({{$visitation->id}})">
-                <div class="icon-box">
-                    <img src="{{$visitation->appointment->visitor['detail']->picture}}" class="image"/>
-                </div>
-                <div class="in">
-                    <div>
-                        <div class="mb-05"><strong> {{$visitation->appointment->visitor['name']}}</strong></div>
-                        <div class="text-small mb-05">{{__($visitation['appointment']->purpose)}}</div>
-                        <div class="text-xsmall">{{$visitation->created_at}}</div>
-                    </div>
-                    @if($visitation->checkout)
-                        <span class="text-success">Checkout
+            @if(auth()->user()["role_id"] != 4)
+                <a href="#" class="item" wire:click="openModalApprove({{$visitation->id}})">
+            @else
+               <a href="#" class="item">
+            @endif
+                            <div class="icon-box">
+                                <img src="{{$visitation->appointment->visitor['detail']->picture}}" class="image"/>
+                            </div>
+                            <div class="in">
+                                <div>
+                                    <div class="mb-05"><strong> {{$visitation->appointment->visitor['name']}}</strong>
+                                    </div>
+                                    <div class="text-small mb-05">{{__($visitation['appointment']->purpose)}}</div>
+                                    <div class="text-xsmall">{{$visitation->created_at}}</div>
+                                </div>
+                                @if($visitation->checkout)
+                                    <span class="text-success">Checkout
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -22,8 +27,8 @@
                                  stroke-width="0" fill="currentColor"></path>
                         </svg>
                     </span>
-                    @else
-                        <span class="text-danger">Not checkout
+                                @else
+                                    <span class="text-danger">Not checkout
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-letter-x"
                                  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                  fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -33,9 +38,9 @@
                                <path d="M10 16l4 -8"></path>
                             </svg>
                         </span>
-                    @endif
-                </div>
-            </a>
+                                @endif
+                            </div>
+                        </a>
         </li>
     @endforeach
 </ul>

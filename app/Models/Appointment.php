@@ -18,7 +18,6 @@ class   Appointment extends Model
 
     protected $with = [
         'visitor',
-//        'visit'
     ];
 
     public function visitor(): BelongsTo
@@ -27,7 +26,7 @@ class   Appointment extends Model
     }
 
     public function visit(): HasOne {
-        return $this->hasOne(Visit::class,'id_appmt');
+        return $this->hasOne(Visit::class);
     }
 
 
@@ -35,12 +34,6 @@ class   Appointment extends Model
     {
         return Attribute::make(
             get: fn($val) => Carbon::create($val)->format('Y-m-d'),
-        );
-    }
-    protected function arrivalTime(): Attribute
-    {
-        return Attribute::make(
-            get: fn($val) => Carbon::create($val)->format('H:i'),
         );
     }
 }

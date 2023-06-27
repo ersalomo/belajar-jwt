@@ -4,9 +4,18 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use Livewire\Component;
+use App\Notify\NotifyHelper;
 
 class UserData extends Component
 {
+    use NotifyHelper;
+
+    public
+        $paginate = 20,
+        $orderBy = "ASC",
+        $role = "",
+        $search = "";
+
     public function render()
     {
 
@@ -16,16 +25,26 @@ class UserData extends Component
                 ->paginate(20),
         ]);
     }
-    public function confirmDelete() {
+
+    public function confirmDelete()
+    {
 
     }
 
-    public function delete(User $user) {
-        if ($user->role_id != 4) {
-            $user->emp_department()->delete();
+    public function delete(User $user)
+    {
+        try {
+            if ($user->role_id != 4) {
+                $user->emp_department()->delete();
+            } else {
+                $user->appointment()->delete();
+            }
+            $user->detail()->delete();
+            $user->delete();
+            $this->successNotify("Data user deleted successfully :)");
+            return back();
+        } catch (\Exception $e) {
+            $this->errorNotify("Cannot delete this user because integrity constrained");
         }
-        $user->detail()->delete();
-        $user->delete();
-        return back();
     }
 }

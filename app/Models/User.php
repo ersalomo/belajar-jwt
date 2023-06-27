@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -51,13 +49,15 @@ class User extends Authenticatable
     ];
 
     protected $with = [
-        'detail'
+        "detail",
+        "image_id"
     ];
 
     protected function name(): Attribute
     {
         return new Attribute(
             get: function ($name, $user) {
+                if($user["role_id"] == 3) return "security ". $name;
                 return $name;
             }
         );
@@ -69,13 +69,9 @@ class User extends Authenticatable
             set: fn($value) => bcrypt($value),
         );
     }
-    public function appointment():HasMany {
-        return $this->hasMany(Appointment::class,'user_id');
-    }
 
-    public function visitor(): HasMany
-    {
-        return $this->hasMany(Appointment::class, 'visitor_id');
+    public function appointment():HasMany {
+        return $this->hasMany(Appointment::class,'visitor_id');
     }
 
 
@@ -97,11 +93,15 @@ class User extends Authenticatable
         return $this->hasMany(Conversation::class, 'user1')->orWhere('user2', $this->getKey());
     }
 
+    public function image_id(){
+        return $this->hasOne(ImageIdentification::class,"visitor_id");
+    }
+
     public function isVisitor(): bool
     {
         $user = auth()->user();
         if ($user->role_id == 4) {
-            $id_appt = auth()->user()->visitor()->first();
+            $id_appt = auth()->user()->appointment()->first();
             $visitExits = null;
             if ($id_appt) {
                 $visitExits = Visit::where('appointment_id', $id_appt['id'])->first();

@@ -43,6 +43,17 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <label for="">Status visitation</label>
+                    <select id='' name="status" class="form-control">
+                        <option value="">--select---</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                    @error('status')
+                    <span class="text-danger fa-sm">
+                               {{$message}}
+                           </span>
+                    @enderror
                     <div class="form-group">
                         <label for="name" class="form-control-label">Employee Name
                             @if($appointment)
@@ -72,8 +83,13 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="lastname" class="form-control-label">Message (optional)</label>
+                        <label for="lastname" class="form-control-label">Message</label>
                         <textarea class="form-control" name="message">{{old('message')}}</textarea>
+                    @error('message')
+                    <span class="text-danger fa-sm">
+                               {{$message}}
+                           </span>
+                    @enderror
                     </div>
                 </div>
             </div>

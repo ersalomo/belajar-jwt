@@ -1,23 +1,14 @@
 import axios from "axios";
 
 
-const getVisitorsHaveAppointment = async () => {
-    try {
-        const res = await axios.get('/oa/appointment-visitors')
-        const { data } = res.data
-        return data
-    }catch (e) {
-        console.log(e)
-    }
-}
 
-const postVisitToCheckin = async (data) => axios.post('/oa/post-visit', data).catch((err) => console.log(err))
-const checkInVisit = async (id, data) => axios.post(`/oa/checkin-visit/${id}`, data).catch((e=>console.log(e)))
+// const base_url = process.env.APP_URL;
+
+export const getVisitors = async () => axios.get(`/oa/get-visitations`).catch(e=>console.log(e))
+
+export const checkInVisitor = async (id) => axios.post(`/oa/checkin-visit/${id}`).catch((e=>console.log(e)))
 
 
+export const faceScreening = (data = {}) => {}
 
-export {
-    getVisitorsHaveAppointment,
-    postVisitToCheckin,
-    checkInVisit
-}
+

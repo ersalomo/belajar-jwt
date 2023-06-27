@@ -20,4 +20,7 @@ trait Helper
             return boolval($respon['face_num'] < 1);
 
     }
+    public function successNotify() {
+
+    }
 }

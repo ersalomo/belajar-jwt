@@ -22,25 +22,20 @@ class AppointmentController extends Controller
         return view('front.home.appointment.list-appointment');
     }
 
-    public function getAppointmentsCurrentUser(Request $request): JsonResponse
-    {
-        $user = auth()->user();
-        if ($user['role_id'] == 4) {
-            $appointments = $user->visitor()->get();
-        } else {
-//            $appointments = $user->appointmentEmp()->get();
-        }
-        return response()->json([
-            'status' => 'success',
-            'data' => $appointments
-        ]);
-    }
 
     public function create()
     {
-//        if ($this->check_image()) {
-//            return to_route('home.home-user');
-//        }
+        $user = auth()->user();
+        if($user["role_id"] !== 4) return back();
+
+
+            //  no face detected
+        $picture = explode("/", $user->detail["picture"]);
+        $isDefaultImg = end($picture) == "img.png";
+        if(!$user->image_id()->exists() and $isDefaultImg) {
+            return back()->with("warning","Image must be uploaded as evidence");
+        }
+
         return view('front.home.appointment.appointment');
     }
 
@@ -67,19 +62,16 @@ class AppointmentController extends Controller
 
         $res = [];
         $user = auth()->user();
-        $count_appointments = $user->visitor()
+        $count_appointments = $user->appointment()
                 ?->whereDate('created_at', now()->today())
                 ->get(['id']);
 
         if ($count_appointments) {
-//            $emp_id = KodeEmp::where('kode_emp', $request->kode_emp)->first()['emp_id'];
-            $appointment = $user->visitor()->create($validator->validate());
+            $appointment = $user->appointment()->create($validator->validate());
             if ($appointment) {
-                // send event when visitor create appointment
-//                HandleNotif::dispatch(auth()->user(), $emp_id);
                 Notification::create([
                     'title' => 'New Appointment Created',
-                    'status' => 'waiting',
+                    'status' => 'unread',
                     'body' => $user["name"] ." has created new appointment"
                 ]);
                 $res = [
@@ -95,45 +87,6 @@ class AppointmentController extends Controller
         }
         return response()->json($res);
     }
-
-    /**
-     * this function for employee who has an appointment from visitors
-     * the purpose is to approve the appointment and
-     * insert data to visits table
-     */
-    public function approveAppointment(Appointment $appointment)
-    {
-        $visitor = User::find($appointment["visitor_id"]);
-        $isApproved = $appointment["status"] == "approved";
-        // employee send notify to visitor
-        HandleNotif::dispatch(auth()->user(), $visitor->id);
-        if ($isApproved) {
-            $appointment->update(['status' => 'pending']);
-            $visit = Visit::where('id_appmt', $appointment->id);
-            $visit->delete();
-            return response()->json([
-                'status' => 'success',
-                'msg' => 'Successfully change status to pending'
-            ]);
-        } else {
-            $appointment->update(['status' => 'approved']);
-            // insert into table visits for the first time status approved
-            $visit = Visit::create([
-                'id_appmt' => $appointment->id,
-                'checkin' => false,
-                'checkout' => false,
-                'notes' => '',
-                'visit_date' => now()
-            ]);
-            if ($visit) {
-                return response()->json([
-                    'status' => 'success',
-                    'msg' => 'Successfully approved'
-                ]);
-            }
-        }
-    }
-
     public function show(Appointment $appointment)
     {
         return view('front.home.appointment.detail-appointment', [
@@ -141,11 +94,55 @@ class AppointmentController extends Controller
         ]);
     }
 
-    public function getVisitorHasAppointment(Request $request)
+    /**
+     * this function for employee who has an appointment from visitors
+     * the purpose is to approve the appointment and
+     * insert data to visits table
+     */
+//    public function approveAppointment(Appointment $appointment)
+//    {
+//        $visitor = User::find($appointment["visitor_id"]);
+//        $isApproved = $appointment["status"] == "approved";
+//        // employee send notify to visitor
+//        HandleNotif::dispatch(auth()->user(), $visitor->id);
+//        if ($isApproved) {
+//            $appointment->update(['status' => 'pending']);
+//            $visit = Visit::where('id_appmt', $appointment->id);
+//            $visit->delete();
+//            return response()->json([
+//                'status' => 'success',
+//                'msg' => 'Successfully change status to pending'
+//            ]);
+//        } else {
+//            $appointment->update(['status' => 'approved']);
+//            // insert into table visits for the first time status approved
+//            $visit = Visit::create([
+//                'id_appmt' => $appointment->id,
+//                'checkin' => false,
+//                'checkout' => false,
+//                'notes' => '',
+//                'visit_date' => now()
+//            ]);
+//            if ($visit) {
+//                return response()->json([
+//                    'status' => 'success',
+//                    'msg' => 'Successfully approved'
+//                ]);
+//            }
+//        }
+//    }
+
+    public function getAppointmentsCurrentUser(Request $request): JsonResponse
     {
-        $visitors = Appointment::get();
+        $user = auth()->user();
+        if ($user['role_id'] == 4) {
+            $appointments = $user->appointment()->get();
+        } else {
+//            $appointments = $user->appointmentEmp()->get();
+        }
         return response()->json([
-            'data' => $visitors
+            'status' => 'success',
+            'data' => $appointments
         ]);
     }
 }

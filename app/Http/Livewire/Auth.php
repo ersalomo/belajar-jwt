@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Notify\NotifyHelper;
 use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 use Livewire\Redirector;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth as Guard;
 
 class Auth extends Component
 {
+    use NotifyHelper;
     // public string $isModeLogin = true;
     public string $mode = 'login';
 
@@ -35,6 +37,7 @@ class Auth extends Component
 
     public function loginHandler()
     {
+
         $fieldType = filter_var($this->login_id, FILTER_VALIDATE_EMAIL) ? 'username' : 'email';
         $credentials = $this->validate([
             'email' => 'required|email',
@@ -51,6 +54,7 @@ class Auth extends Component
                 auth()->logout();
                 return redirect()->route('auth')->with('fail', 'you not may encounter this page');
             }
+            $this->successNotify("Login success");
             return $this->returnUrl === null ?
                 to_route('home.home-user') :
                 redirect()->to($this->returnUrl);
@@ -84,9 +88,11 @@ class Auth extends Component
             'password' => $data['password']
         ];
         if (Guard::attempt($user, $this->remainMe)) {
+            $this->successNotify("register success 😊");
             return to_route('home.home-user');
         }
-        return redirect()->back()->with('fail', ' something went wrong!');
+        $this->errorNotify("Something went wrong 😒");
+        return back();
     }
 
 }

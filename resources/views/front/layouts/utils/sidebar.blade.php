@@ -1,6 +1,3 @@
-@php
-    $notifications = \App\Models\Notification::getNotifications(auth()->id());
-@endphp
 <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarPanel">
     <div class="offcanvas-body">
         <!-- profile box -->
@@ -20,21 +17,6 @@
                 <ion-icon name="close"></ion-icon>
             </a>
         </div>
-        <!-- * profile box -->
-        <ul class="listview flush transparent no-line image-listview mt-2">
-            <li>
-                <a  href="#offcanvas-right" class="item" data-bs-toggle="offcanvas">
-                    <div class="icon-box bg-primary">
-                        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
-                    </div>
-                    <div class="in">
-                        <div>Notifications</div>
-                        <span class="badge badge-danger">{{$notifications->count() }}</span>
-                    </div>
-                </a>
-            </li>
-
-        </ul>
     </div>
     <!-- sidebar buttons -->
     <div class="sidebar-buttons ">
@@ -65,52 +47,5 @@
 </div>
 
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas-right" style="visibility: hidden;" aria-modal="true"
-     role="dialog">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Notifications</h5>
-        <a href="#" class="offcanvas-close" data-bs-dismiss="offcanvas">
-            <ion-icon name="close-outline" role="img" class="md hydrated" aria-label="close outline"></ion-icon>
-        </a>
-    </div>
-    <div class="offcanvas-body">
-        <div class="section">
-            <div class="pt-2 pb-2">
-                <!-- comment block -->
-                <div class="comment-block">
-                    @foreach($notifications as $nf)
-                        <div class="item">
-                            {{--                        <div class="avatar">--}}
-                            {{--                            <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w32 rounded">--}}
-                            {{--                        </div>--}}
-                            <div class="in">
-                                <div class="comment-header">
-                                    <h4 class="title">{{$nf['title']}}</h4>
-                                    <span class="time">{{$nf['created_at']}}</span>
-                                </div>
-                                <div class="text">
-                                 {{$nf['body']}}
-                                </div>
-                                {{--                            <div class="comment-footer">--}}
-                                {{--                                <a href="#" class="comment-button">--}}
-                                {{--                                    <ion-icon name="heart-outline" role="img" class="md hydrated" aria-label="heart outline"></ion-icon>--}}
-                                {{--                                    Like (523)--}}
-                                {{--                                </a>--}}
-                                {{--                                <a href="#" class="comment-button">--}}
-                                {{--                                    <ion-icon name="chatbubble-outline" role="img" class="md hydrated" aria-label="chatbubble outline"></ion-icon>--}}
-                                {{--                                    Reply--}}
-                                {{--                                </a>--}}
-                                {{--                            </div>--}}
-                            </div>
-                        </div>
-                    @endforeach
-
-
-                </div>
-                <!-- * comment block -->
-            </div>
-        </div>
-    </div>
-</div>
 
 

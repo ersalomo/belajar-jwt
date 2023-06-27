@@ -70,7 +70,7 @@
                                     <select class="form-control" wire:model="gender">
                                         @foreach(['Female','Male'] as $i => $g)
                                             <option
-                                                value="{{$i}}" {{auth()->user()['gender']==$i ? 'selected': ''}} >{{$g}}</option>
+                                                value="{{$i}}" {{$this->gender==$i ? 'selected': ''}} >{{$g}}</option>
                                         @endforeach
                                     </select>
                                 </div>

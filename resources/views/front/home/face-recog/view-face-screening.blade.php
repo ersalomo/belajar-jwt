@@ -1,5 +1,6 @@
 <x-app-layout pageTitle="Face Recognition">
-    @vite(['resources/js/face-recognition.js'])
+    @vite(['resources/js/face-screening.js'])
+    <meta name="x-token" content="{{csrf_token()}}">
     <style>
         div#body {
             height: 100vh;
@@ -41,7 +42,7 @@
         <main id="main">
             <div style="position: relative;">
                 <h1>Align your face to camera</h1>
-                <video id="video" width="640" height="480" autoplay></video>
+                <video id="video" width="450" height="340" autoplay></video>
             </div>
         </main>
     </div>

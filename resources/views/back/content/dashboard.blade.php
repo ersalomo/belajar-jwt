@@ -176,7 +176,7 @@
                                 <td>
                                     <div class="d-flex px-2 py-0">
                                         <div>
-                                            <img src="{{$appointment['visitor'][ 'detail']['picture']}}"
+                                            <img src="{{$appointment['visitor']->detail?->picture}}"
                                                  class="avatar avatar-sm me-3">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
@@ -200,7 +200,7 @@
                                 </td>
                                 <td class="align-middle text-center text-sm">
                                     <span
-                                        class="badge badge-sm text-dark  {{($appointment->status == 'pending') ? 'bg-gradient-faded-primary':'bg-gradient-faded-success'}}">{{($appointment->status)}}</span>
+                                        class="badge badge-sm text-dark  bg-gradient-faded-{{($appointment->status == 'pending') ? 'primary': ($appointment->status == 'approved' ? 'success': "danger")}}">{{($appointment->status)}}</span>
                                 </td>
                                 <td class="align-middle text-start" data-bs-toggle="tooltip" data-bs-placement="left"
                                     title="{{($appointment->purpose)}}">

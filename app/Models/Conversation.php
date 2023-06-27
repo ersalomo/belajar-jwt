@@ -16,7 +16,7 @@ class Conversation extends Model
         'user2',
     ];
 
-    public static function createConversation($userOne, $userTwo): self
+    public static function createConversation($userOne, $userTwo=null): self
     {
         $conv = self::where(function ($query) use ($userOne, $userTwo) {
             $query->where('user1', $userOne)->where('user2', $userTwo);

@@ -26,7 +26,7 @@ return new class extends Migration
                 */
                 ->nullable()
                 ->constrained('appointments');
-                $table->foreignId('emp_id')->nullable()->constrained('users');
+                $table->foreignId('emp_id')->nullable()->constrained('users')->cascadeOnDelete();
                 $table->date('visit_date');
                 $table->boolean('checkin');
                 $table->boolean('checkout');

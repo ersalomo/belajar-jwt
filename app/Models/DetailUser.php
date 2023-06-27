@@ -25,7 +25,7 @@ class DetailUser extends Model
     protected function picture(): Attribute
     {
         return Attribute::make(
-            get: fn($val) => $val ? '/storage/users/' . $val : '/storage/users/img.png',
+            get: fn($val) => $val ? '/storage/users/' . $val : '/storage/default/img.png',
         );
     }
 

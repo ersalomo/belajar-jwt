@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Notify\NotifyHelper;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 
 class AuthAdminController extends Controller
 {
+    use NotifyHelper;
+
     public function index(Request $request)
     {
+//        $this->notyf()->addInfo("Welcome login with your credential");
         return view('back.auth.login');
     }
 
@@ -26,9 +30,10 @@ class AuthAdminController extends Controller
                 return to_route('admin-auth.index')->with('error', 'your account has been blocked!');
             }
             $id_role_admin = 1;
-            if (auth()->user()->role_id != $id_role_admin) {
+            if (auth()->user()["role_id"] != $id_role_admin) {
                 return to_route('admin-auth.index')->with('error', 'Only admin can access this page!');
             }
+            $this->notyf()->addSuccess("Login success");
             return to_route('admin.dashboard');
         }
         return redirect()->back()->with('error', 'this credentials does\'nt exists');
@@ -38,6 +43,7 @@ class AuthAdminController extends Controller
     {
         $request->session()->flush();
         auth('employee')->logout();
+        $this->notyf()->addSuccess("Logout success");
         return to_route('admin-auth.index');
     }
 }

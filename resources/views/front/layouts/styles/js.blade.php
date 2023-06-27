@@ -19,7 +19,6 @@
     //     notification('notification-welcome', 5000);
     // }, 2000);
 </script>
-<script src="/ijabo-croptool/ijaboCropTool.min.js"></script>
 <script>
     $.ajaxSetup({
         headers: {
@@ -28,5 +27,6 @@
     })
 </script>
 @livewireScripts
+<script src="/ijabo-croptool/ijaboCropTool.min.js"></script>
 @stack('scripts')
 

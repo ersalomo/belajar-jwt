@@ -35,7 +35,7 @@ class Notification extends Model
 
     public static function getNotifyForAdmin()
     {
-        return self::whereNull("con_id")->get();
+        return self::whereNull("con_id")->where("status", "unread")->get();
     }
 
     public static function getNotifications($userId)
@@ -43,6 +43,11 @@ class Notification extends Model
         return Notification::whereHas('conversation', function ($query) use ($userId) {
             $query->where('user1', $userId)
                 ->orWhere('user2', $userId);
-        })->get();
+        })->where("status","unread")->get();
+    }
+    // put on repository
+
+    public function updateStatus() {
+
     }
 }
