@@ -218,6 +218,7 @@ class VisitController extends Controller
 
     public function visitationOverview() // to chart
     {
+        // typo
         $count_each_visitors_by_mount = Visit::all()->count();
         return response()->json([
             'status' => 'success',
@@ -248,7 +249,7 @@ class VisitController extends Controller
                 "visitor_id" => $visitor["id"],
                 "visitor_name" => $visitor["name"],
                 "visitor_picture" => $visitor["detail"]["picture"],
-                "visitor_image"=> $visitor["image_id"],
+                "visitor_image"=> $visitor["image_id"]->first(["image_name","image_size","image_descriptor"]),
             ];
             $visitors[] = $value;
         }

@@ -62,6 +62,7 @@ Route::group([
 
         Route::get('face-screening', 'viewFaceScreening')->name('get.face-screening');
         Route::post('face-screening', 'faceScreening')->name('post.face-screening');
+        Route::get('faces', 'getImagesDesc')->name('get.faces');
     });
 
     Route::view('approval-visitors','front.home.approval.index')->name('approval.index'); // emp

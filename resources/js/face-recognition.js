@@ -3,9 +3,14 @@ import {
     getVisitors,
     checkInVisitor
 } from "./fect-data";
+import {SECOND} from './utis'
+
+import {loadModel} from "./load-model";
+
 
 const video = document.getElementById('video');
-const startWebCam = () => {
+
+export const startWebCam = () => {
     navigator.mediaDevices.getUserMedia({
         video: true,
         audio: false
@@ -19,7 +24,7 @@ const startWebCam = () => {
 
 const getLabeledFaceDescriptions = async () => {
     const res = await getVisitors()
-    const{data:visitors} = res.data
+    const {data: visitors} = res.data
     return Promise.all(
         visitors.map(async (value) => {
             const visitor = JSON.stringify(value)
@@ -43,7 +48,7 @@ const getLabeledFaceDescriptions = async () => {
 }
 
 function run() {
-    video.addEventListener('playing', async () => {
+    video.addEventListener('play', async () => {
         const labeledFaceDescriptions = (await getLabeledFaceDescriptions()).filter((d) => d !== undefined);
         const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptions, 0.6);
         const canvas = faceapi.createCanvasFromMedia(video)
@@ -56,9 +61,7 @@ function run() {
         // document.body.append(canvas)
         video.insertAdjacentElement("afterend", canvas)
         faceapi.matchDimensions(canvas, displaySize)
-        const second = 800;
         const intervalId = setInterval(async () => {
-            console.log('run')
             const faceDetection = await faceapi
                 .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
                 .withFaceLandmarks()
@@ -86,7 +89,7 @@ function run() {
                         const drawBox = new faceapi.draw.DrawBox(box, {label: visitor_name})
                         drawBox.draw(canvas)
                         clearInterval(intervalId)
-                        checkInVisitor(visit_id).then((res)=> {
+                        checkInVisitor(visit_id).then((res) => {
                             let timerInterval
                             if (res.statusText === "OK") {
                                 Swal.fire({
@@ -112,18 +115,12 @@ function run() {
                     }
                 }
             })
-        }, second)
+        }, SECOND)
     })
 }
 
-const MODEL_URL = '/weights'
-Promise.all([
-    faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
-    faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
-    faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
-    faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-])
+loadModel()
     .then(startWebCam)
-    .then(run);
+    .then(run)
 
 

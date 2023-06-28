@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Visit, Visitor, Appointment};
+use App\Models\{ImageIdentification, User, Visit, Visitor, Appointment};
 
 class FaceDetectionController extends Controller
 {
@@ -20,19 +20,17 @@ class FaceDetectionController extends Controller
     public function faceScreening(Request $request)
     {
         $user = auth()->user();
-        $request->validate([
-            "image_size" => "nullable",
-            "image_name" => "nullable",
-            "image_base64" => "nullable",
-            "image_descriptor" => "string|nullable"
+        $data = $request->only([
+            "image_size",
+            "image_base64",
+            "image_descriptor"
         ]);
+        $data["image_name"] = "Visitor-Face-screening-" . $user["id"] . "-" . time();
         try {
-            $user->image_id()->updateOrCreate([
-                "image_size" => $request->image_size,
-                "image_name" => $request->image_name,
-                "image_base64" => $request->image_base64,
-                "image_descriptor" => $request->image_descriptor,
-            ]);
+            ImageIdentification::updateOrCreate([
+                "visitor_id" => $user["id"]
+            ], $data);
+
             return response()->json([
                 "status" => "success",
                 "message" => "Image success added successfully"
@@ -40,9 +38,19 @@ class FaceDetectionController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "fail",
-                "message" => "Something went wrong 🤔"
+                "message" => "something went wrong!"
             ], 500);
         }
+    }
+    public function getImagesDesc() {
+        $images = ImageIdentification::get(["visitor_id","image_name", "image_descriptor"]);
+
+        return response()->json([
+            'status' => "success",
+            "code" => 200,
+            "data" => $images
+        ]);
+
     }
 
     public function faceRecog()

@@ -29,7 +29,7 @@ class ApprovalVisitor extends Component
     public function openModalApprove($id): Event
     {
         $visit = Visit::findOrFail($id);
-        if ($visit->notes == '') {
+        if ($visit->notes == '' or is_null($visit->notes)) {
             return $this->emit('notifyNotFillTheNotes', []);
         }
         return $this->emit('openModalApprove', [
