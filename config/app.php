@@ -196,7 +196,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         BeyondCode\LaravelWebSockets\WebSocketsServiceProvider::class,
-            Maatwebsite\Excel\ExcelServiceProvider::class
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        App\Service\User\UserServiceProvider::class,
 
     ],
 

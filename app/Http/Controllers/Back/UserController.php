@@ -7,6 +7,7 @@ use App\Http\Requests\UserReq;
 use App\Models\Department;
 use App\Models\User;
 use App\Notify\NotifyHelper;
+use App\Service\User\UserServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -14,6 +15,14 @@ use Illuminate\View\View;
 class UserController extends Controller
 {
     use NotifyHelper;
+    private UserServiceInterface $service;
+
+    public function __construct(
+        UserServiceInterface $userService
+    ) {
+        $this->service = $userService;
+    }
+
 
     public function index(Request $request)
     {
@@ -23,7 +32,7 @@ class UserController extends Controller
     public function createAndEdit(Request $request)
     {
         if ($id = $request->query('user')) {
-            $user = User::find($id);
+            $user = $this->service->getUserById($id);
         } else {
             $user = [];
         }
@@ -38,13 +47,15 @@ class UserController extends Controller
             $path = Storage::putFile('public/images/employee', $request->file('picture'));
             $data['picture'] = $path;
         }
-        $user = User::create([
+
+        $user = $this->service->create([
             'email' => $data['email'],
             'name' => $data['firstname'],
             'password' => $data['password'],
             'gender' => $data['gender'] || 1,
             'role_id' => $data['role_id'],
         ]);
+
         if ($user->role_id != 4) {
             $user->emp_department()->create([
                 'emp_id' => $user['id'],
@@ -71,13 +82,14 @@ class UserController extends Controller
 
     }
 
-    public function update(UserReq $request, User $user)
+    public function update(UserReq $request, $id)
     {
         $data = $request->all();
         if ($request->hasFile('picture')) {
             $path = Storage::putFile('public/images/employee', $request->file('picture'));
             $data['picture'] = $path;
         }
+        $user = $this->service->getUserById($id);
         $user->update([
             'email' => $data['email'],
             'name' => $data['firstname'],

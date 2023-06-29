@@ -34,7 +34,7 @@ Route::group([
                 Route::get('index', 'index')->name('index');
                 Route::get('create', 'createAndEdit')->name('create');
                 Route::post('store', 'store')->name('store');
-                Route::post('update/{user}', 'update')->name('update');
+                Route::post('update/{id}', 'update')->name('update');
                 Route::get('get-all-employees', 'getAllEmployees')->name('get-all-employees');
             });
 

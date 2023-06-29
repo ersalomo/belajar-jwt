@@ -8,6 +8,8 @@ use App\Models\Conversation;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\Visit;
+use App\Service\User\UserService;
+use App\Service\User\UserServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests\VisitRequest;
 use Illuminate\Support\Facades\Validator;
@@ -16,6 +18,13 @@ use App\Notify\NotifyHelper;
 class VisitController extends Controller
 {
     use NotifyHelper;
+
+    private UserService $userService;
+    public function __construct(UserServiceInterface $userService)
+    {
+        $this->userService = $userService;
+
+    }
 
     public function index(Request $request)
     {
@@ -97,7 +106,7 @@ class VisitController extends Controller
                 'status' => 'unread',
                 'body' => $request->input('message') ?? 'Your appointment has been approved by admin',
             ]);
-            $emp_name = User::find($data["emp_id"])["name"];
+            $emp_name = $this->userService->getUserById($data["emp_id"])["name"];
             $ap->update([
                 'status' => 'approved',
                 "name_emp" => $emp_name

@@ -107,7 +107,7 @@
             <x-notification-menu/>
             {{--                if cliked to show that he has an visitations today--}}
             <div class="col-5 card p-2">
-                @if($user->image_id()->first() or $user->detail["picture"])
+                @if(!$user->imageExists())
                     <a class="btn text-primary" onclick="toastbox('verified-visitor', 3500)">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              class="icon icon-tabler icon-tabler-discount-check-filled" width="24" height="24"

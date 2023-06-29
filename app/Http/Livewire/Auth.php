@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Notify\NotifyHelper;
+use App\Service\User\UserServiceInterface;
 use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 use Livewire\Redirector;
@@ -20,6 +21,14 @@ class Auth extends Component
     public $returnUrl;
     public $login_id;
     public $name, $confirmation_password, $term_condition, $username, $phone, $gender;
+
+    private UserServiceInterface $service;
+
+
+    public function boot(UserServiceInterface $userService) {
+        $this->service = $userService;
+
+    }
 
     public function mount(): void
     {
@@ -74,15 +83,18 @@ class Auth extends Component
             'username' => 'required|min:5|max:10',
             'confirmation_password' => 'same:password'
         ]);
-        User::create([
+        $user = $this->service->create([
             'name' => $data['name'],
             'email' => $data['email'],
             'gender' => $data['gender'],
             'password' => $data['password'],
-        ])->detail()->create([
+        ]);
+
+       $user->detail()->create([
             'phone' => $data['phone'],
             'username' => $data['username'],
         ]);
+
         $user = [
             'email' => $data['email'],
             'password' => $data['password']

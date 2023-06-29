@@ -7,6 +7,10 @@ use App\Models\{ImageIdentification, User, Visit, Visitor, Appointment};
 
 class FaceDetectionController extends Controller
 {
+
+    public function __construct() {
+
+    }
     public function index()
     {
         return view('face-detection');

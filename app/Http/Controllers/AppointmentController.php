@@ -28,11 +28,7 @@ class AppointmentController extends Controller
         $user = auth()->user();
         if($user["role_id"] !== 4) return back();
 
-
-            //  no face detected
-        $picture = explode("/", $user->detail["picture"]);
-        $isDefaultImg = end($picture) == "img.png";
-        if(!$user->image_id()->exists() and $isDefaultImg) {
+        if(!$user->imageExists()) {
             return back()->with("warning","Image must be uploaded as evidence");
         }
 

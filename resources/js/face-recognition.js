@@ -28,20 +28,16 @@ const getLabeledFaceDescriptions = async () => {
     return Promise.all(
         visitors.map(async (value) => {
             const visitor = JSON.stringify(value)
-            const descriptions = [];
             const img = await faceapi.fetchImage(`${value["visitor_picture"]}`)
             const detections = await faceapi
                 .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
                 // .detectAllFaces(img)
                 .withFaceLandmarks()
                 .withFaceDescriptor()
-
-            if (detections !== undefined) {
-                const {descriptor} = detections
-                descriptions.push(descriptor);
-            }
-            if (descriptions.length) {
-                return new faceapi.LabeledFaceDescriptors(visitor, descriptions);
+            console.log(detections)
+            if ( detections !== undefined) {
+                const { descriptor } = detections
+                return new faceapi.LabeledFaceDescriptors(visitor, [descriptor]);
             }
         })
     );
@@ -49,6 +45,7 @@ const getLabeledFaceDescriptions = async () => {
 
 function run() {
     video.addEventListener('play', async () => {
+        console.log("running")
         const labeledFaceDescriptions = (await getLabeledFaceDescriptions()).filter((d) => d !== undefined);
         const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptions, 0.6);
         const canvas = faceapi.createCanvasFromMedia(video)
@@ -89,29 +86,29 @@ function run() {
                         const drawBox = new faceapi.draw.DrawBox(box, {label: visitor_name})
                         drawBox.draw(canvas)
                         clearInterval(intervalId)
-                        checkInVisitor(visit_id).then((res) => {
-                            let timerInterval
-                            if (res.statusText === "OK") {
-                                Swal.fire({
-                                    title: 'Checkin Success',
-                                    html: "Yeay! You have successfully checked in.<br> redirect in <b></b> milliseconds.",
-                                    icon: 'success',
-                                    timer: 2000,
-                                    timerProgressBar: true,
-                                    didOpen: () => {
-                                        Swal.showLoading()
-                                        const b = Swal.getHtmlContainer().querySelector('b')
-                                        timerInterval = setInterval(() => {
-                                            b.textContent = Swal.getTimerLeft()
-                                        }, 500)
-                                    },
-                                    willClose: () => {
-                                        clearInterval(timerInterval)
-                                        window.location.href = `/oa/view-visitations-checkin/${visit_id}`
-                                    }
-                                });
-                            }
-                        }).catch(err => console.log(err))
+                        // checkInVisitor(visit_id).then((res) => {
+                        //     let timerInterval
+                        //     if (res.statusText === "OK") {
+                        //         Swal.fire({
+                        //             title: 'Checkin Success',
+                        //             html: "Yeay! You have successfully checked in.<br> redirect in <b></b> milliseconds.",
+                        //             icon: 'success',
+                        //             timer: 2000,
+                        //             timerProgressBar: true,
+                        //             didOpen: () => {
+                        //                 Swal.showLoading()
+                        //                 const b = Swal.getHtmlContainer().querySelector('b')
+                        //                 timerInterval = setInterval(() => {
+                        //                     b.textContent = Swal.getTimerLeft()
+                        //                 }, 500)
+                        //             },
+                        //             willClose: () => {
+                        //                 clearInterval(timerInterval)
+                        //                 window.location.href = `/oa/view-visitations-checkin/${visit_id}`
+                        //             }
+                        //         });
+                        //     }
+                        // }).catch(err => console.log(err))
                     }
                 }
             })

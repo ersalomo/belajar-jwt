@@ -57,7 +57,7 @@ class User extends Authenticatable
     {
         return new Attribute(
             get: function ($name, $user) {
-                if($user["role_id"] == 3) return "security ". $name;
+                if ($user["role_id"] == 3) return "security " . $name;
                 return $name;
             }
         );
@@ -70,8 +70,9 @@ class User extends Authenticatable
         );
     }
 
-    public function appointment():HasMany {
-        return $this->hasMany(Appointment::class,'visitor_id');
+    public function appointment(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'visitor_id');
     }
 
 
@@ -89,12 +90,26 @@ class User extends Authenticatable
     {
         return $this->hasMany(Visit::class, 'emp_id');
     }
-    public function conversation():HasMany {
+
+    public function conversation(): HasMany
+    {
         return $this->hasMany(Conversation::class, 'user1')->orWhere('user2', $this->getKey());
     }
 
-    public function image_id(){
-        return $this->hasOne(ImageIdentification::class,"visitor_id");
+    public function image_id()
+    {
+        return $this->hasOne(ImageIdentification::class, "visitor_id");
+    }
+
+    public function imageExists(): bool
+    {
+        $user = auth()->user();
+        $picture = explode("/", $user->detail["picture"]);
+        $isDefaultImg = end($picture) == "img.png";
+        return boolval(
+            !$user->image_id()->exists() and $isDefaultImg
+        );
+
     }
 
     public function isVisitor(): bool
