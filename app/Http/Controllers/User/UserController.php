@@ -35,22 +35,22 @@ class UserController extends Controller
 
         $user = auth()->user();
         try {
-            $path = "app/public/users/";
-            $file = $request->file('file');
-            $picture = explode("/", $user->detail["picture"]);
-            $oldPicture = end($picture);
-            $filePath = 'app\public\users\\' . $oldPicture;
-            $new_picture_name = 'VISITOR' . $user->id . time() . rand(1, 10000) . ".jpg";
+//            $path = "app/public/users/";
+//            $file = $request->file('file');
+//            $oldPicture = get_name_image($user->detail["picture"]);
+//            $filePath = 'app\public\users\\' . $oldPicture;
+//            $new_picture_name = 'VISITOR' . $user->id . time() . rand(1, 10000) . ".jpg";
 
-            if ($oldPicture != null && File::exists((storage_path($filePath)))) {
-                Storage::delete($path.$oldPicture);
-                File::delete(storage_path(storage_path($path . $oldPicture)));
-            }
-
-            $upload = $file->move(storage_path($path), $new_picture_name);
-            if ($upload) {
+//            if ($oldPicture != null && File::exists((storage_path($filePath)))) {
+//                Storage::delete($path.$oldPicture);
+//                File::delete(storage_path(storage_path($path . $oldPicture)));
+//            }
+//
+//            $upload = $file->move(storage_path($path), $new_picture_name);
+            $image_name = upload_image($user->detail["picture"], $request->file('file'));
+            if ($image_name) {
                 $user->detail()->update([
-                    'picture' => $new_picture_name,
+                    'picture' => $image_name,
                 ]);
                 return response()->json(['status' => 1, 'msg' => 'Your profile picture has been successfully updated.']);
             } else {

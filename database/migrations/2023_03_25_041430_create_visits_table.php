@@ -25,7 +25,9 @@ return new class extends Migration
                  * niminal daftar dulu
                 */
                 ->nullable()
-                ->constrained('appointments');
+                ->constrained('appointments')
+            ->cascadeOnDelete()
+            ->cascadeOnDelete();
                 $table->foreignId('emp_id')->nullable()->constrained('users')->cascadeOnDelete();
                 $table->date('visit_date');
                 $table->boolean('checkin');

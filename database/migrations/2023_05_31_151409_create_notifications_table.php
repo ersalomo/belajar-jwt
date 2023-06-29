@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('con_id')->nullable()->constrained('conversations');
+            $table->foreignId('con_id')->nullable()->constrained('conversations')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
-            $table->string('status');
+            $table->string('status')->default("unread");
             $table->string('body')->nullable();
             $table->timestamps();
         });

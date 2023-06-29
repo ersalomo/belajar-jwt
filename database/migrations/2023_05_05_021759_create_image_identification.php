@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('image_identification', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('visitor_id')->constrained('users');
+            $table->foreignId('visitor_id')->constrained('users')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
             $table->text('image_size');
             $table->text('image_name');
             $table->text('image_base64');

@@ -10,7 +10,6 @@ use App\Notify\NotifyHelper;
 use App\Service\User\UserServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -71,7 +70,7 @@ class UserController extends Controller
             'ln' => $data['lastname'],
             'NIK' => '',
             'username' => $data['firstname'] . $user['id'],
-//            'picture' => $data['picture'] || null,
+            'picture' => $data['picture'] ?? "img.png",
             'phone' => $data['phone'],
             'address' => $data['address'],
             'company_name' => '',
@@ -85,15 +84,22 @@ class UserController extends Controller
     public function update(UserReq $request, $id)
     {
         $data = $request->all();
-        if ($request->hasFile('picture')) {
-            $path = Storage::putFile('public/images/employee', $request->file('picture'));
-            $data['picture'] = $path;
-        }
         $user = $this->service->getUserById($id);
+        if ($request->hasFile('picture')) {
+//            $inStoragePath = "public/users/";
+//            $oldPicture = get_name_image($user->detail["picture"]);
+//            if ($oldPicture != null && Storage::exists($inStoragePath.$oldPicture)){
+//                Storage::delete($inStoragePath.$oldPicture);
+//            }
+//
+//            $path = Storage::putFile($inStoragePath, $request->file('picture'));
+//            $filename = get_name_image($path);
+//            $data['picture'] = $filename;
+            $data['picture'] = upload_image($user->detail["picture"], $request->file('picture'));
+        }
         $user->update([
             'email' => $data['email'],
             'name' => $data['firstname'],
-//            'password' => $data['password'],
             'gender' => $data['gender'] || 1,
             'role_id' => $data['role_id'],
         ]);
@@ -102,20 +108,21 @@ class UserController extends Controller
                 'title' => 'string',
                 'department_id' => 'required|exists:departments,id'
             ]);
-            $user->emp_department()->update([
-//                'emp_id' => $user['id'],
+            $user->emp_department()->updateOrCreate([
                 'department_id' => $data['department_id'],
-                'kode_emp' => $user->emp_department['kode_emp'],
+                'kode_emp' => $user->emp_department['kode_emp'] ?? generateRandomInteger(),
                 'title' => $data['title'],
             ]);
 
         }
-        $user->detail()->update([
+        $user->detail()->updateOrCreate([
+            "user_id" => $user["id"]
+        ], [
             'fn' => $data['firstname'],
             'ln' => $data['lastname'],
             'NIK' => '',
             'username' => $data['username'] . $user['id'],
-//            'picture' => $data['picture'] || null,
+            'picture' => $data['picture'] ?? "",
             'phone' => $data['phone'],
             'address' => $data['address'],
             'company_name' => '',

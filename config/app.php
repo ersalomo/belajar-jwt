@@ -198,6 +198,7 @@ return [
         BeyondCode\LaravelWebSockets\WebSocketsServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         App\Service\User\UserServiceProvider::class,
+        Ladumor\LaravelPwa\PWAServiceProvider::class,
 
     ],
 
@@ -217,6 +218,7 @@ return [
         'WebSockets' => BeyondCode\LaravelWebSockets\Facades\WebSockets::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'LaravelPwa' => \Ladumor\LaravelPwa\LaravelPwa::class,
     ])->toArray(),
 
 ];

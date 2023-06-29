@@ -16,7 +16,8 @@ return new class extends Migration
         // online
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('visitor_id')->constrained('users')
+            $table->foreignId('visitor_id')
+                ->constrained('users')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->string('name_emp');

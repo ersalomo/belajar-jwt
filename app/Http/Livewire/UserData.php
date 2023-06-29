@@ -36,13 +36,15 @@ class UserData extends Component
         try {
             if ($user->role_id != 4) {
                 $user->emp_department()->delete();
+                $user->visitation()->delete();
             } else {
                 $user->appointment()->delete();
+
             }
             $user->detail()->delete();
             $user->delete();
             $this->successNotify("Data user deleted successfully :)");
-            return back();
+//            return back()->with("warning", "Data user deleted successfully :)");
         } catch (\Exception $e) {
             $this->errorNotify("Cannot delete this user because integrity constrained");
         }

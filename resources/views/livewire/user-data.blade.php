@@ -84,7 +84,7 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div>
-                                                <img src="{{$user->detail['picture']}}" class="avatar avatar-sm me-3"
+                                                <img src="{{$user->detail['picture'] ?? ""}}" class="avatar avatar-sm me-3"
                                                      alt="user1">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
@@ -94,8 +94,8 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{__($user->detail['phone'])}}</p>
-                                        <p class="text-xs text-secondary mb-0">{{__($user->detail['company_name'])}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{__($user->detail['phone'] ?? "")}}</p>
+                                        <p class="text-xs text-secondary mb-0">{{__($user->detail['company_name'] ?? "")}}</p>
                                     </td>
                                     <td class="align-middle text-center text-sm">
                                         @if(!$user->is_blocked)
@@ -106,7 +106,7 @@
                                     </td>
                                     <td class="">
                                         <span
-                                            class="text-start text-secondary text-xs font-weight-bold">{{__($user->detail['address'])}}</span>
+                                            class="text-start text-secondary text-xs font-weight-bold">{{__($user->detail['address'] ?? "")}}</span>
                                     </td>
                                 </tr>
                             @endforeach

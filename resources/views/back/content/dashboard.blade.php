@@ -176,12 +176,12 @@
                                 <td>
                                     <div class="d-flex px-2 py-0">
                                         <div>
-                                            <img src="{{$appointment['visitor']->detail?->picture}}"
+                                            <img src="{{$appointment['visitor']->detail?->picture ?? ''}}"
                                                  class="avatar avatar-sm me-3">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-xs">{{$appointment['visitor']->name  }}</h6>
-                                            <p class="text-xs text-secondary mb-0">{{($appointment['visitor']->email)}}</p>
+                                            <h6 class="mb-0 text-xs">{{$appointment['visitor']->name ?? ''  }}</h6>
+                                            <p class="text-xs text-secondary mb-0">{{($appointment['visitor']->email ?? '')}}</p>
                                         </div>
                                     </div>
                                 </td>
